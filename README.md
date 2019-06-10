@@ -2,6 +2,10 @@
 
 > 这是数据中心管理后台前端框架。它只包含了 Element UI & axios & iconfont & lint，这些搭建后台必要的东西。这个项目是基于 `vue-cli` 进行构建。
 
+# 独自搭建，自我练习
+
+> 搭建一套多环境、多子项目简易后台
+
 ## Build Setup
 
 ```bash
