@@ -2,6 +2,8 @@ import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'normalize.css'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 import App from './App.vue'
 import router from './router/index'
 import store from './store'
@@ -9,6 +11,7 @@ import './assets/Icons/iconfont.css'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.use(VueAxios, axios)
 
 console.log(process.env.VUE_APP_URL)
 
