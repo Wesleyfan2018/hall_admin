@@ -29,17 +29,12 @@ const user = {
                         setEncData('loginInfo', resData);
                         commit('SET_TOKEN', token);
                         resData.project.forEach(pro => {
-                            console.log(pro.envs);
                             let pEnvs = Object.values(pro.envs);
-                            // let pEnvs = pro.envs;
                             pEnvs.forEach(envs => {
                                 if (envs.selected === 1) {
                                     let api = envs.api;
                                     commit('SET_BASEAPI', api);
-                                    console.log(8);
-                                    console.log(api);
                                     setBaseApi(api);
-                                    // localStorage.setItem('baseApi', api);
                                 }
                             });
                         });

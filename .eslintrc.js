@@ -3,991 +3,990 @@
 module.exports = {
     root: true,
     parserOptions: {
-      parser: 'babel-eslint'
+        parser: 'babel-eslint'
     },
     env: {
-      browser: true,
+        browser: true,
     },
     extends: [
-      // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
-      // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-      'plugin:vue/essential',
-      // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-      'standard'
+        // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
+        // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
+        'plugin:vue/essential',
+        // https://github.com/standard/standard/blob/master/docs/RULES-en.md
+        'standard'
     ],
     // required to lint *.vue files
     plugins: [
-      'vue'
+        'vue'
     ],
     // add your custom rules here
     rules: {
-      // allow debugger during development
-      'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-      //
-      // ¿ÉÄÜµÄ´íÎó
-      // ÕâĞ©¹æÔòÓë JavaScript ´úÂëÖĞ¿ÉÄÜµÄÓï·¨´íÎó»òÂß¼­´íÎóÓĞ¹Ø
-      //
-      // ½ûÖ¹ for Ñ­»·³öÏÖ·½Ïò´íÎóµÄÑ­»·£¬±ÈÈç for (i = 0; i < 10; i--)
-      'for-direction': 'error',
-      // getter ±ØĞëÓĞ·µ»ØÖµ£¬²¢ÇÒ½ûÖ¹·µ»Ø¿Õ£¬±ÈÈç return;
-      'getter-return': [
-        'error',
-        {
-          allowImplicit: false
-        }
-      ],
-      // ½ûÖ¹½« await Ğ´ÔÚÑ­»·Àï£¬ÒòÎªÕâÑù¾ÍÎŞ·¨Í¬Ê±·¢ËÍ¶à¸öÒì²½ÇëÇóÁË
-      // @off ÒªÇóÌ«ÑÏ¸ñÁË£¬ÓĞÊ±ĞèÒªÔÚÑ­»·ÖĞĞ´ await
-      'no-await-in-loop': 'off',
-      // ½ûÖ¹Óë¸ºÁã½øĞĞ±È½Ï
-      'no-compare-neg-zero': 'error',
-      // ½ûÖ¹ÔÚ²âÊÔ±í´ïÊ½ÖĞÊ¹ÓÃ¸³ÖµÓï¾ä£¬³ı·ÇÕâ¸ö¸³ÖµÓï¾ä±»À¨ºÅ°üÆğÀ´ÁË
-      'no-cond-assign': [
-        'error',
-        'except-parens'
-      ],
-      // ½ûÖ¹Ê¹ÓÃ console
-      // @off console µÄÊ¹ÓÃºÜ³£¼û
-      'no-console': 'off',
-      // ½ûÖ¹½«³£Á¿×÷Îª·ÖÖ§Ìõ¼şÅĞ¶ÏÖĞµÄ²âÊÔ±í´ïÊ½£¬µ«ÔÊĞí×÷ÎªÑ­»·Ìõ¼şÅĞ¶ÏÖĞµÄ²âÊÔ±í´ïÊ½
-      'no-constant-condition': [
-        'error',
-        {
-          checkLoops: false
-        }
-      ],
-      // ½ûÖ¹ÔÚÕıÔò±í´ïÊ½ÖĞ³öÏÖ Ctrl ¼üµÄ ASCII ±íÊ¾£¬¼´½ûÖ¹Ê¹ÓÃ /\x1f/
-      // @off ¼¸ºõ²»»áÓöµ½ÕâÖÖ³¡¾°
-      'no-control-regex': 'error',
-      // ½ûÖ¹ÔÚº¯Êı²ÎÊıÖĞ³öÏÖÖØ¸´Ãû³ÆµÄ²ÎÊı
-      'no-dupe-args': 'error',
-      // ½ûÖ¹ÔÚ¶ÔÏó×ÖÃæÁ¿ÖĞ³öÏÖÖØ¸´Ãû³ÆµÄ¼üÃû
-      'no-dupe-keys': 'error',
-      // ½ûÖ¹ÔÚ switch Óï¾äÖĞ³öÏÖÖØ¸´²âÊÔ±í´ïÊ½µÄ case
-      'no-duplicate-case': 'error',
-      // ½ûÖ¹³öÏÖ¿Õ´úÂë¿é
-      'no-empty': [
-        'error',
-        {
-          allowEmptyCatch: true
-        }
-      ],
-      // ½ûÖ¹ÔÚÕıÔò±í´ïÊ½ÖĞÊ¹ÓÃ¿ÕµÄ×Ö·û¼¯ []
-      'no-empty-character-class': 'error',
-      // ½ûÖ¹½« catch µÄµÚÒ»¸ö²ÎÊı error ÖØĞÂ¸³Öµ
-      'no-ex-assign': 'error',
-      // @fixable ½ûÖ¹ÔÚ²âÊÔ±í´ïÊ½ÖĞÊ¹ÓÃ !! »ò Boolean
-      'no-extra-boolean-cast': 'error',
-      // @fixable ½ûÖ¹º¯Êı±í´ïÊ½ÖĞ³öÏÖ¶àÓàµÄÀ¨ºÅ£¬±ÈÈç let foo = (function () { return 1 })
-      'no-extra-parens': [
-        'error',
-        'functions'
-      ],
-      // @fixable ½ûÖ¹³öÏÖ¶àÓàµÄ·ÖºÅ
-      'no-extra-semi': 'error',
-      // ½ûÖ¹½«Ò»¸öº¯ÊıÉùÃ÷ÖØĞÂ¸³Öµ£¬Èç£º
-      // function foo() {}
-      // foo = bar
-      'no-func-assign': 'error',
-      // ½ûÖ¹ÔÚ if ´úÂë¿éÄÚ³öÏÖº¯ÊıÉùÃ÷
-      'no-inner-declarations': [
-        'error',
-        'both'
-      ],
-      // ½ûÖ¹ÔÚ RegExp ¹¹Ôìº¯ÊıÖĞ³öÏÖ·Ç·¨µÄÕıÔò±í´ïÊ½
-      'no-invalid-regexp': 'error',
-      // ½ûÖ¹Ê¹ÓÃÌØÊâ¿Õ°×·û£¨±ÈÈçÈ«½Ç¿Õ¸ñ£©£¬³ı·ÇÊÇ³öÏÖÔÚ×Ö·û´®¡¢ÕıÔò±í´ïÊ½»òÄ£°æ×Ö·û´®ÖĞ
-      'no-irregular-whitespace': [
-        'error',
-        {
-          skipStrings: true,
-          skipComments: false,
-          skipRegExps: true,
-          skipTemplates: true
-        }
-      ],
-      // ½ûÖ¹½« Math, JSON »ò Reflect Ö±½Ó×÷Îªº¯Êıµ÷ÓÃ
-      'no-obj-calls': 'error',
-      // ½ûÖ¹Ê¹ÓÃ hasOwnProperty, isPrototypeOf »ò propertyIsEnumerable
-      // @off hasOwnProperty ±È½Ï³£ÓÃ
-      'no-prototype-builtins': 'off',
-      // @fixable ½ûÖ¹ÔÚÕıÔò±í´ïÊ½ÖĞ³öÏÖÁ¬ĞøµÄ¿Õ¸ñ£¬±ØĞëÊ¹ÓÃ /foo {3}bar/ ´úÌæ
-      'no-regex-spaces': 'error',
-      // ½ûÖ¹ÔÚÊı×éÖĞ³öÏÖÁ¬ĞøµÄ¶ººÅ£¬Èç let foo = [,,]
-      'no-sparse-arrays': 'error',
-      // ½ûÖ¹ÔÚÆÕÍ¨×Ö·û´®ÖĞ³öÏÖ es2015 µÄÄ£°æ×Ö·û´®µÄ±äÁ¿ĞÎÊ½£¬Èç 'Hello ${name}!'
-      'no-template-curly-in-string': 'error',
-      // ½ûÖ¹³öÏÖÄÑÒÔÀí½âµÄ¶àĞĞ±í´ïÊ½£¬Èç£º
-      // let foo = bar
-      // [1, 2, 3].forEach(baz);
-      'no-unexpected-multiline': 'error',
-      // ½ûÖ¹ÔÚ return, throw, break »ò continue Ö®ºó»¹ÓĞ´úÂë
-      'no-unreachable': 'error',
-      // ½ûÖ¹ÔÚ finally ÖĞ³öÏÖ return, throw, break »ò continue
-      'no-unsafe-finally': 'error',
-      // @fixable ½ûÖ¹ÔÚ in »ò instanceof ²Ù×÷·ûµÄ×ó²àÊ¹ÓÃ¸ĞÌ¾ºÅ£¬Èç if (!key in object)
-      'no-unsafe-negation': 'error',
-      // ±ØĞëÊ¹ÓÃ isNaN(foo) ¶ø²»ÊÇ foo === NaN
-      'use-isnan': 'error',
-      // ×¢ÊÍ±ØĞë·ûºÏ jsdoc µÄ¹æ·¶
-      // @off jsdoc ÒªÇóÌ«ÑÏ¸ñ
-      'valid-jsdoc': 'off',
-      // typeof ±í´ïÊ½±È½ÏµÄ¶ÔÏó±ØĞëÊÇ 'undefined', 'object', 'boolean', 'number', 'string', 'function' »ò 'symbol'
-      'valid-typeof': 'error',
-  
-  
-  
-      //
-      //
-      // ×î¼ÑÊµ¼ù
-      // ÕâĞ©¹æÔòÍ¨¹ıÒ»Ğ©×î¼ÑÊµ¼ù°ïÖúÄã±ÜÃâÎÊÌâ
-      //
-      // setter ±ØĞëÓĞ¶ÔÓ¦µÄ getter£¬getter ¿ÉÒÔÃ»ÓĞ¶ÔÓ¦µÄ setter
-      'accessor-pairs': [
-        'error',
-        {
-          setWithoutGet: true,
-          getWithoutSet: false
-        }
-      ],
-      // Êı×éµÄ·½·¨³ıÁË forEach Ö®Íâ£¬»Øµ÷º¯Êı±ØĞëÓĞ·µ»ØÖµ
-      'array-callback-return': 'error',
-      // ½« var ¶¨ÒåµÄ±äÁ¿ÊÓÎª¿é×÷ÓÃÓò£¬½ûÖ¹ÔÚ¿éÍâÊ¹ÓÃ
-      'block-scoped-var': 'error',
-      // ÔÚÀàµÄ·Ç¾²Ì¬·½·¨ÖĞ£¬±ØĞë´æÔÚ¶Ô this µÄÒıÓÃ
-      // @off Ì«ÑÏ¸ñÁË
-      'class-methods-use-this': 'off',
-      // ½ûÖ¹º¯ÊıµÄÑ­»·¸´ÔÓ¶È³¬¹ı 20£¬https://en.wikipedia.org/wiki/Cyclomatic_complexity
-      'complexity': [
-        'error',
-        {
-          max: 20
-        }
-      ],
-      // ½ûÖ¹º¯ÊıÔÚ²»Í¬·ÖÖ§·µ»Ø²»Í¬ÀàĞÍµÄÖµ
-      // @off Ì«ÑÏ¸ñÁË
-      'consistent-return': 'off',
-      // @fixable if ºóÃæ±ØĞëÒªÓĞ {£¬³ı·ÇÊÇµ¥ĞĞ if
-      'curly': [
-        'error',
-        'multi-line',
-        'consistent'
-      ],
-      // switch Óï¾ä±ØĞëÓĞ default
-      // @off Ì«ÑÏ¸ñÁË
-      'default-case': 'off',
-      // @fixable Á´Ê½µ÷ÓÃµÄÊ±ºò£¬µãºÅ±ØĞë·ÅÔÚµÚ¶şĞĞ¿ªÍ·´¦£¬½ûÖ¹·ÅÔÚµÚÒ»ĞĞ½áÎ²´¦
-      'dot-location': [
-        'error',
-        'property'
-      ],
-      // @fixable ½ûÖ¹³öÏÖ foo['bar']£¬±ØĞëĞ´³É foo.bar
-      // @off µ±ĞèÒªĞ´Ò»ÏµÁĞÊôĞÔµÄÊ±ºò£¬¿ÉÒÔ¸üÍ³Ò»
-      'dot-notation': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃ === »ò !==£¬½ûÖ¹Ê¹ÓÃ == »ò !=£¬Óë null ±È½ÏÊ±³ıÍâ
-      'eqeqeq': [
-        'error',
-        'always',
-        {
-          null: 'ignore'
-        }
-      ],
-      // for in ÄÚ²¿±ØĞëÓĞ hasOwnProperty
-      'guard-for-in': 'error',
-      // ½ûÖ¹Ê¹ÓÃ alert
-      // @off alert ºÜ³£ÓÃ
-      'no-alert': 'off',
-      // ½ûÖ¹Ê¹ÓÃ caller »ò callee
-      'no-caller': 'error',
-      // switch µÄ case ÄÚÓĞ±äÁ¿¶¨ÒåµÄÊ±ºò£¬±ØĞëÊ¹ÓÃ´óÀ¨ºÅ½« case ÄÚ±ä³ÉÒ»¸ö´úÂë¿é
-      'no-case-declarations': 'error',
-      // ½ûÖ¹ÔÚÕıÔò±í´ïÊ½ÖĞ³öÏÖĞÎËÆ³ı·¨²Ù×÷·ûµÄ¿ªÍ·£¬Èç let a = /=foo/
-      // @off ÓĞ´úÂë¸ßÁÁµÄ»°£¬ÔÚÔÄ¶ÁÕâÖÖ´úÂëÊ±£¬Ò²ÍêÈ«²»»á²úÉúÆçÒå»òÀí½âÉÏµÄÀ§ÄÑ
-      'no-div-regex': 'off',
-      // @fixable ½ûÖ¹ÔÚ else ÄÚÊ¹ÓÃ return£¬±ØĞë¸ÄÎªÌáÇ°½áÊø
-      // @off else ÖĞÊ¹ÓÃ return ¿ÉÒÔÊ¹´úÂë½á¹¹¸üÇåÎú
-      'no-else-return': 'off',
-      // ²»ÔÊĞíÓĞ¿Õº¯Êı£¬³ı·ÇÊÇ½«Ò»¸ö¿Õº¯ÊıÉèÖÃÎªÄ³¸öÏîµÄÄ¬ÈÏÖµ
-      'no-empty-function': [
-        'error',
-        {
-          allow: [
-            'functions',
-            'arrowFunctions'
-          ]
-        }
-      ],
-      // ½ûÖ¹½â¹¹ÖĞ³öÏÖ¿Õ {} »ò []
-      'no-empty-pattern': 'error',
-      // ½ûÖ¹Ê¹ÓÃ foo == null »ò foo != null£¬±ØĞëÊ¹ÓÃ foo === null »ò foo !== null
-      // @off foo == null ÓÃÓÚÅĞ¶Ï foo ²»ÊÇ undefined ²¢ÇÒ²»ÊÇ null£¬±È½Ï³£ÓÃ£¬¹ÊÔÊĞí´ËĞ´·¨
-      'no-eq-null': 'off',
-      // ½ûÖ¹Ê¹ÓÃ eval
-      'no-eval': 'error',
-      // ½ûÖ¹ĞŞ¸ÄÔ­Éú¶ÔÏó
-      'no-extend-native': 'error',
-      // @fixable ½ûÖ¹³öÏÖÃ»±ØÒªµÄ bind
-      'no-extra-bind': 'error',
-      // @fixable ½ûÖ¹³öÏÖÃ»±ØÒªµÄ label
-      'no-extra-label': 'error',
-      // switch µÄ case ÄÚ±ØĞëÓĞ break, return »ò throw
-      'no-fallthrough': 'error',
-      // @fixable ±íÊ¾Ğ¡ÊıÊ±£¬½ûÖ¹Ê¡ÂÔ 0£¬±ÈÈç .5
-      'no-floating-decimal': 'error',
-      // ½ûÖ¹¶ÔÈ«¾Ö±äÁ¿¸³Öµ
-      'no-global-assign': 'error',
-      // @fixable ½ûÖ¹Ê¹ÓÃ !! ~ µÈÄÑÒÔÀí½âµÄÔËËã·û
-      // ½öÔÊĞíÊ¹ÓÃ !!
-      'no-implicit-coercion': [
-        'error',
-        {
-          allow: [
-            '!!'
-          ]
-        }
-      ],
-      // ½ûÖ¹ÔÚÈ«¾Ö×÷ÓÃÓòÏÂ¶¨Òå±äÁ¿»òÉêÃ÷º¯Êı
-      'no-implicit-globals': 'error',
-      // ½ûÖ¹ÔÚ setTimeout »ò setInterval ÖĞ´«Èë×Ö·û´®£¬Èç setTimeout('alert("Hi!")', 100);
-      'no-implied-eval': 'error',
-      // ½ûÖ¹ÔÚÀàÖ®ÍâµÄµØ·½Ê¹ÓÃ this
-      // @off this µÄÊ¹ÓÃºÜÁé»î£¬ÊÂ¼ş»Øµ÷ÖĞ¿ÉÒÔ±íÊ¾µ±Ç°ÔªËØ£¬º¯ÊıÒ²¿ÉÒÔÏÈÓÃ this£¬µÈÒÔºó±»µ÷ÓÃµÄÊ±ºòÔÙ call
-      'no-invalid-this': 'off',
-      // ½ûÖ¹Ê¹ÓÃ __iterator__
-      'no-iterator': 'error',
-      // ½ûÖ¹Ê¹ÓÃ label
-      'no-labels': 'error',
-      // ½ûÖ¹Ê¹ÓÃÃ»±ØÒªµÄ {} ×÷Îª´úÂë¿é
-      'no-lone-blocks': 'error',
-      // ½ûÖ¹ÔÚÑ­»·ÄÚµÄº¯ÊıÖĞ³öÏÖÑ­»·ÌåÌõ¼şÓï¾äÖĞ¶¨ÒåµÄ±äÁ¿£¬±ÈÈç£º
-      // for (var i = 0; i < 10; i++) {
-      //     (function () { return i })();
-      // }
-      'no-loop-func': 'error',
-      // ½ûÖ¹Ê¹ÓÃ magic numbers
-      // @off Ì«ÑÏ¸ñÁË
-      'no-magic-numbers': 'off',
-      // @fixable ½ûÖ¹³öÏÖÁ¬ĞøµÄ¶à¸ö¿Õ¸ñ£¬³ı·ÇÊÇ×¢ÊÍÇ°£¬»ò¶ÔÆë¶ÔÏóµÄÊôĞÔ¡¢±äÁ¿¶¨Òå¡¢import µÈ
-      'no-multi-spaces': [
-        'error',
-        {
-          ignoreEOLComments: true,
-          exceptions: {
-            Property: true,
-            BinaryExpression: false,
-            VariableDeclarator: true,
-            ImportDeclaration: true
-          }
-        }
-      ],
-      // ½ûÖ¹Ê¹ÓÃ \ À´»»ĞĞ×Ö·û´®
-      'no-multi-str': 'error',
-      // ½ûÖ¹Ö±½Ó new Ò»¸öÀà¶ø²»¸³Öµ
-      'no-new': 'error',
-      // ½ûÖ¹Ê¹ÓÃ new Function£¬±ÈÈç let x = new Function("a", "b", "return a + b");
-      'no-new-func': 'error',
-      // ½ûÖ¹Ê¹ÓÃ new À´Éú³É String, Number »ò Boolean
-      'no-new-wrappers': 'error',
-      // ½ûÖ¹Ê¹ÓÃ 0 ¿ªÍ·µÄÊı×Ö±íÊ¾°Ë½øÖÆÊı
-      'no-octal': 'error',
-      // ½ûÖ¹Ê¹ÓÃ°Ë½øÖÆµÄ×ªÒå·û
-      'no-octal-escape': 'error',
-      // ½ûÖ¹¶Ôº¯ÊıµÄ²ÎÊıÖØĞÂ¸³Öµ
-      'no-param-reassign': 'error',
-      // ½ûÖ¹Ê¹ÓÃ __proto__
-      'no-proto': 'error',
-      // ½ûÖ¹ÖØ¸´¶¨Òå±äÁ¿
-      'no-redeclare': 'error',
-      // ½ûÖ¹Ê¹ÓÃÖ¸¶¨µÄ¶ÔÏóÊôĞÔ
-      // @off ËüÓÃÓÚÏŞÖÆÄ³¸ö¾ßÌåµÄ api ²»ÄÜÊ¹ÓÃ
-      'no-restricted-properties': 'off',
-      // ½ûÖ¹ÔÚ return Óï¾äÀï¸³Öµ
-      'no-return-assign': [
-        'error',
-        'always'
-      ],
-      // ½ûÖ¹ÔÚ return Óï¾äÀïÊ¹ÓÃ await
-      'no-return-await': 'error',
-      // ½ûÖ¹³öÏÖ location.href = 'javascript:void(0)';
-      'no-script-url': 'error',
-      // ½ûÖ¹½«×Ô¼º¸³Öµ¸ø×Ô¼º
-      'no-self-assign': 'error',
-      // ½ûÖ¹½«×Ô¼ºÓë×Ô¼º±È½Ï
-      'no-self-compare': 'error',
-      // ½ûÖ¹Ê¹ÓÃ¶ººÅ²Ù×÷·û
-      'no-sequences': 'error',
-      // ½ûÖ¹ throw ×ÖÃæÁ¿£¬±ØĞë throw Ò»¸ö Error ¶ÔÏó
-      'no-throw-literal': 'error',
-      // Ñ­»·ÄÚ±ØĞë¶ÔÑ­»·Ìõ¼şµÄ±äÁ¿ÓĞĞŞ¸Ä
-      'no-unmodified-loop-condition': 'error',
-      // ½ûÖ¹ÎŞÓÃµÄ±í´ïÊ½
-      'no-unused-expressions': [
-        'error',
-        {
-          allowShortCircuit: true,
-          allowTernary: true,
-          allowTaggedTemplates: true
-        }
-      ],
-      // @fixable ½ûÖ¹³öÏÖÃ»ÓÃµÄ label
-      'no-unused-labels': 'error',
-      // ½ûÖ¹³öÏÖÃ»±ØÒªµÄ call »ò apply
-      'no-useless-call': 'error',
-      // ½ûÖ¹³öÏÖÃ»±ØÒªµÄ×Ö·û´®Á¬½Ó
-      'no-useless-concat': 'error',
-      // ½ûÖ¹³öÏÖÃ»±ØÒªµÄ×ªÒå
-      // @off ×ªÒå¿ÉÒÔÊ¹´úÂë¸üÒ×¶®
-      'no-useless-escape': 'off',
-      // @fixable ½ûÖ¹Ã»±ØÒªµÄ return
-      // @off Ã»±ØÒªÏŞÖÆ return
-      'no-useless-return': 'off',
-      // ½ûÖ¹Ê¹ÓÃ void
-      'no-void': 'error',
-      // ½ûÖ¹×¢ÊÍÖĞ³öÏÖ TODO ºÍ FIXME
-      // @off TODO ºÜ³£ÓÃ
-      'no-warning-comments': 'off',
-      // ½ûÖ¹Ê¹ÓÃ with
-      'no-with': 'error',
-      // Promise µÄ reject ÖĞ±ØĞë´«Èë Error ¶ÔÏó£¬¶ø²»ÊÇ×ÖÃæÁ¿
-      'prefer-promise-reject-errors': 'error',
-      // parseInt ±ØĞë´«ÈëµÚ¶ş¸ö²ÎÊı
-      'radix': 'error',
-      // async º¯ÊıÖĞ±ØĞë´æÔÚ await Óï¾ä
-      // @off async function ÖĞÃ»ÓĞ await µÄĞ´·¨ºÜ³£¼û£¬±ÈÈç koa µÄÊ¾ÀıÖĞ¾ÍÓĞÕâÖÖÓÃ·¨
-      'require-await': 'off',
-      // var ±ØĞëÔÚ×÷ÓÃÓòµÄ×îÇ°Ãæ
-      // @off var ²»ÔÚ×îÇ°ÃæÒ²ÊÇºÜ³£¼ûµÄÓÃ·¨
-      'vars-on-top': 'off',
-      // @fixable Á¢¼´Ö´ĞĞµÄº¯Êı±ØĞë·ûºÏÈçÏÂ¸ñÊ½ (function () { alert('Hello') })()
-      'wrap-iife': [
-        'error',
-        'inside',
-        {
-          functionPrototypeMethods: true
-        }
-      ],
-      // @fixable ±ØĞëÊ¹ÓÃ if (foo === 5) ¶ø²»ÊÇ if (5 === foo)
-      'yoda': [
-        'error',
-        'never',
-        {
-          onlyEquality: true
-        }
-      ],
-  
-  
-  
-      //
-      //
-      // ÑÏ¸ñÄ£Ê½
-      // ÕâĞ©¹æÔòÓëÑÏ¸ñÄ£Ê½Ö¸ÁîÓĞ¹Ø
-      //
-      // @fixable ½ûÖ¹Ê¹ÓÃ 'strict';
-      'strict': [
-        'error',
-        'never'
-      ],
-  
-  
-  
-      //
-      //
-      // ±äÁ¿
-      // ÕâĞ©¹æÔòÓë±äÁ¿ÉêÃ÷ÓĞ¹Ø
-      //
-      // ±äÁ¿±ØĞëÔÚ¶¨ÒåµÄÊ±ºò¸³Öµ
-      // @off ÏÈ¶¨Òåºó¸³ÖµºÜ³£¼û
-      'init-declarations': 'off',
-      // ½ûÖ¹ catch µÄ²ÎÊıÃûÓë¶¨Òå¹ıµÄ±äÁ¿ÖØ¸´
-      // @off Ì«ÑÏ¸ñÁË
-      'no-catch-shadow': 'off',
-      // ½ûÖ¹Ê¹ÓÃ delete
-      'no-delete-var': 'error',
-      // ½ûÖ¹ label Ãû³ÆÓë¶¨Òå¹ıµÄ±äÁ¿ÖØ¸´
-      'no-label-var': 'error',
-      // ½ûÖ¹Ê¹ÓÃÖ¸¶¨µÄÈ«¾Ö±äÁ¿
-      // @off ËüÓÃÓÚÏŞÖÆÄ³¸ö¾ßÌåµÄ±äÁ¿Ãû²»ÄÜÊ¹ÓÃ
-      'no-restricted-globals': 'off',
-      // ½ûÖ¹±äÁ¿ÃûÓëÉÏ²ã×÷ÓÃÓòÄÚµÄ¶¨Òå¹ıµÄ±äÁ¿ÖØ¸´
-      // @off ºÜ¶àÊ±ºòº¯ÊıµÄĞÎ²ÎºÍ´«²ÎÊÇÍ¬ÃûµÄ
-      'no-shadow': 'off',
-      // ½ûÖ¹Ê¹ÓÃ±£Áô×Ö×÷Îª±äÁ¿Ãû
-      'no-shadow-restricted-names': 'error',
-      // ½ûÖ¹Ê¹ÓÃÎ´¶¨ÒåµÄ±äÁ¿
-      'no-undef': [
-        'error',
-        {
-          typeof: false
-        }
-      ],
-      // @fixable ½ûÖ¹½« undefined ¸³Öµ¸ø±äÁ¿
-      'no-undef-init': 'error',
-      // ½ûÖ¹¶Ô undefined ÖØĞÂ¸³Öµ
-      'no-undefined': 'error',
-      // ¶¨Òå¹ıµÄ±äÁ¿±ØĞëÊ¹ÓÃ
-      'no-unused-vars': [
-        'error',
-        {
-          vars: 'all',
-          args: 'none',
-          caughtErrors: 'none',
-          ignoreRestSiblings: true
-        }
-      ],
-      // ±äÁ¿±ØĞëÏÈ¶¨ÒåºóÊ¹ÓÃ
-      'no-use-before-define': [
-        'error',
-        {
-          functions: false,
-          classes: false,
-          variables: false
-        }
-      ],
-  
-  
-  
-      //
-      //
-      // Node.js ºÍ CommonJS
-      // ÕâĞ©¹æÔòÓëÔÚ Node.js ÖĞÔËĞĞµÄ´úÂë»òä¯ÀÀÆ÷ÖĞÊ¹ÓÃµÄ CommonJS ÓĞ¹Ø
-      //
-      // callback Ö®ºó±ØĞëÁ¢¼´ return
-      // @off Limitations Ì«¶àÁË
-      'callback-return': 'off',
-      // require ±ØĞëÔÚÈ«¾Ö×÷ÓÃÓòÏÂ
-      // @off Ìõ¼ş¼ÓÔØºÜ³£¼û
-      'global-require': 'off',
-      // callback ÖĞµÄ error ±ØĞë±»´¦Àí
-      'handle-callback-err': 'error',
-      // ½ûÖ¹Ö±½ÓÊ¹ÓÃ Buffer
-      'no-buffer-constructor': 'error',
-      // ÏàÍ¬ÀàĞÍµÄ require ±ØĞë·ÅÔÚÒ»Æğ
-      // @off Ì«ÑÏ¸ñÁË
-      'no-mixed-requires': 'off',
-      // ½ûÖ¹Ö±½Ó new require('foo')
-      'no-new-require': 'error',
-      // ½ûÖ¹¶Ô __dirname »ò __filename Ê¹ÓÃ×Ö·û´®Á¬½Ó
-      'no-path-concat': 'error',
-      // ½ûÖ¹Ê¹ÓÃ process.env.NODE_ENV
-      // @off Ê¹ÓÃºÜ³£¼û
-      'no-process-env': 'off',
-      // ½ûÖ¹Ê¹ÓÃ process.exit(0)
-      // @off Ê¹ÓÃºÜ³£¼û
-      'no-process-exit': 'off',
-      // ½ûÖ¹Ê¹ÓÃÖ¸¶¨µÄÄ£¿é
-      // @off ËüÓÃÓÚÏŞÖÆÄ³¸ö¾ßÌåµÄÄ£¿é²»ÄÜÊ¹ÓÃ
-      'no-restricted-modules': 'off',
-      // ½ûÖ¹Ê¹ÓÃ node ÖĞµÄÍ¬²½µÄ·½·¨£¬±ÈÈç fs.readFileSync
-      // @off Ê¹ÓÃºÜ³£¼û
-      'no-sync': 'off',
-  
-  
-  
-      //
-      //
-      // ·ç¸ñÎÊÌâ
-      // ÕâĞ©¹æÔòÓë´úÂë·ç¸ñÓĞ¹Ø£¬ËùÒÔÊÇ·Ç³£Ö÷¹ÛµÄ
-      //
-      // @fixable ÅäÖÃÊı×éµÄÖĞÀ¨ºÅÄÚÇ°ºóµÄ»»ĞĞ¸ñÊ½
-      // @off ÅäÖÃÏîÎŞ·¨ÅäÖÆ³ÉÏëÒªµÄÑù×Ó
-      'array-bracket-newline': 'off',
-      // @fixable Êı×éµÄÀ¨ºÅÄÚµÄÇ°ºó½ûÖ¹ÓĞ¿Õ¸ñ
-      'array-bracket-spacing': [
-        'error',
-        'never'
-      ],
-      // @fixable ÅäÖÃÊı×éµÄÔªËØÖ®¼äµÄ»»ĞĞ¸ñÊ½
-      // @off ÔÊĞíÒ»ĞĞ°üº¬¶à¸öÔªËØ£¬·½±ã´óÊıÁ¿µÄÊı×éµÄÊéĞ´
-      'array-element-newline': 'off',
-      // @fixable ´úÂë¿éÈç¹ûÔÚÒ»ĞĞÄÚ£¬ÄÇÃ´´óÀ¨ºÅÄÚµÄÊ×Î²±ØĞëÓĞ¿Õ¸ñ£¬±ÈÈç function () { alert('Hello') }
-      'block-spacing': [
-        'error',
-        'always'
-      ],
-      // @fixable if Óë else µÄ´óÀ¨ºÅ·ç¸ñ±ØĞëÒ»ÖÂ
-      // @off else ´úÂë¿é¿ÉÄÜÇ°ÃæĞèÒªÓĞÒ»ĞĞ×¢ÊÍ
-      'brace-style': 'off',
-      // ±äÁ¿Ãû±ØĞëÊÇ camelcase ·ç¸ñµÄ
-      // @off ºÜ¶à api »òÎÄ¼şÃû¶¼²»ÊÇ camelcase
-      'camelcase': 'off',
-      // @fixable ×¢ÊÍµÄÊ××ÖÄ¸±ØĞë´óĞ´
-      // @off Ã»±ØÒªÏŞÖÆ
-      'capitalized-comments': 'off',
-      // @fixable ¶ÔÏóµÄ×îºóÒ»¸öÊôĞÔÄ©Î²±ØĞëÓĞ¶ººÅ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'comma-dangle': 'off',
-      // @fixable ¶ººÅÇ°½ûÖ¹ÓĞ¿Õ¸ñ£¬¶ººÅºó±ØĞëÒªÓĞ¿Õ¸ñ
-      'comma-spacing': [
-        'error',
-        {
-          'before': false,
-          'after': true
-        }
-      ],
-      // @fixable ½ûÖ¹ÔÚĞĞÊ×Ğ´¶ººÅ
-      'comma-style': [
-        'error',
-        'last'
-      ],
-      // @fixable ÓÃ×÷¶ÔÏóµÄ¼ÆËãÊôĞÔÊ±£¬ÖĞÀ¨ºÅÄÚµÄÊ×Î²½ûÖ¹ÓĞ¿Õ¸ñ
-      'computed-property-spacing': [
-        'error',
-        'never'
-      ],
-      // ÏŞÖÆ this µÄ±ğÃû
-      // @off Ã»±ØÒªÏŞÖÆ
-      'consistent-this': 'off',
-      // @fixable ÎÄ¼ş×îºóÒ»ĞĞ±ØĞëÓĞÒ»¸ö¿ÕĞĞ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'eol-last': 'off',
-      // @fixable º¯ÊıÃûºÍÖ´ĞĞËüµÄÀ¨ºÅÖ®¼ä½ûÖ¹ÓĞ¿Õ¸ñ
-      'func-call-spacing': [
-        'error',
-        'never'
-      ],
-      // º¯Êı¸³Öµ¸ø±äÁ¿µÄÊ±ºò£¬º¯ÊıÃû±ØĞëÓë±äÁ¿ÃûÒ»ÖÂ
-      'func-name-matching': [
-        'error',
-        'always',
-        {
-          includeCommonJSModuleExports: false
-        }
-      ],
-      // º¯Êı±ØĞëÓĞÃû×Ö
-      // @off Ã»±ØÒªÏŞÖÆ
-      'func-names': 'off',
-      // ±ØĞëÖ»Ê¹ÓÃº¯ÊıÉùÃ÷»òÖ»Ê¹ÓÃº¯Êı±í´ïÊ½
-      // @off Ã»±ØÒªÏŞÖÆ
-      'func-style': 'off',
-      // ½ûÖ¹Ê¹ÓÃÖ¸¶¨µÄ±êÊ¶·û
-      // @off ËüÓÃÓÚÏŞÖÆÄ³¸ö¾ßÌåµÄ±êÊ¶·û²»ÄÜÊ¹ÓÃ
-      'id-blacklist': 'off',
-      // ÏŞÖÆ±äÁ¿Ãû³¤¶È
-      // @off Ã»±ØÒªÏŞÖÆ±äÁ¿Ãû³¤¶È
-      'id-length': 'off',
-      // ÏŞÖÆ±äÁ¿Ãû±ØĞëÆ¥ÅäÖ¸¶¨µÄÕıÔò±í´ïÊ½
-      // @off Ã»±ØÒªÏŞÖÆ±äÁ¿Ãû
-      'id-match': 'off',
-      // @fixable Ò»¸öËõ½ø±ØĞëÓÃ2¸ö¿Õ¸ñÌæ´ú
-      'indent': [
-        'error',
-        4,
-        {
-          SwitchCase: 1,
-          flatTernaryExpressions: true
-        }
-      ],
-      // @fixable jsx ÖĞµÄÊôĞÔ±ØĞëÓÃË«ÒıºÅ
-      'jsx-quotes': [
-        'error',
-        'prefer-double'
-      ],
-      // @fixable ¶ÔÏó×ÖÃæÁ¿ÖĞÃ°ºÅÇ°Ãæ½ûÖ¹ÓĞ¿Õ¸ñ£¬ºóÃæ±ØĞëÓĞ¿Õ¸ñ
-      'key-spacing': [
-        'error',
-        {
-          beforeColon: false,
-          afterColon: true,
-          mode: 'strict',
-        }
-      ],
-      // @fixable ¹Ø¼ü×ÖÇ°ºó±ØĞëÓĞ¿Õ¸ñ
-      'keyword-spacing': [
-        'error',
-        {
-          before: true,
-          after: true
-        }
-      ],
-      // µ¥ĞĞ×¢ÊÍ±ØĞëĞ´ÔÚÉÏÒ»ĞĞ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'line-comment-position': 'off',
-      // @fixable ÏŞÖÆ»»ĞĞ·ûÎª LF »ò CRLF
-      // @off Ã»±ØÒªÏŞÖÆ
-      'linebreak-style': 'off',
-      // @fixable ×¢ÊÍÇ°ºó±ØĞëÓĞ¿ÕĞĞ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'lines-around-comment': 'off',
-      // ´úÂë¿éÇ¶Ì×µÄÉî¶È½ûÖ¹³¬¹ı 5 ²ã
-      'max-depth': [
-        'error',
-        5
-      ],
-      // ÏŞÖÆÒ»ĞĞµÄ³¤¶È
-      // @off ÏÖÔÚ±à¼­Æ÷ÒÑ¾­ºÜÖÇÄÜÁË£¬²»ĞèÒªÏŞÖÆÒ»ĞĞµÄ³¤¶È
-      'max-len': 'off',
-      // ÏŞÖÆÒ»¸öÎÄ¼ş×î¶àµÄĞĞÊı
-      // @off Ã»±ØÒªÏŞÖÆ
-      'max-lines': 'off',
-      // »Øµ÷º¯ÊıÇ¶Ì×½ûÖ¹³¬¹ı 3 ²ã£¬¶àÁËÇëÓÃ async await Ìæ´ú
-      'max-nested-callbacks': [
-        'error',
-        3
-      ],
-      // º¯ÊıµÄ²ÎÊı½ûÖ¹³¬¹ı 7 ¸ö
-      'max-params': [
-        'error',
-        7
-      ],
-      // ÏŞÖÆº¯Êı¿éÖĞµÄÓï¾äÊıÁ¿
-      // @off Ã»±ØÒªÏŞÖÆ
-      'max-statements': 'off',
-      // ÏŞÖÆÒ»ĞĞÖĞµÄÓï¾äÊıÁ¿
-      // @off Ã»±ØÒªÏŞÖÆ
-      'max-statements-per-line': 'off',
-      // ÈıÔª±í´ïÊ½±ØĞëµÃ»»ĞĞ
-      // @off ÈıÔª±í´ïÊ½¿ÉÒÔËæÒâÊ¹ÓÃ
-      'multiline-ternary': 'off',
-      // new ºóÃæµÄÀàÃû±ØĞëÊ××ÖÄ¸´óĞ´
-      'new-cap': [
-        'error',
-        {
-          newIsCap: true,
-          capIsNew: false,
-          properties: true
-        }
-      ],
-      // @fixable new ºóÃæµÄÀà±ØĞëÓĞĞ¡À¨ºÅ
-      'new-parens': 'error',
-      // Á´Ê½µ÷ÓÃ±ØĞë»»ĞĞ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'newline-per-chained-call': 'off',
-      // ½ûÖ¹Ê¹ÓÃ Array ¹¹Ôìº¯Êı
-      'no-array-constructor': 'error',
-      // ½ûÖ¹Ê¹ÓÃÎ»ÔËËã
-      // @off Î»ÔËËãºÜ³£¼û
-      'no-bitwise': 'off',
-      // ½ûÖ¹Ê¹ÓÃ continue
-      // @off continue ºÜ³£ÓÃ
-      'no-continue': 'off',
-      // ½ûÖ¹ÔÚ´úÂëºóÌí¼ÓÄÚÁª×¢ÊÍ
-      // @off ÄÚÁª×¢ÊÍºÜ³£ÓÃ
-      'no-inline-comments': 'off',
-      // @fixable ½ûÖ¹ else ÖĞÖ»ÓĞÒ»¸öµ¥¶ÀµÄ if
-      // @off µ¥¶ÀµÄ if ¿ÉÒÔ°ÑÂß¼­±í´ïµÄ¸üÇå³ş
-      'no-lonely-if': 'off',
-      // ½ûÖ¹»ìÓÃ²»Í¬µÄ²Ù×÷·û£¬±ÈÈç let foo = a && b < 0 || c > 0 || d + 1 === 0
-      // @off Ì«ÑÏ¸ñÁË£¬¿ÉÒÔÓÉÊ¹ÓÃÕß×Ô¼ºÈ¥ÅĞ¶ÏÈçºÎ»ìÓÃ²Ù×÷·û
-      'no-mixed-operators': 'off',
-      // ½ûÖ¹»ìÓÃ¿Õ¸ñºÍËõ½ø
-      'no-mixed-spaces-and-tabs': 'error',
-      // ½ûÖ¹Á¬Ğø¸³Öµ£¬±ÈÈç a = b = c = 5
-      // @off Ã»±ØÒªÏŞÖÆ
-      'no-multi-assign': 'off',
-      // @fixable ½ûÖ¹³öÏÖ³¬¹ıÈıĞĞµÄÁ¬Ğø¿ÕĞĞ
-      'no-multiple-empty-lines': [
-        'error',
-        {
-          max: 3,
-          maxEOF: 1,
-          maxBOF: 1
-        }
-      ],
-      // ½ûÖ¹ if ÀïÃæÓĞ·ñ¶¨µÄ±í´ïÊ½£¬±ÈÈç£º
-      // if (a !== b) {
-      //     doSomething();
-      // } else {
-      //     doSomethingElse();
-      // }
-      // @off ·ñ¶¨µÄ±í´ïÊ½¿ÉÒÔ°ÑÂß¼­±í´ïµÄ¸üÇå³ş
-      'no-negated-condition': 'off',
-      // ½ûÖ¹Ê¹ÓÃÇ¶Ì×µÄÈıÔª±í´ïÊ½£¬±ÈÈç a ? b : c ? d : e
-      // @off Ã»±ØÒªÏŞÖÆ
-      'no-nested-ternary': 'off',
-      // ½ûÖ¹Ö±½Ó new Object
-      'no-new-object': 'error',
-      // ½ûÖ¹Ê¹ÓÃ ++ »ò --
-      // @off Ã»±ØÒªÏŞÖÆ
-      'no-plusplus': 'off',
-      // ½ûÖ¹Ê¹ÓÃÌØ¶¨µÄÓï·¨
-      // @off ËüÓÃÓÚÏŞÖÆÄ³¸ö¾ßÌåµÄÓï·¨²»ÄÜÊ¹ÓÃ
-      'no-restricted-syntax': 'off',
-      // ½ûÖ¹Ê¹ÓÃ tabs
-      'no-tabs': 'error',
-      // ½ûÖ¹Ê¹ÓÃÈıÔª±í´ïÊ½
-      // @off ÈıÔª±í´ïÊ½ºÜ³£ÓÃ
-      'no-ternary': 'off',
-      // @fixable ½ûÖ¹ĞĞÎ²ÓĞ¿Õ¸ñ
-      'no-trailing-spaces': 'error',
-      // ½ûÖ¹±äÁ¿Ãû³öÏÖÏÂ»®Ïß
-      // @off ÏÂ»®ÏßÔÚ±äÁ¿ÃûÖĞºÜ³£ÓÃ
-      'no-underscore-dangle': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃ !a Ìæ´ú a ? false : true
-      // @off ºóÕß±í´ïµÄ¸üÇåÎú
-      'no-unneeded-ternary': 'off',
-      // @fixable ½ûÖ¹ÊôĞÔÇ°ÓĞ¿Õ¸ñ£¬±ÈÈç foo. bar()
-      'no-whitespace-before-property': 'error',
-      // @fixable ½ûÖ¹ if ºóÃæ²»¼Ó´óÀ¨ºÅ¶øĞ´Á½ĞĞ´úÂë
-      'nonblock-statement-body-position': [
-        'error',
-        'beside',
-        {
-          overrides: {
-            while: 'below'
-          }
-        }
-      ],
-      // @fixable ´óÀ¨ºÅÄÚµÄÊ×Î²±ØĞëÓĞ»»ĞĞ
-      'object-curly-newline': [
-        'error',
-        {
-          multiline: true,
-          consistent: true
-        }
-      ],
-      // @fixable ¶ÔÏó×ÖÃæÁ¿Ö»ÓĞÒ»ĞĞÊ±£¬´óÀ¨ºÅÄÚµÄÊ×Î²±ØĞëÓĞ¿Õ¸ñ
-      'object-curly-spacing': [
-        'error',
-        'always',
-        {
-          arraysInObjects: true,
-          objectsInObjects: false
-        }
-      ],
-      // @fixable ¶ÔÏó×ÖÃæÁ¿ÄÚµÄÊôĞÔÃ¿ĞĞ±ØĞëÖ»ÓĞÒ»¸ö
-      // @off Ã»±ØÒªÏŞÖÆ
-      'object-property-newline': 'off',
-      // ½ûÖ¹±äÁ¿ÉêÃ÷Ê±ÓÃ¶ººÅÒ»´ÎÉêÃ÷¶à¸ö
-      'one-var': [
-        'error',
-        'never'
-      ],
-      // @fixable ±äÁ¿ÉêÃ÷±ØĞëÃ¿ĞĞÒ»¸ö
-      'one-var-declaration-per-line': [
-        'error',
-        'always'
-      ],
-      // @fixable ±ØĞëÊ¹ÓÃ x = x + y ¶ø²»ÊÇ x += y
-      // @off Ã»±ØÒªÏŞÖÆ
-      'operator-assignment': 'off',
-      // @fixable ĞèÒª»»ĞĞµÄÊ±ºò£¬²Ù×÷·û±ØĞë·ÅÔÚĞĞÄ©£¬±ÈÈç£º
-      // let foo = 1 +
-      //     2
-      // @off ÓĞÊ±·ÅÔÚµÚ¶şĞĞ¿ªÊ¼´¦¸üÒ×¶Á
-      'operator-linebreak': 'off',
-      // @fixable ´úÂë¿éÊ×Î²±ØĞëÒª¿ÕĞĞ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'padded-blocks': 'off',
-      // @fixable ÏŞÖÆÓï¾äÖ®¼äµÄ¿ÕĞĞ¹æÔò£¬±ÈÈç±äÁ¿¶¨ÒåÍêÖ®ºó±ØĞëÒª¿ÕĞĞ
-      // @off Ã»±ØÒªÏŞÖÆ
-      'padding-line-between-statements': 'off',
-      // @fixable ¶ÔÏó×ÖÃæÁ¿µÄ¼üÃû½ûÖ¹ÓÃÒıºÅÀ¨ÆğÀ´
-      // @off Ã»±ØÒªÏŞÖÆ
-      'quote-props': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃµ¥ÒıºÅ£¬½ûÖ¹Ê¹ÓÃË«ÒıºÅ
-      'quotes': [
-        'error',
-        'single',
-        {
-          avoidEscape: true,
-          allowTemplateLiterals: true
-        }
-      ],
-      // ±ØĞëÊ¹ÓÃ jsdoc ·ç¸ñµÄ×¢ÊÍ
-      // @off Ì«ÑÏ¸ñÁË
-      'require-jsdoc': 'off',
-      // @fixable ½áÎ²±ØĞëÓĞ·ÖºÅ
-      'semi': [
-        'error',
-        'always',
-        {
-          omitLastInOneLineBlock: true
-        }
-      ],
-      // @fixable Ò»ĞĞÓĞ¶à¸öÓï¾äÊ±£¬·ÖºÅÇ°Ãæ½ûÖ¹ÓĞ¿Õ¸ñ£¬·ÖºÅºóÃæ±ØĞëÓĞ¿Õ¸ñ
-      'semi-spacing': [
-        'error',
-        {
-          before: false,
-          after: true
-        }
-      ],
-      // @fixable ·ÖºÅ±ØĞëĞ´ÔÚĞĞÎ²£¬½ûÖ¹ÔÚĞĞÊ×³öÏÖ
-      'semi-style': [
-        'error',
-        'last'
-      ],
-      // ¶ÔÏó×ÖÃæÁ¿µÄ¼üÃû±ØĞëÅÅºÃĞò
-      // @off Ã»±ØÒªÏŞÖÆ
-      'sort-keys': 'off',
-      // ±äÁ¿ÉêÃ÷±ØĞëÅÅºÃĞò
-      // @off Ã»±ØÒªÏŞÖÆ
-      'sort-vars': 'off',
-      // @fixable if, function µÈµÄ´óÀ¨ºÅÖ®Ç°±ØĞëÒªÓĞ¿Õ¸ñ£¬±ÈÈç if (a) {
-      'space-before-blocks': [
-        'error',
-        'always'
-      ],
-      // @fixable function µÄĞ¡À¨ºÅÖ®Ç°±ØĞëÒªÓĞ¿Õ¸ñ
-      'space-before-function-paren': [
-        'error',
-        {
-          anonymous: 'ignore',
-          named: 'never',
-          asyncArrow: 'always'
-        }
-      ],
-      // @fixable Ğ¡À¨ºÅÄÚµÄÊ×Î²½ûÖ¹ÓĞ¿Õ¸ñ
-      'space-in-parens': [
-        'error',
-        'never'
-      ],
-      // @fixable ²Ù×÷·û×óÓÒ±ØĞëÓĞ¿Õ¸ñ£¬±ÈÈç let sum = 1 + 2;
-      'space-infix-ops': 'error',
-      // @fixable new, typeof µÈºóÃæ±ØĞëÓĞ¿Õ¸ñ£¬++, -- µÈ½ûÖ¹ÓĞ¿Õ¸ñ£¬±ÈÈç£º
-      // let foo = new Person();
-      // bar = bar++;
-      'space-unary-ops': [
-        'error',
-        {
-          words: true,
-          nonwords: false
-        }
-      ],
-      // @fixable ×¢ÊÍµÄĞ±Ïß»ò * ºó±ØĞëÓĞ¿Õ¸ñ
-      'spaced-comment': [
-        'error',
-        'always',
-        {
-          block: {
-            exceptions: [
-              '*'
-            ],
-            balanced: true
-          }
-        }
-      ],
-      // @fixable case µÄÃ°ºÅÇ°½ûÖ¹ÓĞ¿Õ¸ñ£¬Ã°ºÅºó±ØĞëÓĞ¿Õ¸ñ
-      'switch-colon-spacing': [
-        'error',
-        {
-          after: true,
-          before: false
-        }
-      ],
-      // @fixable Ä£°æ×Ö·û´®µÄ tag Ö®ºó½ûÖ¹ÓĞ¿Õ¸ñ£¬±ÈÈç tag`Hello World`
-      'template-tag-spacing': [
-        'error',
-        'never'
-      ],
-      // @fixable ÎÄ¼ş¿ªÍ·½ûÖ¹ÓĞ BOM
-      'unicode-bom': [
-        'error',
-        'never'
-      ],
-      // @fixable ÕıÔò±í´ïÊ½±ØĞëÓĞÀ¨ºÅ°üÆğÀ´
-      // @off Ã»±ØÒªÏŞÖÆ
-      'wrap-regex': 'off',
-  
-  
-  
-      //
-      //
-      // ECMAScript 6
-      // ÕâĞ©¹æÔòÓë ES6£¨¼´Í¨³£ËùËµµÄ ES2015£©ÓĞ¹Ø
-      //
-      // @fixable ¼ıÍ·º¯ÊıÄÜ¹»Ê¡ÂÔ return µÄÊ±ºò£¬±ØĞëÊ¡ÂÔ£¬±ÈÈç±ØĞëĞ´³É () => 0£¬½ûÖ¹Ğ´³É () => { return 0 }
-      // @off ¼ıÍ·º¯ÊıµÄ·µ»ØÖµ£¬Ó¦¸ÃÔÊĞíÁé»îÉèÖÃ
-      'arrow-body-style': 'off',
-      // @fixable ¼ıÍ·º¯ÊıÖ»ÓĞÒ»¸ö²ÎÊıµÄÊ±ºò£¬±ØĞë¼ÓÀ¨ºÅ
-      // @off Ó¦¸ÃÔÊĞíÁé»îÉèÖÃ
-      'arrow-parens': 'off',
-      // @fixable ¼ıÍ·º¯ÊıµÄ¼ıÍ·Ç°ºó±ØĞëÓĞ¿Õ¸ñ
-      'arrow-spacing': [
-        'error',
-        {
-          before: true,
-          after: true
-        }
-      ],
-      // constructor ÖĞ±ØĞëÓĞ super
-      'constructor-super': 'error',
-      // @fixable generator µÄ * Ç°Ãæ½ûÖ¹ÓĞ¿Õ¸ñ£¬ºóÃæ±ØĞëÓĞ¿Õ¸ñ
-      'generator-star-spacing': [
-        'error',
-        {
-          before: false,
-          after: true
-        }
-      ],
-      // ½ûÖ¹¶Ô¶¨Òå¹ıµÄ class ÖØĞÂ¸³Öµ
-      'no-class-assign': 'error',
-      // @fixable ½ûÖ¹³öÏÖÄÑÒÔÀí½âµÄ¼ıÍ·º¯Êı£¬±ÈÈç let x = a => 1 ? 2 : 3
-      'no-confusing-arrow': [
-        'error',
-        {
-          allowParens: true
-        }
-      ],
-      // ½ûÖ¹¶ÔÊ¹ÓÃ const ¶¨ÒåµÄ³£Á¿ÖØĞÂ¸³Öµ
-      'no-const-assign': 'error',
-      // ½ûÖ¹ÖØ¸´¶¨ÒåÀà
-      'no-dupe-class-members': 'error',
-      // ½ûÖ¹ÖØ¸´ import Ä£¿é
-      'no-duplicate-imports': 'error',
-      // ½ûÖ¹Ê¹ÓÃ new À´Éú³É Symbol
-      'no-new-symbol': 'error',
-      // ½ûÖ¹ import Ö¸¶¨µÄÄ£¿é
-      // @off ËüÓÃÓÚÏŞÖÆÄ³¸ö¾ßÌåµÄÄ£¿é²»ÄÜÊ¹ÓÃ
-      'no-restricted-imports': 'off',
-      // ½ûÖ¹ÔÚ super ±»µ÷ÓÃÖ®Ç°Ê¹ÓÃ this »ò super
-      'no-this-before-super': 'error',
-      // @fixable ½ûÖ¹³öÏÖÃ»±ØÒªµÄ¼ÆËã¼üÃû£¬±ÈÈç let a = { ['0']: 0 };
-      'no-useless-computed-key': 'error',
-      // ½ûÖ¹³öÏÖÃ»±ØÒªµÄ constructor£¬±ÈÈç constructor(value) { super(value) }
-      'no-useless-constructor': 'error',
-      // @fixable ½ûÖ¹½â¹¹Ê±³öÏÖÍ¬ÑùÃû×ÖµÄµÄÖØÃüÃû£¬±ÈÈç let { foo: foo } = bar;
-      'no-useless-rename': 'error',
-      // @fixable ½ûÖ¹³öÏÖ var
-      'no-var': 'error',
-      // @fixable ±ØĞëÊ¹ÓÃ a = {b} ¶ø²»ÊÇ a = {b: b}
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'object-shorthand': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃ¼ıÍ·º¯Êı×÷Îª»Øµ÷
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'prefer-arrow-callback': 'off',
-      // @fixable ÉêÃ÷ºó²»ÔÙ±»ĞŞ¸ÄµÄ±äÁ¿±ØĞëÊ¹ÓÃ const À´ÉêÃ÷
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'prefer-const': 'off',
-      // ±ØĞëÊ¹ÓÃ½â¹¹
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'prefer-destructuring': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃ 0b11111011 ¶ø²»ÊÇ parseInt('111110111', 2)
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'prefer-numeric-literals': 'off',
-      // ±ØĞëÊ¹ÓÃ ...args ¶ø²»ÊÇ arguments
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'prefer-rest-params': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃ ... ¶ø²»ÊÇ apply£¬±ÈÈç foo(...args)
-      // @off  apply ºÜ³£ÓÃ
-      'prefer-spread': 'off',
-      // @fixable ±ØĞëÊ¹ÓÃÄ£°æ×ÖÃæÁ¿¶ø²»ÊÇ×Ö·û´®Á¬½Ó
-      // @off ×Ö·û´®Á¬½ÓºÜ³£ÓÃ
-      'prefer-template': 'off',
-      // generator º¯ÊıÄÚ±ØĞëÓĞ yield
-      'require-yield': 'error',
-      // @fixable ... µÄºóÃæ½ûÖ¹ÓĞ¿Õ¸ñ
-      'rest-spread-spacing': [
-        'error',
-        'never'
-      ],
-      // @fixable import ±ØĞë°´¹æÔòÅÅĞò
-      // @off Ã»±ØÒªÇ¿ÖÆÒªÇó
-      'sort-imports': 'off',
-      // ´´½¨ Symbol Ê±±ØĞë´«Èë²ÎÊı
-      'symbol-description': 'error',
-      // @fixable ${name} ÄÚµÄÊ×Î²½ûÖ¹ÓĞ¿Õ¸ñ
-      'template-curly-spacing': [
-        'error',
-        'never'
-      ],
-      // @fixable yield* ºóÃæ±ØĞëÒªÓĞ¿Õ¸ñ
-      'yield-star-spacing': [
-        'error',
-        'after'
-      ]
-  
+        // allow debugger during development
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        //
+        // å¯èƒ½çš„é”™è¯¯
+        // è¿™äº›è§„åˆ™ä¸ JavaScript ä»£ç ä¸­å¯èƒ½çš„è¯­æ³•é”™è¯¯æˆ–é€»è¾‘é”™è¯¯æœ‰å…³
+        //
+        // ç¦æ­¢ for å¾ªç¯å‡ºç°æ–¹å‘é”™è¯¯çš„å¾ªç¯ï¼Œæ¯”å¦‚ for (i = 0; i < 10; i--)
+        'for-direction': 'error',
+        // getter å¿…é¡»æœ‰è¿”å›å€¼ï¼Œå¹¶ä¸”ç¦æ­¢è¿”å›ç©ºï¼Œæ¯”å¦‚ return;
+        'getter-return': [
+            'error',
+            {
+                allowImplicit: false
+            }
+        ],
+        // ç¦æ­¢å°† await å†™åœ¨å¾ªç¯é‡Œï¼Œå› ä¸ºè¿™æ ·å°±æ— æ³•åŒæ—¶å‘é€å¤šä¸ªå¼‚æ­¥è¯·æ±‚äº†
+        // @off è¦æ±‚å¤ªä¸¥æ ¼äº†ï¼Œæœ‰æ—¶éœ€è¦åœ¨å¾ªç¯ä¸­å†™ await
+        'no-await-in-loop': 'off',
+        // ç¦æ­¢ä¸è´Ÿé›¶è¿›è¡Œæ¯”è¾ƒ
+        'no-compare-neg-zero': 'error',
+        // ç¦æ­¢åœ¨æµ‹è¯•è¡¨è¾¾å¼ä¸­ä½¿ç”¨èµ‹å€¼è¯­å¥ï¼Œé™¤éè¿™ä¸ªèµ‹å€¼è¯­å¥è¢«æ‹¬å·åŒ…èµ·æ¥äº†
+        'no-cond-assign': [
+            'error',
+            'except-parens'
+        ],
+        // ç¦æ­¢ä½¿ç”¨ console
+        // @off console çš„ä½¿ç”¨å¾ˆå¸¸è§
+        'no-console': 'off',
+        // ç¦æ­¢å°†å¸¸é‡ä½œä¸ºåˆ†æ”¯æ¡ä»¶åˆ¤æ–­ä¸­çš„æµ‹è¯•è¡¨è¾¾å¼ï¼Œä½†å…è®¸ä½œä¸ºå¾ªç¯æ¡ä»¶åˆ¤æ–­ä¸­çš„æµ‹è¯•è¡¨è¾¾å¼
+        'no-constant-condition': [
+            'error',
+            {
+                checkLoops: false
+            }
+        ],
+        // ç¦æ­¢åœ¨æ­£åˆ™è¡¨è¾¾å¼ä¸­å‡ºç° Ctrl é”®çš„ ASCII è¡¨ç¤ºï¼Œå³ç¦æ­¢ä½¿ç”¨ /\x1f/
+        // @off å‡ ä¹ä¸ä¼šé‡åˆ°è¿™ç§åœºæ™¯
+        'no-control-regex': 'error',
+        // ç¦æ­¢åœ¨å‡½æ•°å‚æ•°ä¸­å‡ºç°é‡å¤åç§°çš„å‚æ•°
+        'no-dupe-args': 'error',
+        // ç¦æ­¢åœ¨å¯¹è±¡å­—é¢é‡ä¸­å‡ºç°é‡å¤åç§°çš„é”®å
+        'no-dupe-keys': 'error',
+        // ç¦æ­¢åœ¨ switch è¯­å¥ä¸­å‡ºç°é‡å¤æµ‹è¯•è¡¨è¾¾å¼çš„ case
+        'no-duplicate-case': 'error',
+        // ç¦æ­¢å‡ºç°ç©ºä»£ç å—
+        'no-empty': [
+            'error',
+            {
+                allowEmptyCatch: true
+            }
+        ],
+        // ç¦æ­¢åœ¨æ­£åˆ™è¡¨è¾¾å¼ä¸­ä½¿ç”¨ç©ºçš„å­—ç¬¦é›† []
+        'no-empty-character-class': 'error',
+        // ç¦æ­¢å°† catch çš„ç¬¬ä¸€ä¸ªå‚æ•° error é‡æ–°èµ‹å€¼
+        'no-ex-assign': 'error',
+        // @fixable ç¦æ­¢åœ¨æµ‹è¯•è¡¨è¾¾å¼ä¸­ä½¿ç”¨ !! æˆ– Boolean
+        'no-extra-boolean-cast': 'error',
+        // @fixable ç¦æ­¢å‡½æ•°è¡¨è¾¾å¼ä¸­å‡ºç°å¤šä½™çš„æ‹¬å·ï¼Œæ¯”å¦‚ let foo = (function () { return 1 })
+        'no-extra-parens': [
+            'error',
+            'functions'
+        ],
+        // @fixable ç¦æ­¢å‡ºç°å¤šä½™çš„åˆ†å·
+        'no-extra-semi': 'error',
+        // ç¦æ­¢å°†ä¸€ä¸ªå‡½æ•°å£°æ˜é‡æ–°èµ‹å€¼ï¼Œå¦‚ï¼š
+        // function foo() {}
+        // foo = bar
+        'no-func-assign': 'error',
+        // ç¦æ­¢åœ¨ if ä»£ç å—å†…å‡ºç°å‡½æ•°å£°æ˜
+        'no-inner-declarations': [
+            'error',
+            'both'
+        ],
+        // ç¦æ­¢åœ¨ RegExp æ„é€ å‡½æ•°ä¸­å‡ºç°éæ³•çš„æ­£åˆ™è¡¨è¾¾å¼
+        'no-invalid-regexp': 'error',
+        // ç¦æ­¢ä½¿ç”¨ç‰¹æ®Šç©ºç™½ç¬¦ï¼ˆæ¯”å¦‚å…¨è§’ç©ºæ ¼ï¼‰ï¼Œé™¤éæ˜¯å‡ºç°åœ¨å­—ç¬¦ä¸²ã€æ­£åˆ™è¡¨è¾¾å¼æˆ–æ¨¡ç‰ˆå­—ç¬¦ä¸²ä¸­
+        'no-irregular-whitespace': [
+            'error',
+            {
+                skipStrings: true,
+                skipComments: false,
+                skipRegExps: true,
+                skipTemplates: true
+            }
+        ],
+        // ç¦æ­¢å°† Math, JSON æˆ– Reflect ç›´æ¥ä½œä¸ºå‡½æ•°è°ƒç”¨
+        'no-obj-calls': 'error',
+        // ç¦æ­¢ä½¿ç”¨ hasOwnProperty, isPrototypeOf æˆ– propertyIsEnumerable
+        // @off hasOwnProperty æ¯”è¾ƒå¸¸ç”¨
+        'no-prototype-builtins': 'off',
+        // @fixable ç¦æ­¢åœ¨æ­£åˆ™è¡¨è¾¾å¼ä¸­å‡ºç°è¿ç»­çš„ç©ºæ ¼ï¼Œå¿…é¡»ä½¿ç”¨ /foo {3}bar/ ä»£æ›¿
+        'no-regex-spaces': 'error',
+        // ç¦æ­¢åœ¨æ•°ç»„ä¸­å‡ºç°è¿ç»­çš„é€—å·ï¼Œå¦‚ let foo = [,,]
+        'no-sparse-arrays': 'error',
+        // ç¦æ­¢åœ¨æ™®é€šå­—ç¬¦ä¸²ä¸­å‡ºç° es2015 çš„æ¨¡ç‰ˆå­—ç¬¦ä¸²çš„å˜é‡å½¢å¼ï¼Œå¦‚ 'Hello ${name}!'
+        'no-template-curly-in-string': 'error',
+        // ç¦æ­¢å‡ºç°éš¾ä»¥ç†è§£çš„å¤šè¡Œè¡¨è¾¾å¼ï¼Œå¦‚ï¼š
+        // let foo = bar
+        // [1, 2, 3].forEach(baz);
+        'no-unexpected-multiline': 'error',
+        // ç¦æ­¢åœ¨ return, throw, break æˆ– continue ä¹‹åè¿˜æœ‰ä»£ç 
+        'no-unreachable': 'error',
+        // ç¦æ­¢åœ¨ finally ä¸­å‡ºç° return, throw, break æˆ– continue
+        'no-unsafe-finally': 'error',
+        // @fixable ç¦æ­¢åœ¨ in æˆ– instanceof æ“ä½œç¬¦çš„å·¦ä¾§ä½¿ç”¨æ„Ÿå¹å·ï¼Œå¦‚ if (!key in object)
+        'no-unsafe-negation': 'error',
+        // å¿…é¡»ä½¿ç”¨ isNaN(foo) è€Œä¸æ˜¯ foo === NaN
+        'use-isnan': 'error',
+        // æ³¨é‡Šå¿…é¡»ç¬¦åˆ jsdoc çš„è§„èŒƒ
+        // @off jsdoc è¦æ±‚å¤ªä¸¥æ ¼
+        'valid-jsdoc': 'off',
+        // typeof è¡¨è¾¾å¼æ¯”è¾ƒçš„å¯¹è±¡å¿…é¡»æ˜¯ 'undefined', 'object', 'boolean', 'number', 'string', 'function' æˆ– 'symbol'
+        'valid-typeof': 'error',
+
+
+
+        //
+        //
+        // æœ€ä½³å®è·µ
+        // è¿™äº›è§„åˆ™é€šè¿‡ä¸€äº›æœ€ä½³å®è·µå¸®åŠ©ä½ é¿å…é—®é¢˜
+        //
+        // setter å¿…é¡»æœ‰å¯¹åº”çš„ getterï¼Œgetter å¯ä»¥æ²¡æœ‰å¯¹åº”çš„ setter
+        'accessor-pairs': [
+            'error',
+            {
+                setWithoutGet: true,
+                getWithoutSet: false
+            }
+        ],
+        // æ•°ç»„çš„æ–¹æ³•é™¤äº† forEach ä¹‹å¤–ï¼Œå›è°ƒå‡½æ•°å¿…é¡»æœ‰è¿”å›å€¼
+        'array-callback-return': 'error',
+        // å°† var å®šä¹‰çš„å˜é‡è§†ä¸ºå—ä½œç”¨åŸŸï¼Œç¦æ­¢åœ¨å—å¤–ä½¿ç”¨
+        'block-scoped-var': 'error',
+        // åœ¨ç±»çš„éé™æ€æ–¹æ³•ä¸­ï¼Œå¿…é¡»å­˜åœ¨å¯¹ this çš„å¼•ç”¨
+        // @off å¤ªä¸¥æ ¼äº†
+        'class-methods-use-this': 'off',
+        // ç¦æ­¢å‡½æ•°çš„å¾ªç¯å¤æ‚åº¦è¶…è¿‡ 20ï¼Œhttps://en.wikipedia.org/wiki/Cyclomatic_complexity
+        'complexity': [
+            'error',
+            {
+                max: 20
+            }
+        ],
+        // ç¦æ­¢å‡½æ•°åœ¨ä¸åŒåˆ†æ”¯è¿”å›ä¸åŒç±»å‹çš„å€¼
+        // @off å¤ªä¸¥æ ¼äº†
+        'consistent-return': 'off',
+        // @fixable if åé¢å¿…é¡»è¦æœ‰ {ï¼Œé™¤éæ˜¯å•è¡Œ if
+        'curly': [
+            'error',
+            'multi-line',
+            'consistent'
+        ],
+        // switch è¯­å¥å¿…é¡»æœ‰ default
+        // @off å¤ªä¸¥æ ¼äº†
+        'default-case': 'off',
+        // @fixable é“¾å¼è°ƒç”¨çš„æ—¶å€™ï¼Œç‚¹å·å¿…é¡»æ”¾åœ¨ç¬¬äºŒè¡Œå¼€å¤´å¤„ï¼Œç¦æ­¢æ”¾åœ¨ç¬¬ä¸€è¡Œç»“å°¾å¤„
+        'dot-location': [
+            'error',
+            'property'
+        ],
+        // @fixable ç¦æ­¢å‡ºç° foo['bar']ï¼Œå¿…é¡»å†™æˆ foo.bar
+        // @off å½“éœ€è¦å†™ä¸€ç³»åˆ—å±æ€§çš„æ—¶å€™ï¼Œå¯ä»¥æ›´ç»Ÿä¸€
+        'dot-notation': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨ === æˆ– !==ï¼Œç¦æ­¢ä½¿ç”¨ == æˆ– !=ï¼Œä¸ null æ¯”è¾ƒæ—¶é™¤å¤–
+        'eqeqeq': [
+            'error',
+            'always',
+            {
+                null: 'ignore'
+            }
+        ],
+        // for in å†…éƒ¨å¿…é¡»æœ‰ hasOwnProperty
+        'guard-for-in': 'error',
+        // ç¦æ­¢ä½¿ç”¨ alert
+        // @off alert å¾ˆå¸¸ç”¨
+        'no-alert': 'off',
+        // ç¦æ­¢ä½¿ç”¨ caller æˆ– callee
+        'no-caller': 'error',
+        // switch çš„ case å†…æœ‰å˜é‡å®šä¹‰çš„æ—¶å€™ï¼Œå¿…é¡»ä½¿ç”¨å¤§æ‹¬å·å°† case å†…å˜æˆä¸€ä¸ªä»£ç å—
+        'no-case-declarations': 'error',
+        // ç¦æ­¢åœ¨æ­£åˆ™è¡¨è¾¾å¼ä¸­å‡ºç°å½¢ä¼¼é™¤æ³•æ“ä½œç¬¦çš„å¼€å¤´ï¼Œå¦‚ let a = /=foo/
+        // @off æœ‰ä»£ç é«˜äº®çš„è¯ï¼Œåœ¨é˜…è¯»è¿™ç§ä»£ç æ—¶ï¼Œä¹Ÿå®Œå…¨ä¸ä¼šäº§ç”Ÿæ­§ä¹‰æˆ–ç†è§£ä¸Šçš„å›°éš¾
+        'no-div-regex': 'off',
+        // @fixable ç¦æ­¢åœ¨ else å†…ä½¿ç”¨ returnï¼Œå¿…é¡»æ”¹ä¸ºæå‰ç»“æŸ
+        // @off else ä¸­ä½¿ç”¨ return å¯ä»¥ä½¿ä»£ç ç»“æ„æ›´æ¸…æ™°
+        'no-else-return': 'off',
+        // ä¸å…è®¸æœ‰ç©ºå‡½æ•°ï¼Œé™¤éæ˜¯å°†ä¸€ä¸ªç©ºå‡½æ•°è®¾ç½®ä¸ºæŸä¸ªé¡¹çš„é»˜è®¤å€¼
+        'no-empty-function': [
+            'error',
+            {
+                allow: [
+                    'functions',
+                    'arrowFunctions'
+                ]
+            }
+        ],
+        // ç¦æ­¢è§£æ„ä¸­å‡ºç°ç©º {} æˆ– []
+        'no-empty-pattern': 'error',
+        // ç¦æ­¢ä½¿ç”¨ foo == null æˆ– foo != nullï¼Œå¿…é¡»ä½¿ç”¨ foo === null æˆ– foo !== null
+        // @off foo == null ç”¨äºåˆ¤æ–­ foo ä¸æ˜¯ undefined å¹¶ä¸”ä¸æ˜¯ nullï¼Œæ¯”è¾ƒå¸¸ç”¨ï¼Œæ•…å…è®¸æ­¤å†™æ³•
+        'no-eq-null': 'off',
+        // ç¦æ­¢ä½¿ç”¨ eval
+        'no-eval': 'error',
+        // ç¦æ­¢ä¿®æ”¹åŸç”Ÿå¯¹è±¡
+        'no-extend-native': 'error',
+        // @fixable ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„ bind
+        'no-extra-bind': 'error',
+        // @fixable ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„ label
+        'no-extra-label': 'error',
+        // switch çš„ case å†…å¿…é¡»æœ‰ break, return æˆ– throw
+        'no-fallthrough': 'error',
+        // @fixable è¡¨ç¤ºå°æ•°æ—¶ï¼Œç¦æ­¢çœç•¥ 0ï¼Œæ¯”å¦‚ .5
+        'no-floating-decimal': 'error',
+        // ç¦æ­¢å¯¹å…¨å±€å˜é‡èµ‹å€¼
+        'no-global-assign': 'error',
+        // @fixable ç¦æ­¢ä½¿ç”¨ !! ~ ç­‰éš¾ä»¥ç†è§£çš„è¿ç®—ç¬¦
+        // ä»…å…è®¸ä½¿ç”¨ !!
+        'no-implicit-coercion': [
+            'error',
+            {
+                allow: [
+                    '!!'
+                ]
+            }
+        ],
+        // ç¦æ­¢åœ¨å…¨å±€ä½œç”¨åŸŸä¸‹å®šä¹‰å˜é‡æˆ–ç”³æ˜å‡½æ•°
+        'no-implicit-globals': 'error',
+        // ç¦æ­¢åœ¨ setTimeout æˆ– setInterval ä¸­ä¼ å…¥å­—ç¬¦ä¸²ï¼Œå¦‚ setTimeout('alert("Hi!")', 100);
+        'no-implied-eval': 'error',
+        // ç¦æ­¢åœ¨ç±»ä¹‹å¤–çš„åœ°æ–¹ä½¿ç”¨ this
+        // @off this çš„ä½¿ç”¨å¾ˆçµæ´»ï¼Œäº‹ä»¶å›è°ƒä¸­å¯ä»¥è¡¨ç¤ºå½“å‰å…ƒç´ ï¼Œå‡½æ•°ä¹Ÿå¯ä»¥å…ˆç”¨ thisï¼Œç­‰ä»¥åè¢«è°ƒç”¨çš„æ—¶å€™å† call
+        'no-invalid-this': 'off',
+        // ç¦æ­¢ä½¿ç”¨ __iterator__
+        'no-iterator': 'error',
+        // ç¦æ­¢ä½¿ç”¨ label
+        'no-labels': 'error',
+        // ç¦æ­¢ä½¿ç”¨æ²¡å¿…è¦çš„ {} ä½œä¸ºä»£ç å—
+        'no-lone-blocks': 'error',
+        // ç¦æ­¢åœ¨å¾ªç¯å†…çš„å‡½æ•°ä¸­å‡ºç°å¾ªç¯ä½“æ¡ä»¶è¯­å¥ä¸­å®šä¹‰çš„å˜é‡ï¼Œæ¯”å¦‚ï¼š
+        // for (var i = 0; i < 10; i++) {
+        //     (function () { return i })();
+        // }
+        'no-loop-func': 'error',
+        // ç¦æ­¢ä½¿ç”¨ magic numbers
+        // @off å¤ªä¸¥æ ¼äº†
+        'no-magic-numbers': 'off',
+        // @fixable ç¦æ­¢å‡ºç°è¿ç»­çš„å¤šä¸ªç©ºæ ¼ï¼Œé™¤éæ˜¯æ³¨é‡Šå‰ï¼Œæˆ–å¯¹é½å¯¹è±¡çš„å±æ€§ã€å˜é‡å®šä¹‰ã€import ç­‰
+        'no-multi-spaces': [
+            'error',
+            {
+                ignoreEOLComments: true,
+                exceptions: {
+                    Property: true,
+                    BinaryExpression: false,
+                    VariableDeclarator: true,
+                    ImportDeclaration: true
+                }
+            }
+        ],
+        // ç¦æ­¢ä½¿ç”¨ \ æ¥æ¢è¡Œå­—ç¬¦ä¸²
+        'no-multi-str': 'error',
+        // ç¦æ­¢ç›´æ¥ new ä¸€ä¸ªç±»è€Œä¸èµ‹å€¼
+        'no-new': 'error',
+        // ç¦æ­¢ä½¿ç”¨ new Functionï¼Œæ¯”å¦‚ let x = new Function("a", "b", "return a + b");
+        'no-new-func': 'error',
+        // ç¦æ­¢ä½¿ç”¨ new æ¥ç”Ÿæˆ String, Number æˆ– Boolean
+        'no-new-wrappers': 'error',
+        // ç¦æ­¢ä½¿ç”¨ 0 å¼€å¤´çš„æ•°å­—è¡¨ç¤ºå…«è¿›åˆ¶æ•°
+        'no-octal': 'error',
+        // ç¦æ­¢ä½¿ç”¨å…«è¿›åˆ¶çš„è½¬ä¹‰ç¬¦
+        'no-octal-escape': 'error',
+        // ç¦æ­¢å¯¹å‡½æ•°çš„å‚æ•°é‡æ–°èµ‹å€¼
+        'no-param-reassign': 'error',
+        // ç¦æ­¢ä½¿ç”¨ __proto__
+        'no-proto': 'error',
+        // ç¦æ­¢é‡å¤å®šä¹‰å˜é‡
+        'no-redeclare': 'error',
+        // ç¦æ­¢ä½¿ç”¨æŒ‡å®šçš„å¯¹è±¡å±æ€§
+        // @off å®ƒç”¨äºé™åˆ¶æŸä¸ªå…·ä½“çš„ api ä¸èƒ½ä½¿ç”¨
+        'no-restricted-properties': 'off',
+        // ç¦æ­¢åœ¨ return è¯­å¥é‡Œèµ‹å€¼
+        'no-return-assign': [
+            'error',
+            'always'
+        ],
+        // ç¦æ­¢åœ¨ return è¯­å¥é‡Œä½¿ç”¨ await
+        'no-return-await': 'error',
+        // ç¦æ­¢å‡ºç° location.href = 'javascript:void(0)';
+        'no-script-url': 'error',
+        // ç¦æ­¢å°†è‡ªå·±èµ‹å€¼ç»™è‡ªå·±
+        'no-self-assign': 'error',
+        // ç¦æ­¢å°†è‡ªå·±ä¸è‡ªå·±æ¯”è¾ƒ
+        'no-self-compare': 'error',
+        // ç¦æ­¢ä½¿ç”¨é€—å·æ“ä½œç¬¦
+        'no-sequences': 'error',
+        // ç¦æ­¢ throw å­—é¢é‡ï¼Œå¿…é¡» throw ä¸€ä¸ª Error å¯¹è±¡
+        'no-throw-literal': 'error',
+        // å¾ªç¯å†…å¿…é¡»å¯¹å¾ªç¯æ¡ä»¶çš„å˜é‡æœ‰ä¿®æ”¹
+        'no-unmodified-loop-condition': 'error',
+        // ç¦æ­¢æ— ç”¨çš„è¡¨è¾¾å¼
+        'no-unused-expressions': [
+            'error',
+            {
+                allowShortCircuit: true,
+                allowTernary: true,
+                allowTaggedTemplates: true
+            }
+        ],
+        // @fixable ç¦æ­¢å‡ºç°æ²¡ç”¨çš„ label
+        'no-unused-labels': 'error',
+        // ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„ call æˆ– apply
+        'no-useless-call': 'error',
+        // ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„å­—ç¬¦ä¸²è¿æ¥
+        'no-useless-concat': 'error',
+        // ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„è½¬ä¹‰
+        // @off è½¬ä¹‰å¯ä»¥ä½¿ä»£ç æ›´æ˜“æ‡‚
+        'no-useless-escape': 'off',
+        // @fixable ç¦æ­¢æ²¡å¿…è¦çš„ return
+        // @off æ²¡å¿…è¦é™åˆ¶ return
+        'no-useless-return': 'off',
+        // ç¦æ­¢ä½¿ç”¨ void
+        'no-void': 'error',
+        // ç¦æ­¢æ³¨é‡Šä¸­å‡ºç° TODO å’Œ FIXME
+        // @off TODO å¾ˆå¸¸ç”¨
+        'no-warning-comments': 'off',
+        // ç¦æ­¢ä½¿ç”¨ with
+        'no-with': 'error',
+        // Promise çš„ reject ä¸­å¿…é¡»ä¼ å…¥ Error å¯¹è±¡ï¼Œè€Œä¸æ˜¯å­—é¢é‡
+        'prefer-promise-reject-errors': 'error',
+        // parseInt å¿…é¡»ä¼ å…¥ç¬¬äºŒä¸ªå‚æ•°
+        'radix': 'error',
+        // async å‡½æ•°ä¸­å¿…é¡»å­˜åœ¨ await è¯­å¥
+        // @off async function ä¸­æ²¡æœ‰ await çš„å†™æ³•å¾ˆå¸¸è§ï¼Œæ¯”å¦‚ koa çš„ç¤ºä¾‹ä¸­å°±æœ‰è¿™ç§ç”¨æ³•
+        'require-await': 'off',
+        // var å¿…é¡»åœ¨ä½œç”¨åŸŸçš„æœ€å‰é¢
+        // @off var ä¸åœ¨æœ€å‰é¢ä¹Ÿæ˜¯å¾ˆå¸¸è§çš„ç”¨æ³•
+        'vars-on-top': 'off',
+        // @fixable ç«‹å³æ‰§è¡Œçš„å‡½æ•°å¿…é¡»ç¬¦åˆå¦‚ä¸‹æ ¼å¼ (function () { alert('Hello') })()
+        'wrap-iife': [
+            'error',
+            'inside',
+            {
+                functionPrototypeMethods: true
+            }
+        ],
+        // @fixable å¿…é¡»ä½¿ç”¨ if (foo === 5) è€Œä¸æ˜¯ if (5 === foo)
+        'yoda': [
+            'error',
+            'never',
+            {
+                onlyEquality: true
+            }
+        ],
+
+
+
+        //
+        //
+        // ä¸¥æ ¼æ¨¡å¼
+        // è¿™äº›è§„åˆ™ä¸ä¸¥æ ¼æ¨¡å¼æŒ‡ä»¤æœ‰å…³
+        //
+        // @fixable ç¦æ­¢ä½¿ç”¨ 'strict';
+        'strict': [
+            'error',
+            'never'
+        ],
+
+
+
+        //
+        //
+        // å˜é‡
+        // è¿™äº›è§„åˆ™ä¸å˜é‡ç”³æ˜æœ‰å…³
+        //
+        // å˜é‡å¿…é¡»åœ¨å®šä¹‰çš„æ—¶å€™èµ‹å€¼
+        // @off å…ˆå®šä¹‰åèµ‹å€¼å¾ˆå¸¸è§
+        'init-declarations': 'off',
+        // ç¦æ­¢ catch çš„å‚æ•°åä¸å®šä¹‰è¿‡çš„å˜é‡é‡å¤
+        // @off å¤ªä¸¥æ ¼äº†
+        'no-catch-shadow': 'off',
+        // ç¦æ­¢ä½¿ç”¨ delete
+        'no-delete-var': 'error',
+        // ç¦æ­¢ label åç§°ä¸å®šä¹‰è¿‡çš„å˜é‡é‡å¤
+        'no-label-var': 'error',
+        // ç¦æ­¢ä½¿ç”¨æŒ‡å®šçš„å…¨å±€å˜é‡
+        // @off å®ƒç”¨äºé™åˆ¶æŸä¸ªå…·ä½“çš„å˜é‡åä¸èƒ½ä½¿ç”¨
+        'no-restricted-globals': 'off',
+        // ç¦æ­¢å˜é‡åä¸ä¸Šå±‚ä½œç”¨åŸŸå†…çš„å®šä¹‰è¿‡çš„å˜é‡é‡å¤
+        // @off å¾ˆå¤šæ—¶å€™å‡½æ•°çš„å½¢å‚å’Œä¼ å‚æ˜¯åŒåçš„
+        'no-shadow': 'off',
+        // ç¦æ­¢ä½¿ç”¨ä¿ç•™å­—ä½œä¸ºå˜é‡å
+        'no-shadow-restricted-names': 'error',
+        // ç¦æ­¢ä½¿ç”¨æœªå®šä¹‰çš„å˜é‡
+        'no-undef': [
+            'error',
+            {
+                typeof: false
+            }
+        ],
+        // @fixable ç¦æ­¢å°† undefined èµ‹å€¼ç»™å˜é‡
+        'no-undef-init': 'error',
+        // ç¦æ­¢å¯¹ undefined é‡æ–°èµ‹å€¼
+        'no-undefined': 'error',
+        // å®šä¹‰è¿‡çš„å˜é‡å¿…é¡»ä½¿ç”¨
+        'no-unused-vars': [
+            'error',
+            {
+                vars: 'all',
+                args: 'none',
+                caughtErrors: 'none',
+                ignoreRestSiblings: true
+            }
+        ],
+        // å˜é‡å¿…é¡»å…ˆå®šä¹‰åä½¿ç”¨
+        'no-use-before-define': [
+            'error',
+            {
+                functions: false,
+                classes: false,
+                variables: false
+            }
+        ],
+
+
+
+        //
+        //
+        // Node.js å’Œ CommonJS
+        // è¿™äº›è§„åˆ™ä¸åœ¨ Node.js ä¸­è¿è¡Œçš„ä»£ç æˆ–æµè§ˆå™¨ä¸­ä½¿ç”¨çš„ CommonJS æœ‰å…³
+        //
+        // callback ä¹‹åå¿…é¡»ç«‹å³ return
+        // @off Limitations å¤ªå¤šäº†
+        'callback-return': 'off',
+        // require å¿…é¡»åœ¨å…¨å±€ä½œç”¨åŸŸä¸‹
+        // @off æ¡ä»¶åŠ è½½å¾ˆå¸¸è§
+        'global-require': 'off',
+        // callback ä¸­çš„ error å¿…é¡»è¢«å¤„ç†
+        'handle-callback-err': 'error',
+        // ç¦æ­¢ç›´æ¥ä½¿ç”¨ Buffer
+        'no-buffer-constructor': 'error',
+        // ç›¸åŒç±»å‹çš„ require å¿…é¡»æ”¾åœ¨ä¸€èµ·
+        // @off å¤ªä¸¥æ ¼äº†
+        'no-mixed-requires': 'off',
+        // ç¦æ­¢ç›´æ¥ new require('foo')
+        'no-new-require': 'error',
+        // ç¦æ­¢å¯¹ __dirname æˆ– __filename ä½¿ç”¨å­—ç¬¦ä¸²è¿æ¥
+        'no-path-concat': 'error',
+        // ç¦æ­¢ä½¿ç”¨ process.env.NODE_ENV
+        // @off ä½¿ç”¨å¾ˆå¸¸è§
+        'no-process-env': 'off',
+        // ç¦æ­¢ä½¿ç”¨ process.exit(0)
+        // @off ä½¿ç”¨å¾ˆå¸¸è§
+        'no-process-exit': 'off',
+        // ç¦æ­¢ä½¿ç”¨æŒ‡å®šçš„æ¨¡å—
+        // @off å®ƒç”¨äºé™åˆ¶æŸä¸ªå…·ä½“çš„æ¨¡å—ä¸èƒ½ä½¿ç”¨
+        'no-restricted-modules': 'off',
+        // ç¦æ­¢ä½¿ç”¨ node ä¸­çš„åŒæ­¥çš„æ–¹æ³•ï¼Œæ¯”å¦‚ fs.readFileSync
+        // @off ä½¿ç”¨å¾ˆå¸¸è§
+        'no-sync': 'off',
+
+
+
+        //
+        //
+        // é£æ ¼é—®é¢˜
+        // è¿™äº›è§„åˆ™ä¸ä»£ç é£æ ¼æœ‰å…³ï¼Œæ‰€ä»¥æ˜¯éå¸¸ä¸»è§‚çš„
+        //
+        // @fixable é…ç½®æ•°ç»„çš„ä¸­æ‹¬å·å†…å‰åçš„æ¢è¡Œæ ¼å¼
+        // @off é…ç½®é¡¹æ— æ³•é…åˆ¶æˆæƒ³è¦çš„æ ·å­
+        'array-bracket-newline': 'off',
+        // @fixable æ•°ç»„çš„æ‹¬å·å†…çš„å‰åç¦æ­¢æœ‰ç©ºæ ¼
+        'array-bracket-spacing': [
+            'error',
+            'never'
+        ],
+        // @fixable é…ç½®æ•°ç»„çš„å…ƒç´ ä¹‹é—´çš„æ¢è¡Œæ ¼å¼
+        // @off å…è®¸ä¸€è¡ŒåŒ…å«å¤šä¸ªå…ƒç´ ï¼Œæ–¹ä¾¿å¤§æ•°é‡çš„æ•°ç»„çš„ä¹¦å†™
+        'array-element-newline': 'off',
+        // @fixable ä»£ç å—å¦‚æœåœ¨ä¸€è¡Œå†…ï¼Œé‚£ä¹ˆå¤§æ‹¬å·å†…çš„é¦–å°¾å¿…é¡»æœ‰ç©ºæ ¼ï¼Œæ¯”å¦‚ function () { alert('Hello') }
+        'block-spacing': [
+            'error',
+            'always'
+        ],
+        // @fixable if ä¸ else çš„å¤§æ‹¬å·é£æ ¼å¿…é¡»ä¸€è‡´
+        // @off else ä»£ç å—å¯èƒ½å‰é¢éœ€è¦æœ‰ä¸€è¡Œæ³¨é‡Š
+        'brace-style': 'off',
+        // å˜é‡åå¿…é¡»æ˜¯ camelcase é£æ ¼çš„
+        // @off å¾ˆå¤š api æˆ–æ–‡ä»¶åéƒ½ä¸æ˜¯ camelcase
+        'camelcase': 'off',
+        // @fixable æ³¨é‡Šçš„é¦–å­—æ¯å¿…é¡»å¤§å†™
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'capitalized-comments': 'off',
+        // @fixable å¯¹è±¡çš„æœ€åä¸€ä¸ªå±æ€§æœ«å°¾å¿…é¡»æœ‰é€—å·
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'comma-dangle': 'off',
+        // @fixable é€—å·å‰ç¦æ­¢æœ‰ç©ºæ ¼ï¼Œé€—å·åå¿…é¡»è¦æœ‰ç©ºæ ¼
+        'comma-spacing': [
+            'error',
+            {
+                'before': false,
+                'after': true
+            }
+        ],
+        // @fixable ç¦æ­¢åœ¨è¡Œé¦–å†™é€—å·
+        'comma-style': [
+            'error',
+            'last'
+        ],
+        // @fixable ç”¨ä½œå¯¹è±¡çš„è®¡ç®—å±æ€§æ—¶ï¼Œä¸­æ‹¬å·å†…çš„é¦–å°¾ç¦æ­¢æœ‰ç©ºæ ¼
+        'computed-property-spacing': [
+            'error',
+            'never'
+        ],
+        // é™åˆ¶ this çš„åˆ«å
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'consistent-this': 'off',
+        // @fixable æ–‡ä»¶æœ€åä¸€è¡Œå¿…é¡»æœ‰ä¸€ä¸ªç©ºè¡Œ
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'eol-last': 'off',
+        // @fixable å‡½æ•°åå’Œæ‰§è¡Œå®ƒçš„æ‹¬å·ä¹‹é—´ç¦æ­¢æœ‰ç©ºæ ¼
+        'func-call-spacing': [
+            'error',
+            'never'
+        ],
+        // å‡½æ•°èµ‹å€¼ç»™å˜é‡çš„æ—¶å€™ï¼Œå‡½æ•°åå¿…é¡»ä¸å˜é‡åä¸€è‡´
+        'func-name-matching': [
+            'error',
+            'always',
+            {
+                includeCommonJSModuleExports: false
+            }
+        ],
+        // å‡½æ•°å¿…é¡»æœ‰åå­—
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'func-names': 'off',
+        // å¿…é¡»åªä½¿ç”¨å‡½æ•°å£°æ˜æˆ–åªä½¿ç”¨å‡½æ•°è¡¨è¾¾å¼
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'func-style': 'off',
+        // ç¦æ­¢ä½¿ç”¨æŒ‡å®šçš„æ ‡è¯†ç¬¦
+        // @off å®ƒç”¨äºé™åˆ¶æŸä¸ªå…·ä½“çš„æ ‡è¯†ç¬¦ä¸èƒ½ä½¿ç”¨
+        'id-blacklist': 'off',
+        // é™åˆ¶å˜é‡åé•¿åº¦
+        // @off æ²¡å¿…è¦é™åˆ¶å˜é‡åé•¿åº¦
+        'id-length': 'off',
+        // é™åˆ¶å˜é‡åå¿…é¡»åŒ¹é…æŒ‡å®šçš„æ­£åˆ™è¡¨è¾¾å¼
+        // @off æ²¡å¿…è¦é™åˆ¶å˜é‡å
+        'id-match': 'off',
+        // @fixable ä¸€ä¸ªç¼©è¿›å¿…é¡»ç”¨2ä¸ªç©ºæ ¼æ›¿ä»£
+        'indent': [
+            'error',
+            4,
+            {
+                SwitchCase: 1,
+                flatTernaryExpressions: true
+            }
+        ],
+        // @fixable jsx ä¸­çš„å±æ€§å¿…é¡»ç”¨åŒå¼•å·
+        'jsx-quotes': [
+            'error',
+            'prefer-double'
+        ],
+        // @fixable å¯¹è±¡å­—é¢é‡ä¸­å†’å·å‰é¢ç¦æ­¢æœ‰ç©ºæ ¼ï¼Œåé¢å¿…é¡»æœ‰ç©ºæ ¼
+        'key-spacing': [
+            'error',
+            {
+                beforeColon: false,
+                afterColon: true,
+                mode: 'strict',
+            }
+        ],
+        // @fixable å…³é”®å­—å‰åå¿…é¡»æœ‰ç©ºæ ¼
+        'keyword-spacing': [
+            'error',
+            {
+                before: true,
+                after: true
+            }
+        ],
+        // å•è¡Œæ³¨é‡Šå¿…é¡»å†™åœ¨ä¸Šä¸€è¡Œ
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'line-comment-position': 'off',
+        // @fixable é™åˆ¶æ¢è¡Œç¬¦ä¸º LF æˆ– CRLF
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'linebreak-style': 'off',
+        // @fixable æ³¨é‡Šå‰åå¿…é¡»æœ‰ç©ºè¡Œ
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'lines-around-comment': 'off',
+        // ä»£ç å—åµŒå¥—çš„æ·±åº¦ç¦æ­¢è¶…è¿‡ 5 å±‚
+        'max-depth': [
+            'error',
+            5
+        ],
+        // é™åˆ¶ä¸€è¡Œçš„é•¿åº¦
+        // @off ç°åœ¨ç¼–è¾‘å™¨å·²ç»å¾ˆæ™ºèƒ½äº†ï¼Œä¸éœ€è¦é™åˆ¶ä¸€è¡Œçš„é•¿åº¦
+        'max-len': 'off',
+        // é™åˆ¶ä¸€ä¸ªæ–‡ä»¶æœ€å¤šçš„è¡Œæ•°
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'max-lines': 'off',
+        // å›è°ƒå‡½æ•°åµŒå¥—ç¦æ­¢è¶…è¿‡ 3 å±‚ï¼Œå¤šäº†è¯·ç”¨ async await æ›¿ä»£
+        'max-nested-callbacks': [
+            'error',
+            3
+        ],
+        // å‡½æ•°çš„å‚æ•°ç¦æ­¢è¶…è¿‡ 7 ä¸ª
+        'max-params': [
+            'error',
+            7
+        ],
+        // é™åˆ¶å‡½æ•°å—ä¸­çš„è¯­å¥æ•°é‡
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'max-statements': 'off',
+        // é™åˆ¶ä¸€è¡Œä¸­çš„è¯­å¥æ•°é‡
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'max-statements-per-line': 'off',
+        // ä¸‰å…ƒè¡¨è¾¾å¼å¿…é¡»å¾—æ¢è¡Œ
+        // @off ä¸‰å…ƒè¡¨è¾¾å¼å¯ä»¥éšæ„ä½¿ç”¨
+        'multiline-ternary': 'off',
+        // new åé¢çš„ç±»åå¿…é¡»é¦–å­—æ¯å¤§å†™
+        'new-cap': [
+            'error',
+            {
+                newIsCap: true,
+                capIsNew: false,
+                properties: true
+            }
+        ],
+        // @fixable new åé¢çš„ç±»å¿…é¡»æœ‰å°æ‹¬å·
+        'new-parens': 'error',
+        // é“¾å¼è°ƒç”¨å¿…é¡»æ¢è¡Œ
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'newline-per-chained-call': 'off',
+        // ç¦æ­¢ä½¿ç”¨ Array æ„é€ å‡½æ•°
+        'no-array-constructor': 'error',
+        // ç¦æ­¢ä½¿ç”¨ä½è¿ç®—
+        // @off ä½è¿ç®—å¾ˆå¸¸è§
+        'no-bitwise': 'off',
+        // ç¦æ­¢ä½¿ç”¨ continue
+        // @off continue å¾ˆå¸¸ç”¨
+        'no-continue': 'off',
+        // ç¦æ­¢åœ¨ä»£ç åæ·»åŠ å†…è”æ³¨é‡Š
+        // @off å†…è”æ³¨é‡Šå¾ˆå¸¸ç”¨
+        'no-inline-comments': 'off',
+        // @fixable ç¦æ­¢ else ä¸­åªæœ‰ä¸€ä¸ªå•ç‹¬çš„ if
+        // @off å•ç‹¬çš„ if å¯ä»¥æŠŠé€»è¾‘è¡¨è¾¾çš„æ›´æ¸…æ¥š
+        'no-lonely-if': 'off',
+        // ç¦æ­¢æ··ç”¨ä¸åŒçš„æ“ä½œç¬¦ï¼Œæ¯”å¦‚ let foo = a && b < 0 || c > 0 || d + 1 === 0
+        // @off å¤ªä¸¥æ ¼äº†ï¼Œå¯ä»¥ç”±ä½¿ç”¨è€…è‡ªå·±å»åˆ¤æ–­å¦‚ä½•æ··ç”¨æ“ä½œç¬¦
+        'no-mixed-operators': 'off',
+        // ç¦æ­¢æ··ç”¨ç©ºæ ¼å’Œç¼©è¿›
+        'no-mixed-spaces-and-tabs': 'error',
+        // ç¦æ­¢è¿ç»­èµ‹å€¼ï¼Œæ¯”å¦‚ a = b = c = 5
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'no-multi-assign': 'off',
+        // @fixable ç¦æ­¢å‡ºç°è¶…è¿‡ä¸‰è¡Œçš„è¿ç»­ç©ºè¡Œ
+        'no-multiple-empty-lines': [
+            'error',
+            {
+                max: 3,
+                maxEOF: 1,
+                maxBOF: 1
+            }
+        ],
+        // ç¦æ­¢ if é‡Œé¢æœ‰å¦å®šçš„è¡¨è¾¾å¼ï¼Œæ¯”å¦‚ï¼š
+        // if (a !== b) {
+        //     doSomething();
+        // } else {
+        //     doSomethingElse();
+        // }
+        // @off å¦å®šçš„è¡¨è¾¾å¼å¯ä»¥æŠŠé€»è¾‘è¡¨è¾¾çš„æ›´æ¸…æ¥š
+        'no-negated-condition': 'off',
+        // ç¦æ­¢ä½¿ç”¨åµŒå¥—çš„ä¸‰å…ƒè¡¨è¾¾å¼ï¼Œæ¯”å¦‚ a ? b : c ? d : e
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'no-nested-ternary': 'off',
+        // ç¦æ­¢ç›´æ¥ new Object
+        'no-new-object': 'error',
+        // ç¦æ­¢ä½¿ç”¨ ++ æˆ– --
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'no-plusplus': 'off',
+        // ç¦æ­¢ä½¿ç”¨ç‰¹å®šçš„è¯­æ³•
+        // @off å®ƒç”¨äºé™åˆ¶æŸä¸ªå…·ä½“çš„è¯­æ³•ä¸èƒ½ä½¿ç”¨
+        'no-restricted-syntax': 'off',
+        // ç¦æ­¢ä½¿ç”¨ tabs
+        'no-tabs': 'error',
+        // ç¦æ­¢ä½¿ç”¨ä¸‰å…ƒè¡¨è¾¾å¼
+        // @off ä¸‰å…ƒè¡¨è¾¾å¼å¾ˆå¸¸ç”¨
+        'no-ternary': 'off',
+        // @fixable ç¦æ­¢è¡Œå°¾æœ‰ç©ºæ ¼
+        'no-trailing-spaces': 'error',
+        // ç¦æ­¢å˜é‡åå‡ºç°ä¸‹åˆ’çº¿
+        // @off ä¸‹åˆ’çº¿åœ¨å˜é‡åä¸­å¾ˆå¸¸ç”¨
+        'no-underscore-dangle': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨ !a æ›¿ä»£ a ? false : true
+        // @off åè€…è¡¨è¾¾çš„æ›´æ¸…æ™°
+        'no-unneeded-ternary': 'off',
+        // @fixable ç¦æ­¢å±æ€§å‰æœ‰ç©ºæ ¼ï¼Œæ¯”å¦‚ foo. bar()
+        'no-whitespace-before-property': 'error',
+        // @fixable ç¦æ­¢ if åé¢ä¸åŠ å¤§æ‹¬å·è€Œå†™ä¸¤è¡Œä»£ç 
+        'nonblock-statement-body-position': [
+            'error',
+            'beside',
+            {
+                overrides: {
+                    while: 'below'
+                }
+            }
+        ],
+        // @fixable å¤§æ‹¬å·å†…çš„é¦–å°¾å¿…é¡»æœ‰æ¢è¡Œ
+        'object-curly-newline': [
+            'error',
+            {
+                multiline: true,
+                consistent: true
+            }
+        ],
+        // @fixable å¯¹è±¡å­—é¢é‡åªæœ‰ä¸€è¡Œæ—¶ï¼Œå¤§æ‹¬å·å†…çš„é¦–å°¾å¿…é¡»æœ‰ç©ºæ ¼
+        'object-curly-spacing': [
+            'error',
+            'always',
+            {
+                arraysInObjects: true,
+                objectsInObjects: false
+            }
+        ],
+        // @fixable å¯¹è±¡å­—é¢é‡å†…çš„å±æ€§æ¯è¡Œå¿…é¡»åªæœ‰ä¸€ä¸ª
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'object-property-newline': 'off',
+        // ç¦æ­¢å˜é‡ç”³æ˜æ—¶ç”¨é€—å·ä¸€æ¬¡ç”³æ˜å¤šä¸ª
+        'one-var': [
+            'error',
+            'never'
+        ],
+        // @fixable å˜é‡ç”³æ˜å¿…é¡»æ¯è¡Œä¸€ä¸ª
+        'one-var-declaration-per-line': [
+            'error',
+            'always'
+        ],
+        // @fixable å¿…é¡»ä½¿ç”¨ x = x + y è€Œä¸æ˜¯ x += y
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'operator-assignment': 'off',
+        // @fixable éœ€è¦æ¢è¡Œçš„æ—¶å€™ï¼Œæ“ä½œç¬¦å¿…é¡»æ”¾åœ¨è¡Œæœ«ï¼Œæ¯”å¦‚ï¼š
+        // let foo = 1 +
+        //     2
+        // @off æœ‰æ—¶æ”¾åœ¨ç¬¬äºŒè¡Œå¼€å§‹å¤„æ›´æ˜“è¯»
+        'operator-linebreak': 'off',
+        // @fixable ä»£ç å—é¦–å°¾å¿…é¡»è¦ç©ºè¡Œ
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'padded-blocks': 'off',
+        // @fixable é™åˆ¶è¯­å¥ä¹‹é—´çš„ç©ºè¡Œè§„åˆ™ï¼Œæ¯”å¦‚å˜é‡å®šä¹‰å®Œä¹‹åå¿…é¡»è¦ç©ºè¡Œ
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'padding-line-between-statements': 'off',
+        // @fixable å¯¹è±¡å­—é¢é‡çš„é”®åç¦æ­¢ç”¨å¼•å·æ‹¬èµ·æ¥
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'quote-props': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨å•å¼•å·ï¼Œç¦æ­¢ä½¿ç”¨åŒå¼•å·
+        'quotes': [
+            'error',
+            'single',
+            {
+                avoidEscape: true,
+                allowTemplateLiterals: true
+            }
+        ],
+        // å¿…é¡»ä½¿ç”¨ jsdoc é£æ ¼çš„æ³¨é‡Š
+        // @off å¤ªä¸¥æ ¼äº†
+        'require-jsdoc': 'off',
+        // @fixable ç»“å°¾å¿…é¡»æœ‰åˆ†å·
+        'semi': [
+            'error',
+            'always',
+            {
+                omitLastInOneLineBlock: true
+            }
+        ],
+        // @fixable ä¸€è¡Œæœ‰å¤šä¸ªè¯­å¥æ—¶ï¼Œåˆ†å·å‰é¢ç¦æ­¢æœ‰ç©ºæ ¼ï¼Œåˆ†å·åé¢å¿…é¡»æœ‰ç©ºæ ¼
+        'semi-spacing': [
+            'error',
+            {
+                before: false,
+                after: true
+            }
+        ],
+        // @fixable åˆ†å·å¿…é¡»å†™åœ¨è¡Œå°¾ï¼Œç¦æ­¢åœ¨è¡Œé¦–å‡ºç°
+        'semi-style': [
+            'error',
+            'last'
+        ],
+        // å¯¹è±¡å­—é¢é‡çš„é”®åå¿…é¡»æ’å¥½åº
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'sort-keys': 'off',
+        // å˜é‡ç”³æ˜å¿…é¡»æ’å¥½åº
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'sort-vars': 'off',
+        // @fixable if, function ç­‰çš„å¤§æ‹¬å·ä¹‹å‰å¿…é¡»è¦æœ‰ç©ºæ ¼ï¼Œæ¯”å¦‚ if (a) {
+        'space-before-blocks': [
+            'error',
+            'always'
+        ],
+        // @fixable function çš„å°æ‹¬å·ä¹‹å‰å¿…é¡»è¦æœ‰ç©ºæ ¼
+        'space-before-function-paren': [
+            'error',
+            {
+                anonymous: 'ignore',
+                named: 'never',
+                asyncArrow: 'always'
+            }
+        ],
+        // @fixable å°æ‹¬å·å†…çš„é¦–å°¾ç¦æ­¢æœ‰ç©ºæ ¼
+        'space-in-parens': [
+            'error',
+            'never'
+        ],
+        // @fixable æ“ä½œç¬¦å·¦å³å¿…é¡»æœ‰ç©ºæ ¼ï¼Œæ¯”å¦‚ let sum = 1 + 2;
+        'space-infix-ops': 'error',
+        // @fixable new, typeof ç­‰åé¢å¿…é¡»æœ‰ç©ºæ ¼ï¼Œ++, -- ç­‰ç¦æ­¢æœ‰ç©ºæ ¼ï¼Œæ¯”å¦‚ï¼š
+        // let foo = new Person();
+        // bar = bar++;
+        'space-unary-ops': [
+            'error',
+            {
+                words: true,
+                nonwords: false
+            }
+        ],
+        // @fixable æ³¨é‡Šçš„æ–œçº¿æˆ– * åå¿…é¡»æœ‰ç©ºæ ¼
+        'spaced-comment': [
+            'error',
+            'always',
+            {
+                block: {
+                    exceptions: [
+                        '*'
+                    ],
+                    balanced: true
+                }
+            }
+        ],
+        // @fixable case çš„å†’å·å‰ç¦æ­¢æœ‰ç©ºæ ¼ï¼Œå†’å·åå¿…é¡»æœ‰ç©ºæ ¼
+        'switch-colon-spacing': [
+            'error',
+            {
+                after: true,
+                before: false
+            }
+        ],
+        // @fixable æ¨¡ç‰ˆå­—ç¬¦ä¸²çš„ tag ä¹‹åç¦æ­¢æœ‰ç©ºæ ¼ï¼Œæ¯”å¦‚ tag`Hello World`
+        'template-tag-spacing': [
+            'error',
+            'never'
+        ],
+        // @fixable æ–‡ä»¶å¼€å¤´ç¦æ­¢æœ‰ BOM
+        'unicode-bom': [
+            'error',
+            'never'
+        ],
+        // @fixable æ­£åˆ™è¡¨è¾¾å¼å¿…é¡»æœ‰æ‹¬å·åŒ…èµ·æ¥
+        // @off æ²¡å¿…è¦é™åˆ¶
+        'wrap-regex': 'off',
+
+
+
+        //
+        //
+        // ECMAScript 6
+        // è¿™äº›è§„åˆ™ä¸ ES6ï¼ˆå³é€šå¸¸æ‰€è¯´çš„ ES2015ï¼‰æœ‰å…³
+        //
+        // @fixable ç®­å¤´å‡½æ•°èƒ½å¤Ÿçœç•¥ return çš„æ—¶å€™ï¼Œå¿…é¡»çœç•¥ï¼Œæ¯”å¦‚å¿…é¡»å†™æˆ () => 0ï¼Œç¦æ­¢å†™æˆ () => { return 0 }
+        // @off ç®­å¤´å‡½æ•°çš„è¿”å›å€¼ï¼Œåº”è¯¥å…è®¸çµæ´»è®¾ç½®
+        'arrow-body-style': 'off',
+        // @fixable ç®­å¤´å‡½æ•°åªæœ‰ä¸€ä¸ªå‚æ•°çš„æ—¶å€™ï¼Œå¿…é¡»åŠ æ‹¬å·
+        // @off åº”è¯¥å…è®¸çµæ´»è®¾ç½®
+        'arrow-parens': 'off',
+        // @fixable ç®­å¤´å‡½æ•°çš„ç®­å¤´å‰åå¿…é¡»æœ‰ç©ºæ ¼
+        'arrow-spacing': [
+            'error',
+            {
+                before: true,
+                after: true
+            }
+        ],
+        // constructor ä¸­å¿…é¡»æœ‰ super
+        'constructor-super': 'error',
+        // @fixable generator çš„ * å‰é¢ç¦æ­¢æœ‰ç©ºæ ¼ï¼Œåé¢å¿…é¡»æœ‰ç©ºæ ¼
+        'generator-star-spacing': [
+            'error',
+            {
+                before: false,
+                after: true
+            }
+        ],
+        // ç¦æ­¢å¯¹å®šä¹‰è¿‡çš„ class é‡æ–°èµ‹å€¼
+        'no-class-assign': 'error',
+        // @fixable ç¦æ­¢å‡ºç°éš¾ä»¥ç†è§£çš„ç®­å¤´å‡½æ•°ï¼Œæ¯”å¦‚ let x = a => 1 ? 2 : 3
+        'no-confusing-arrow': [
+            'error',
+            {
+                allowParens: true
+            }
+        ],
+        // ç¦æ­¢å¯¹ä½¿ç”¨ const å®šä¹‰çš„å¸¸é‡é‡æ–°èµ‹å€¼
+        'no-const-assign': 'error',
+        // ç¦æ­¢é‡å¤å®šä¹‰ç±»
+        'no-dupe-class-members': 'error',
+        // ç¦æ­¢é‡å¤ import æ¨¡å—
+        'no-duplicate-imports': 'error',
+        // ç¦æ­¢ä½¿ç”¨ new æ¥ç”Ÿæˆ Symbol
+        'no-new-symbol': 'error',
+        // ç¦æ­¢ import æŒ‡å®šçš„æ¨¡å—
+        // @off å®ƒç”¨äºé™åˆ¶æŸä¸ªå…·ä½“çš„æ¨¡å—ä¸èƒ½ä½¿ç”¨
+        'no-restricted-imports': 'off',
+        // ç¦æ­¢åœ¨ super è¢«è°ƒç”¨ä¹‹å‰ä½¿ç”¨ this æˆ– super
+        'no-this-before-super': 'error',
+        // @fixable ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„è®¡ç®—é”®åï¼Œæ¯”å¦‚ let a = { ['0']: 0 };
+        'no-useless-computed-key': 'error',
+        // ç¦æ­¢å‡ºç°æ²¡å¿…è¦çš„ constructorï¼Œæ¯”å¦‚ constructor(value) { super(value) }
+        'no-useless-constructor': 'error',
+        // @fixable ç¦æ­¢è§£æ„æ—¶å‡ºç°åŒæ ·åå­—çš„çš„é‡å‘½åï¼Œæ¯”å¦‚ let { foo: foo } = bar;
+        'no-useless-rename': 'error',
+        // @fixable ç¦æ­¢å‡ºç° var
+        'no-var': 'error',
+        // @fixable å¿…é¡»ä½¿ç”¨ a = {b} è€Œä¸æ˜¯ a = {b: b}
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'object-shorthand': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨ç®­å¤´å‡½æ•°ä½œä¸ºå›è°ƒ
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'prefer-arrow-callback': 'off',
+        // @fixable ç”³æ˜åä¸å†è¢«ä¿®æ”¹çš„å˜é‡å¿…é¡»ä½¿ç”¨ const æ¥ç”³æ˜
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'prefer-const': 'off',
+        // å¿…é¡»ä½¿ç”¨è§£æ„
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'prefer-destructuring': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨ 0b11111011 è€Œä¸æ˜¯ parseInt('111110111', 2)
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'prefer-numeric-literals': 'off',
+        // å¿…é¡»ä½¿ç”¨ ...args è€Œä¸æ˜¯ arguments
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'prefer-rest-params': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨ ... è€Œä¸æ˜¯ applyï¼Œæ¯”å¦‚ foo(...args)
+        // @off  apply å¾ˆå¸¸ç”¨
+        'prefer-spread': 'off',
+        // @fixable å¿…é¡»ä½¿ç”¨æ¨¡ç‰ˆå­—é¢é‡è€Œä¸æ˜¯å­—ç¬¦ä¸²è¿æ¥
+        // @off å­—ç¬¦ä¸²è¿æ¥å¾ˆå¸¸ç”¨
+        'prefer-template': 'off',
+        // generator å‡½æ•°å†…å¿…é¡»æœ‰ yield
+        'require-yield': 'error',
+        // @fixable ... çš„åé¢ç¦æ­¢æœ‰ç©ºæ ¼
+        'rest-spread-spacing': [
+            'error',
+            'never'
+        ],
+        // @fixable import å¿…é¡»æŒ‰è§„åˆ™æ’åº
+        // @off æ²¡å¿…è¦å¼ºåˆ¶è¦æ±‚
+        'sort-imports': 'off',
+        // åˆ›å»º Symbol æ—¶å¿…é¡»ä¼ å…¥å‚æ•°
+        'symbol-description': 'error',
+        // @fixable ${name} å†…çš„é¦–å°¾ç¦æ­¢æœ‰ç©ºæ ¼
+        'template-curly-spacing': [
+            'error',
+            'never'
+        ],
+        // @fixable yield* åé¢å¿…é¡»è¦æœ‰ç©ºæ ¼
+        'yield-star-spacing': [
+            'error',
+            'after'
+        ]
+
     }
-  
-  }
-  
+
+};

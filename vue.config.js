@@ -1,9 +1,9 @@
-'use strict';
+
 const path = require('path');
 const port = 9527; // dev port
 
-function resolve (dir) {
-    return path.join(__dirname, dir)
+function resolve(dir) {
+    return path.join(__dirname, dir);
 }
 module.exports = {
     // publicPath: process.env.NODE_ENV === 'produvtion'

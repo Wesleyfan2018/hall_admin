@@ -50,32 +50,32 @@
 </template>
 
 <script>
-import ajax from '@/utils/ajax'
+import ajax from '@/utils/ajax';
 import { mapActions } from 'vuex';
 export default {
-    data () {
+    data() {
         return {
             username: 'admin',
             password: '111111',
             loading: false,
             passwordType: 'password'
-        }
+        };
     },
     methods: {
-      ...mapActions([
+        ...mapActions([
             'userLogin'
         ]),
-        showPwd () {
+        showPwd() {
             if (this.passwordType === 'password') {
-                this.passwordType = ''
+                this.passwordType = '';
             } else {
-                this.passwordType = 'password'
+                this.passwordType = 'password';
             }
             this.$nextTick(() => {
-                this.$refs.password.focus()
-            })
+                this.$refs.password.focus();
+            });
         },
-        handleLogin () {
+        handleLogin() {
             // let data = {
             //     api: {
             //         m: 'login',
@@ -92,7 +92,7 @@ export default {
             });
         }
     }
-}
+};
 </script>
 
 <style lang="scss">

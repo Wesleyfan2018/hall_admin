@@ -16,10 +16,10 @@
     </div>
 </template>
 <script>
-import ajax from '@/utils/ajax'
-import { mapMutations } from "vuex";
-import { setEncData, getEncData, getRequestApi, setBaseApi } from "@/utils/auth";
-import { constants } from 'crypto';
+import ajax from '@/utils/ajax';
+import { mapMutations } from 'vuex';
+import { setEncData, getEncData, getRequestApi, setBaseApi } from '@/utils/auth';
+// import { constants } from 'crypto';
 export default {
     data() {
         return {
