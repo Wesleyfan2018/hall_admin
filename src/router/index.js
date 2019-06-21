@@ -10,17 +10,23 @@ export const constantRouterMap = [
         name: 'login',
         component: _import('login/index'),
     },
+    // 选择界面
+    {
+        path: '/sel-project',
+        name: 'sel-project',
+        component: _import('sel-project/index'),
+    },
     // 首页
     {
         path: '/',
-        name: 'home',
+        name: 'dashboard',
         component: layout,
         children: [
             // 首页
             {
                 path: '/',
                 name: 'index',
-                component: _import('home/index'),
+                component: _import('dashboard/index'),
             }
         ]
     }

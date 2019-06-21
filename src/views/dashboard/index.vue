@@ -7,7 +7,7 @@
 
 <script>
 import ajax from '@/utils/ajax';
-import { mapActions } from 'vuex';
+// import { mapActions } from 'vuex';
 import { initPage } from '@/api/initializePage';
 export default {
     data() {
@@ -35,7 +35,7 @@ export default {
             });
         },
         dele() {
-            console.log(store.state.user);
+            // console.log(store.state.user);
             ajax.post('kk/kkk').then(res => {
                 if (res.code === 0) {
                     console.log(321);

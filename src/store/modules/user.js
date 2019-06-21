@@ -1,5 +1,6 @@
 // import { setToken, setUserInfo } from '@/utils/auth';
-import { setToken, getToken, removeToken, getBaseApi, setBaseApi, setEncData, getEncData, getStorageData, setStorageData } from '@/utils/auth';
+// import { setToken, getToken, removeToken, getBaseApi, setBaseApi, setEncData, getEncData, getStorageData, setStorageData } from '@/utils/auth';
+import { setToken, getToken, removeToken, getBaseApi, setBaseApi, setEncData } from '@/utils/auth';
 import { login, logout } from '@/api/user';
 import router from '@/router';
 // const userInfo = getEncData('userInfoData');
@@ -39,7 +40,7 @@ const user = {
                             });
                         });
                         router.push({
-                            path: '/'
+                            path: '/sel-project'
                         });
                     }
                     resolve(res);

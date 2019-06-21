@@ -1,32 +1,26 @@
 <template>
     <div>
-        <router-view></router-view>
-        <ul v-if="dataInfo">
-            <li v-for="(info, i) in dataInfo.project" :key="info[i]">
-                <label>{{info.pname}}</label>
-                <ul>
-                    <li
-                        v-for="(envs, j) in info.envs"
-                        :key="envs[j]"
-                        @click="changeEnvs(envs.api, i, j)"
-                    >{{envs.ename}}</li>
-                </ul>
-            </li>
-        </ul>
+        <div class="app-wrapper">
+            <navbar />
+        </div>
     </div>
 </template>
 <script>
 import ajax from '@/utils/ajax';
+import { Navbar } from './components';
 import { mapMutations } from 'vuex';
 import { setEncData, getEncData, getRequestApi, setBaseApi } from '@/utils/auth';
 // import { constants } from 'crypto';
 export default {
+    name: 'Layout',
+    components: {
+        Navbar
+    },
     data() {
         return {
             dataInfo: null
         };
     },
-    components: {},
     mounted() {
         this.init();
     },
@@ -54,3 +48,11 @@ export default {
     }
 };
 </script>
+
+<style lang="scss">
+.app-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+</style>

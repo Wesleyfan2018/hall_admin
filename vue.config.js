@@ -1,4 +1,4 @@
-
+'use strict';
 const path = require('path');
 const port = 9527; // dev port
 
