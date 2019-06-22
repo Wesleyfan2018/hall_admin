@@ -50,8 +50,7 @@
 </template>
 
 <script>
-// import ajax from '@/utils/ajax';
-import { mapActions } from 'vuex';
+import ajax from '@/utils/ajax';
 export default {
     data() {
         return {
@@ -62,9 +61,6 @@ export default {
         };
     },
     methods: {
-        ...mapActions([
-            'userLogin'
-        ]),
         showPwd() {
             if (this.passwordType === 'password') {
                 this.passwordType = '';
@@ -76,17 +72,17 @@ export default {
             });
         },
         handleLogin() {
-            // let data = {
-            //     api: {
-            //         m: 'login',
-            //         p: 'index',
-            //         g: 9999,
-            //         e: 3
-            //     }
-            // }
-            // ajax.post('/main/index.php', data).then(res => {
-            //     localStorage.setItem('dataInfo', res)
-            // })
+            let data = {
+                api: {
+                    m: 'login',
+                    p: 'index',
+                    g: 9999,
+                    e: 3
+                }
+            };
+            ajax.post('/main/index.php', data).then(res => {
+                localStorage.setItem('dataInfo', res);
+            });
         }
     }
 };

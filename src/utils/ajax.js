@@ -1,16 +1,14 @@
 import axios from 'axios';
 // import router from '@/router'
-import store from '@/store';
+// import store from '@/store';
 axios.defaults.withCredentials = false;
-let baseApi = store.state.user.baseApi;
 const service = axios.create({
-    // baseURL: process.env.VUE_APP_URL,
-    baseURL: baseApi,
+    baseURL: process.env.VUE_APP_URL,
     timeout: 5000
 });
 // request
 service.interceptors.request.use(config => {
-    config.baseURL = store.state.user.baseApi;
+    debugger;
     if (localStorage.token) {
         console.log(localStorage.token);
         config.headers.Authorization = 'JWT' + localStorage.token;

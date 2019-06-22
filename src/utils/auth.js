@@ -3,8 +3,6 @@ import CryptoJS from 'crypto-js';
 // const CryptoJS = require('crypto-js');
 // Vue.use(VueCookies);
 const userToken = 'JSESSIONID';
-const baseApi = 'baseApi';
-const requestApi = 'requestApi';
 const aesSecret = 'bndehs6pbr8ia8is';
 const aesSecret2 = 'ABCDEF1234123412';
 
@@ -17,28 +15,6 @@ export function setToken(token) {
 }
 export function removeToken() {
     return VueCookies.remove(userToken);
-}
-
-// 设置、获取、删除域名
-export function getBaseApi() {
-    return localStorage.getItem(baseApi);
-}
-export function setBaseApi(value) {
-    return localStorage.setItem(baseApi, value);
-}
-export function removeBaseApi() {
-    return localStorage.removeItem(baseApi);
-}
-
-// 设置、获取、删除接口
-export function getRequestApi() {
-    return localStorage.getItem(requestApi);
-}
-export function setRequestApi(value) {
-    return localStorage.setItem(requestApi, value);
-}
-export function removeRequestApi() {
-    return localStorage.removeItem(requestApi);
 }
 
 // 设置本地存储, 默认localStorage
@@ -59,7 +35,6 @@ export function getStorageData(name, type) {
     } else {
         value = localStorage.getItem(name);
     }
-    console.log(value);
     return value && JSON.parse(value);
 }
 
@@ -81,7 +56,6 @@ export function getEncData(name, type) {
     } else {
         value = localStorage.getItem(name);
     }
-    console.log(value);
     return value && JSON.parse(aesDecrypt(value));
 }
 
