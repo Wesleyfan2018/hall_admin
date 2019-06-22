@@ -11,6 +11,10 @@ const service = axios.create({
 // request
 service.interceptors.request.use(config => {
     config.baseURL = store.state.user.baseApi;
+    if (localStorage.token) {
+        console.log(localStorage.token);
+        config.headers.Authorization = 'JWT' + localStorage.token;
+    }
     return config;
 }, error => {
     Promise.reject(error);

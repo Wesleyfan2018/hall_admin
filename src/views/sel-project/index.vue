@@ -21,9 +21,6 @@
 <script>
 import router from '@/router';
 import { Navbar } from './components';
-// import ajax from '@/utils/ajax';
-// import { mapActions } from 'vuex';
-// import { initPage } from '@/api/initializePage';
 export default {
     components: {
         Navbar

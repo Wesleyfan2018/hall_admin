@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import ajax from '@/utils/ajax';
+// import ajax from '@/utils/ajax';
 import { mapActions } from 'vuex';
 export default {
     data() {
@@ -87,9 +87,6 @@ export default {
             // ajax.post('/main/index.php', data).then(res => {
             //     localStorage.setItem('dataInfo', res)
             // })
-            this.userLogin().then(res => {
-
-            });
         }
     }
 };
