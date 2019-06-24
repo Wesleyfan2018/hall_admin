@@ -1,21 +1,6 @@
-import VueCookies from 'vue-cookies';
-import CryptoJS from 'crypto-js';
-// const CryptoJS = require('crypto-js');
-// Vue.use(VueCookies);
-const userToken = 'JSESSIONID';
-const aesSecret = 'bndehs6pbr8ia8is';
-const aesSecret2 = 'ABCDEF1234123412';
+import md5 from 'js-md5';
 
-// 设置、获取、删除token
-export function getToken() {
-    return VueCookies.get(userToken);
-}
-export function setToken(token) {
-    return VueCookies.set(userToken, token, '7d');
-}
-export function removeToken() {
-    return VueCookies.remove(userToken);
-}
+const secret = 'zpMWYl#7fz&*^&*12I7IWWdT';
 
 // 设置本地存储, 默认localStorage
 export function setStorageData(name, value, type) {
@@ -35,46 +20,21 @@ export function getStorageData(name, type) {
     } else {
         value = localStorage.getItem(name);
     }
-    return value && JSON.parse(value);
+    return value;
 }
 
-// 设置加密信息, 默认存本地
-export function setEncData(name, value, type) {
-    let data = aesEncrypt(JSON.stringify(value));
-    if (type === 'cookie') {
-        VueCookies.set(name, data, '7d');
-    } else {
-        localStorage.setItem(name, data);
+// md5加密
+export function Enmd5(data) {
+    let mDataStr = '';
+    let sortList = [];
+    for (let t in data) {
+        sortList.push(t);
     }
-}
-
-// 获取解密信息, 默认取本地
-export function getEncData(name, type) {
-    let value = '';
-    if (type === 'cookie') {
-        value = VueCookies.get(name);
-    } else {
-        value = localStorage.getItem(name);
+    sortList = sortList.sort();
+    for (let i in sortList) {
+        mDataStr += '&' + sortList[i] + '=' + data[sortList[i]];
     }
-    return value && JSON.parse(aesDecrypt(value));
-}
-
-// aes加密
-export function aesEncrypt(content) {
-    let key = CryptoJS.enc.Utf8.parse(aesSecret);
-    let iv = CryptoJS.enc.Utf8.parse(aesSecret2);
-    let srcs = CryptoJS.enc.Utf8.parse(content);
-    let encrypted = CryptoJS.AES.encrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
-    return encrypted.ciphertext.toString().toUpperCase();
-}
-
-// aes解密
-export function aesDecrypt(content) {
-    let key = CryptoJS.enc.Utf8.parse(aesSecret);
-    let iv = CryptoJS.enc.Utf8.parse(aesSecret2);
-    let encryptedHexStr = CryptoJS.enc.Hex.parse(content);
-    let srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
-    let decrypt = CryptoJS.AES.decrypt(srcs, key, { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
-    let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
-    return decryptedStr.toString();
+    mDataStr = mDataStr.substr(1) + secret;
+    let md5Str = md5(mDataStr);
+    return md5Str;
 }

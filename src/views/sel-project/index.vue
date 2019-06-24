@@ -4,7 +4,7 @@
             <navbar />
             <el-row class="mainBox">
                 <div class="card text-center" v-for="(i, t) in proList" :key="(i, t)">
-                    <div class="cardItem" @click="toSuit(i.projectId)">
+                    <div class="cardItem" @click="toSuit(i.projectId)" :style="{ 'background-image': 'url('+ i.imgUrl +')'}" >
                         <div class="cardTitle opaciity">{{i.title}}</div>
                     </div>
                 </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import ajax from '@/utils/ajax';
 import router from '@/router';
 import { Navbar } from './components';
 export default {
@@ -30,18 +31,14 @@ export default {
             username: 'admin',
             password: '111111',
             loading: false,
+            kk: 'img.png',
             passwordType: 'password',
             proList: [
-                { title: '数据中心', projectId: 1 },
-                { title: '中控中心', projectId: 2 },
-                { title: '配置中心', projectId: 3 },
-                { title: '个人中心', projectId: 4 },
-                { title: '道具中心', projectId: 5 },
-                { title: '工具中心', projectId: 6 },
-                { title: '权限中心', projectId: 7 },
-                { title: '运维中心', projectId: 8 }
-            ],
-            colorList: []
+                { title: '中控中心', projectId: 1, imgUrl: require('../../assets/image/bigData.png') },
+                { title: '数据中心', projectId: 2, imgUrl: require('../../assets/image/bigData2.png') },
+                { title: '配置中心', projectId: 3, imgUrl: require('../../assets/image/bigData3.png') },
+                { title: '助手中心', projectId: 4, imgUrl: require('../../assets/image/bigData4.png') }
+            ]
         };
     },
     methods: {
@@ -65,7 +62,7 @@ export default {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    background: url('../../assets/loginbg_01.jpg');
+    background: url('../../assets/image/loginbg_01.jpg');
 }
 .iconStyle { font-size: 100px!important; }
 .text-center{ text-align:center; }
@@ -91,10 +88,14 @@ export default {
     width: 240px;height: 145px;margin: 20px;background: #FFF;line-height:145px;border-radius:5px;
 }
 .cardItem {
-    display:flex;flex-direction: column-reverse;width:100%;height:100%;background-image:url("http://hao.weidunewtab.com/m/baidu.com.png");background-repeat: no-repeat;background-position: center center;
+    display:flex;flex-direction: column-reverse;width:100%;height:100%;
+    background-repeat: no-repeat;background-position: center center;
+    background-size: 40% 65%;
 }
 .cardItemEnd {
-    display:flex;flex-direction: column-reverse;width:100%;height:100%;background-image:url("../../assets/plusIcon.png");background-repeat: no-repeat;background-position: center center;
+    display:flex;flex-direction: column-reverse;width:100%;height:100%;
+    background-image:url("../../assets/image/plusIcon.png");
+    background-repeat: no-repeat;background-position: center center;
 }
 .cardTitle {
     display: none;

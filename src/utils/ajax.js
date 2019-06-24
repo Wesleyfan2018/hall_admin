@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getStorageData } from '@/utils/auth';
 // import router from '@/router'
 // import store from '@/store';
 axios.defaults.withCredentials = false;
@@ -8,10 +9,9 @@ const service = axios.create({
 });
 // request
 service.interceptors.request.use(config => {
-    debugger;
-    if (localStorage.token) {
-        console.log(localStorage.token);
-        config.headers.Authorization = 'JWT' + localStorage.token;
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    if (config.url.indexOf('p=index') === -1) {
+        config.headers['stv-admin-token'] = getStorageData('token');
     }
     return config;
 }, error => {

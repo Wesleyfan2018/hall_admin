@@ -27,7 +27,7 @@
                     name="password"
                     tabindex="2"
                     auto-complete="on"
-                    @keyup.enter.native="handleLogin"
+                    @keyup.enter.native="login"
                 />
                 <span class="show-pwd" @click="showPwd">
                     <span
@@ -39,23 +39,21 @@
                 :loading="loading"
                 type="primary"
                 class="loginBtn"
-                @click="handleLogin"
+                @click="login"
             >Login</el-button>
-            <div class="tips">
-                <span style="margin-right:20px;">username: admin</span>
-                <span>password: any</span>
-            </div>
         </el-form>
     </div>
 </template>
 
 <script>
 import ajax from '@/utils/ajax';
+import router from '@/router';
+import { Enmd5, setStorageData } from '@/utils/auth';
 export default {
     data() {
         return {
-            username: 'admin',
-            password: '111111',
+            username: 'wade',
+            password: 123456,
             loading: false,
             passwordType: 'password'
         };
@@ -71,17 +69,20 @@ export default {
                 this.$refs.password.focus();
             });
         },
-        handleLogin() {
+        login() {
             let data = {
-                api: {
-                    m: 'login',
-                    p: 'index',
-                    g: 9999,
-                    e: 3
-                }
+                userName: this.username,
+                password: this.password,
             };
-            ajax.post('/main/index.php', data).then(res => {
-                localStorage.setItem('dataInfo', res);
+            data._sig = Enmd5(data);
+            ajax.post('/hall-admin-new/index.php?m=login&p=index&g=10000', data).then(res => {
+                console.log(res);
+                if (res.code === 0) {
+                    setStorageData('token', res.data.token);
+                    router.push({
+                        path: '/sel-project'
+                    });
+                }
             });
         }
     }

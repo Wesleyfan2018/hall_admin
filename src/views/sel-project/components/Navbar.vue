@@ -7,8 +7,17 @@
                 <i class="el-icon-caret-bottom" />
                 </div>
                 <el-dropdown-menu slot="dropdown" class="user-dropdown">
+                <el-dropdown-item disabled>
+                    <span style="display:block;">{{userInfo.enName}}</span>
+                </el-dropdown-item>
+                <el-dropdown-item disabled>
+                    <span style="display:block;">{{userInfo.groupId}}</span>
+                </el-dropdown-item>
                 <el-dropdown-item>
-                    <span style="display:block;" @click="logout">Log Out</span>
+                    <a style="display:block;">修改信息</a>
+                </el-dropdown-item>
+                <el-dropdown-item divided>
+                    <span style="display:block;" @click="logout">注销</span>
                 </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -17,13 +26,30 @@
 </template>
 
 <script>
+import ajax from '@/utils/ajax';
 import router from '@/router';
+import { Enmd5, setStorageData } from '@/utils/auth';
+import { userInfo } from 'os';
 export default {
     data() {
         return {
+            userInfo: {}
         };
     },
+    created() {
+        this.loadUserInfo();
+    },
     methods: {
+        loadUserInfo() {
+            let data = {};
+            data._sig = Enmd5(data);
+            console.log(data);
+            ajax.post('/hall-admin-new/index.php?m=login&p=getInfo&g=10000', data).then(res => {
+                console.log(res);
+                this.userInfo = res.data;
+                setStorageData('userInfo', res.data);
+            });
+        },
         logout() {
             router.push({
                 path: '/login'
