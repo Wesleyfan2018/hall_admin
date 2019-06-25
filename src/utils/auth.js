@@ -4,11 +4,16 @@ const secret = 'zpMWYl#7fz&*^&*12I7IWWdT';
 
 // 设置本地存储, 默认localStorage
 export function setStorageData(name, value, type) {
-    let values = JSON.stringify(value);
+    let values = '';
+    if (typeof (value) === 'object') {
+        values = JSON.stringify(value);
+    } else {
+        values = value;
+    }
     if (type === 'session') {
         sessionStorage.setItem(name, values);
     } else {
-        localStorage.setItem(name, value);
+        localStorage.setItem(name, values);
     }
 }
 
@@ -21,6 +26,11 @@ export function getStorageData(name, type) {
         value = localStorage.getItem(name);
     }
     return value;
+}
+
+// 删除本地存储, 默认localStorage
+export function removeStorageData(name) {
+    localStorage.removeItem(name);
 }
 
 // md5加密

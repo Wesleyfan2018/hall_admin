@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import ajax from '@/utils/ajax';
+// import ajax from '@/utils/ajax';
 import router from '@/router';
-import { Navbar } from './components';
+import { Navbar } from '../layout/components';
 export default {
     components: {
         Navbar
@@ -44,10 +44,7 @@ export default {
     methods: {
         toSuit(str) {
             router.push({
-                path: '/',
-                query: {
-                    g: str
-                }
+                path: '/'
             });
         }
     }

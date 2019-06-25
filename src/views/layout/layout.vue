@@ -1,36 +1,45 @@
 <template>
     <div class="app-wrapper">
         <el-container style="height:100%;">
-            <el-aside width="200px" style=" background-color: #D3DCE6;">Aside</el-aside>
+            <sidebar />
             <el-container>
-                <el-header style="padding:0;">
+                <el-header class="headers">
                     <navbar />
+                    <tags-view />
                 </el-header>
-                <el-main>Main</el-main>
+                <app-main />
             </el-container>
         </el-container>
     </div>
 </template>
 <script>
 // import ajax from '@/utils/ajax';
-import { Navbar } from './components';
+import { Navbar, AppMain, Sidebar, TagsView } from './components';
 export default {
     name: 'Layout',
     components: {
-        Navbar
+        Navbar,
+        AppMain,
+        Sidebar,
+        TagsView
     },
     data() {
         return {
             dataInfo: null
         };
+    },
+    methods: {
     }
 };
 </script>
-
 <style lang="scss">
 .app-wrapper {
     position: relative;
     height: 100%;
     width: 100%;
+    .headers {
+        height:70px!important;
+        padding:0!important;
+    }
 }
 </style>

@@ -1,26 +1,8 @@
 <template>
     <div class="navbar">
         <div class="right-menu">
-            <div style="margin: 0 20px;line-height: 70px;">
-                <el-autocomplete
-                class="inline-input"
-                v-model="state1"
-                :fetch-suggestions="querySearch"
-                placeholder="请输入内容"
-                @select="handleSelect"
-                >
-                    <el-button slot="append" icon="el-icon-search"></el-button>
-                </el-autocomplete>
-            </div>
-            <div style="margin:0 20px;line-height: 70px;">
-                <el-select v-model="env" placeholder="请选择环境" style="width:140px;">
-                    <el-option
-                    v-for="(i, t) in options"
-                    :key="(i, t)"
-                    :label="i"
-                    :value="t">
-                    </el-option>
-                </el-select>
+            <div v-show="showEnv" class="chaEnv">
+                <a href="#">切换环境</a>
             </div>
             <el-dropdown class="avatar-container" trigger="click">
                 <div class="avatar-wrapper">
@@ -28,8 +10,17 @@
                 <i class="el-icon-caret-bottom" />
                 </div>
                 <el-dropdown-menu slot="dropdown" class="user-dropdown">
+                <el-dropdown-item disabled>
+                    <span style="display:block;">{{userInfo.name}}</span>
+                </el-dropdown-item>
+                <el-dropdown-item disabled>
+                    <span style="display:block;">{{userInfo.role}}</span>
+                </el-dropdown-item>
                 <el-dropdown-item>
-                    <span style="display:block;" @click="logout">Log Out</span>
+                    <a style="display:block;">修改密码</a>
+                </el-dropdown-item>
+                <el-dropdown-item divided>
+                    <span style="display:block;" @click="layLogout">注销</span>
                 </el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -38,45 +29,48 @@
 </template>
 
 <script>
+import ajax from '@/utils/ajax';
 import router from '@/router';
+import { getStorageData, Enmd5, removeStorageData } from '@/utils/auth';
 export default {
     data() {
         return {
-            restaurants: [],
-            state1: '',
-            options: ['正式服', '预发布服', '体验服', '测试服'],
-            env: ''
+            userInfo: {},
         };
     },
-    methods: {
-        logout() {
-            router.push({
-                path: '/login'
-            });
-        },
-        querySearch(queryString, cb) {
-            let restaurants = this.restaurants;
-            let results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-            // 调用 callback 返回建议列表的数据
-            cb(results);
-        },
-        createFilter(queryString) {
-            return (restaurant) => {
-                return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-            };
-        },
-        loadAll() {
-            return [
-                { 'value': '三全鲜食（北新泾店）', 'address': '长宁区新渔路144号' },
-                { 'value': 'Hot honey 首尔炸鸡（仙霞路）', 'address': '上海市长宁区淞虹路661号' }
-            ];
-        },
-        handleSelect(item) {
-            console.log(item);
+    created() {
+        this.getUserInfo();
+    },
+    computed: {
+        showEnv: function() {
+            let pathname = window.location.pathname;
+            if (pathname === '/sel-project') {
+                return false;
+            } else {
+                return true;
+            }
         }
     },
-    mounted() {
-        this.restaurants = this.loadAll();
+    methods: {
+        getUserInfo() {
+            let self = this;
+            let userInfoStr = getStorageData('userInfo');
+            self.userInfo = JSON.parse(userInfoStr);
+        },
+        layLogout() {
+            let data = {};
+            data._sig = Enmd5(data);
+            ajax.post('/hall-admin-new/index.php?m=login&p=logout&g=10000', data).then(res => {
+                debugger;
+                if (res.code === 0) {
+                    removeStorageData('token');
+                    removeStorageData('userInfo');
+                    router.push({
+                        path: '/login'
+                    });
+                }
+            });
+        }
     }
 };
 </script>
@@ -161,6 +155,15 @@ export default {
             font-size: 20px;
             }
         }
+        }
+        .chaEnv {
+            margin: 0px 20px;
+            line-height: 70px;
+            font-size: 14px;
+            a {
+                text-decoration: none;
+                color: coral;
+            }
         }
     }
 }

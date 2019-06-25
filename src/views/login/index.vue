@@ -76,8 +76,8 @@ export default {
             };
             data._sig = Enmd5(data);
             ajax.post('/hall-admin-new/index.php?m=login&p=index&g=10000', data).then(res => {
-                console.log(res);
                 if (res.code === 0) {
+                    setStorageData('userInfo', res.data);
                     setStorageData('token', res.data.token);
                     router.push({
                         path: '/sel-project'

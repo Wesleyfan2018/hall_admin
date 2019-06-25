@@ -1,13 +1,9 @@
 <template>
-    <div class="">
-        home
-        <div @click="dele()">kkkkkkk</div>
+    <div>
     </div>
 </template>
 
 <script>
-// import ajax from '@/utils/ajax';
-// import { mapActions } from 'vuex';
 export default {
     data() {
         return {
