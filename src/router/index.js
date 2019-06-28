@@ -19,14 +19,31 @@ export const constantRouterMap = [
     // 首页
     {
         path: '/',
-        name: 'dashboard',
+        name: 'Dashboard',
         component: layout,
+        meta: { keepAlive: true },
         children: [
             // 首页
             {
                 path: '/',
                 name: 'index',
                 component: _import('dashboard/index'),
+            },
+            // 修改密码
+            {
+                path: '/changepwd',
+                name: 'changePwd',
+                component: _import('changePwd/index'),
+            },
+            {
+                path: '/test1',
+                name: 'Test1',
+                component: _import('test/test1'),
+            },
+            {
+                path: '/test2',
+                name: 'Test2',
+                component: _import('test/test2'),
             }
         ]
     }

@@ -1,16 +1,24 @@
 <template>
     <section class="app-main">
-        <transition name="fade-transform" mode="out-in">
-            <router-view :key="key" />
-        </transition>
+        <div class="app-container">
+            <transition name="fade-transform" mode="out-in">
+                <keep-alive :include="this.cachedViews">
+                    <router-view :key="key" />
+                </keep-alive>
+            </transition>
+        </div>
     </section>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import router from '@/router';
 export default {
     name: 'AppMain',
     computed: {
+        ...mapState({
+            cachedViews: state => state.tagsview.cachedViews,
+        }),
         key() {
             return router.path;
         }
@@ -25,7 +33,13 @@ export default {
     width: 100%;
     position: relative;
     overflow: hidden;
-    margin-top: 40px;
+    background-color: #f0f2f5;
+}
+.app-container {
+    min-height: calc(100vh - 140px);
+    margin: 30px;
+    margin-bottom: 0;
+    background-color: #fff;
 }
 .fixed-header+.app-main {
     padding-top: 50px;

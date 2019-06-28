@@ -14,7 +14,8 @@
         <el-scrollbar wrap-class="scrollbar-wrapper">
             <div class="menu">
                 <el-menu
-                default-active="2"
+                :default-active="activeMenuItem"
+                :unique-opened=true
                 class="el-menu-vertical-demo"
                 background-color="#1f2d3d"
                 text-color="rgb(191, 203, 217)"
@@ -24,7 +25,7 @@
                             <i :class="item.iconCLass"></i>
                             <span>{{item.name}}</span>
                         </template>
-                        <el-menu-item :index="idx + '-' + i" v-for="(t, i) in item.menuItem" :key="(t, i)" @click="clickItem(t.path)"><span>{{t.name}}</span></el-menu-item>
+                        <el-menu-item :index="idx + '-' + i" v-for="(t, i) in item.menuItem" :key="(t, i)" @click="clickItem(t)"><span>{{t.value}}</span></el-menu-item>
                     </el-submenu>
                 </el-menu>
             </div>
@@ -33,75 +34,101 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+import router from '@/router';
 export default {
     name: 'Sidebar',
     data() {
         return {
             dataInfo: null,
-            restaurants: [],
+            menuItems: [],
             state1: '',
-            menuList: [
-                {
-                    name: '系统管理',
-                    iconCLass: 'el-icon-location',
-                    menuItem: [
-                        {
-                            name: '用户列表1',
-                            path: '/1'
-                        },
-                        {
-                            name: '用户列表2',
-                            path: '/2'
-                        }
-                    ]
-                },
-                {
-                    name: '系统管理2',
-                    iconCLass: 'el-icon-s-operation',
-                    menuItem: [
-                        {
-                            name: '用户列表3',
-                            path: '/3'
-                        },
-                        {
-                            name: '用户列表4',
-                            path: '/4'
-                        }
-                    ]
-                }
-            ]
         };
     },
+    computed: {
+        ...mapState({
+            menuList: state => state.tagsview.menuList,
+            cachedViews: state => state.tagsview.cachedViews,
+            tagsList: state => state.tagsview.tagsList,
+            tagIndex: state => state.tagsview.tagIndex,
+            activeMenuItem: state => state.tagsview.activeMenuItem
+        })
+    },
     methods: {
-        clickItem(str) {
-            console.log(str);
+        ...mapActions([
+            'setTagsList',
+            'setTagsIndex',
+            'setActiveMenuItem'
+        ]),
+        // 更改menuItem打开的index
+        activeItem(str) {
+            let menuIndex = Number;
+            let itemIndex = Number;
+            if (str === '/') {
+                return '0';
+            }
+            for (let i in this.menuList) {
+                if (this.menuList[i].menuItem.findIndex(item => item.path === str) !== -1) {
+                    menuIndex = i;
+                    itemIndex = this.menuList[i].menuItem.map(item => item.path).indexOf(str);
+                }
+            }
+            let activeIndex = menuIndex + '-' + itemIndex;
+            return activeIndex;
+        },
+        clickItem(obj) {
+            if (this.tagsList.findIndex(item => item.path === obj.path) === -1) {
+                this.tagsList.push(obj);
+                this.setTagsList(this.tagsList);
+                this.cachedViews.push(obj.pathName);
+                this.$store.commit('SET_CACHEDVIEWS', this.cachedViews);
+            }
+            let indexNum = this.tagsList.map(item => item.path).indexOf(obj.path);
+            this.setTagsIndex(indexNum);
+            let index = this.activeItem(obj.path);
+            this.setActiveMenuItem(index);
+            router.push({
+                path: obj.path
+            });
         },
         querySearch(queryString, cb) {
-            let restaurants = this.restaurants;
-            let results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+            let menuItems = this.menuItems;
+            let results = queryString ? menuItems.filter(this.createFilter(queryString)) : menuItems;
             // 调用 callback 返回建议列表的数据
             cb(results);
         },
         createFilter(queryString) {
-            return (restaurant) => {
-                return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            return (menuItem) => {
+                return (menuItem.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
             };
         },
         loadAll() {
-            return [
-                { 'value': '三全鲜食（北新泾店）' },
-                { 'value': 'Hot honey 首尔炸鸡（仙霞路）' }
-            ];
+            let List = [];
+            for (let i in this.menuList) {
+                let itemList = this.menuList[i].menuItem;
+                for (let t in itemList) {
+                    List.push(itemList[t]);
+                }
+            }
+            console.log(List);
+            return List;
         },
-        handleSelect(item) {
-            console.log(item);
-        },
-        handleNodeClick(data) {
-            console.log(data);
+        handleSelect(obj) {
+            if (this.tagsList.findIndex(item => item.path === obj.path) === -1) {
+                this.tagsList.push(obj);
+                this.setTagsList(this.tagsList);
+                this.cachedViews.push(obj.pathName);
+                this.$store.commit('SET_CACHEDVIEWS', this.cachedViews);
+            }
+            let indexNum = this.tagsList.map(item => item.path).indexOf(obj.path);
+            this.setTagsIndex(indexNum);
+            router.push({
+                path: obj.path
+            });
         }
     },
     mounted() {
-        this.restaurants = this.loadAll();
+        this.menuItems = this.loadAll();
     }
 };
 </script>

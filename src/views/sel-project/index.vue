@@ -19,7 +19,7 @@
 </template>
 
 <script>
-// import ajax from '@/utils/ajax';
+// import { setStorageData } from '@/utils/auth';
 import router from '@/router';
 import { Navbar } from '../layout/components';
 export default {

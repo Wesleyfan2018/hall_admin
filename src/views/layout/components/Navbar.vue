@@ -17,7 +17,7 @@
                     <span style="display:block;">{{userInfo.role}}</span>
                 </el-dropdown-item>
                 <el-dropdown-item>
-                    <a style="display:block;">修改密码</a>
+                    <a style="display:block;" @click="changePwd">修改密码</a>
                 </el-dropdown-item>
                 <el-dropdown-item divided>
                     <span style="display:block;" @click="layLogout">注销</span>
@@ -32,6 +32,7 @@
 import ajax from '@/utils/ajax';
 import router from '@/router';
 import { getStorageData, Enmd5, removeStorageData } from '@/utils/auth';
+import { mapActions } from 'vuex';
 export default {
     data() {
         return {
@@ -52,6 +53,11 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            'setTagsList',
+            'setTagsIndex',
+            'setActiveMenuItem'
+        ]),
         getUserInfo() {
             let self = this;
             let userInfoStr = getStorageData('userInfo');
@@ -61,14 +67,24 @@ export default {
             let data = {};
             data._sig = Enmd5(data);
             ajax.post('/hall-admin-new/index.php?m=login&p=logout&g=10000', data).then(res => {
-                debugger;
                 if (res.code === 0) {
                     removeStorageData('token');
                     removeStorageData('userInfo');
+                    removeStorageData('tagsList');
+                    removeStorageData('tagIndex');
+                    removeStorageData('activeMenuItem');
+                    this.setTagsList([{ value: '首页', path: '/', pathName: '/' }]);
+                    this.setTagsIndex(0);
+                    this.setActiveMenuItem('0');
                     router.push({
                         path: '/login'
                     });
                 }
+            });
+        },
+        changePwd() {
+            router.push({
+                path: '/changepwd'
             });
         }
     }

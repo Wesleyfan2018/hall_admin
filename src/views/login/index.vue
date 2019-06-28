@@ -31,7 +31,7 @@
                 />
                 <span class="show-pwd" @click="showPwd">
                     <span
-                        :class="passwordType == 'password' ? 'iconfont icon-view icon-icon-test iconStyle' : 'iconfont icon-view_off icon-icon-test1 iconStyle'"
+                        :class="passwordType === 'password' ? 'iconfont icon-view icon-icon-test iconStyle' : 'iconfont icon-view_off icon-icon-test1 iconStyle'"
                     ></span>
                 </span>
             </el-form-item>

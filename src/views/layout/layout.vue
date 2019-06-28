@@ -38,7 +38,7 @@ export default {
     height: 100%;
     width: 100%;
     .headers {
-        height:70px!important;
+        height:110px!important;
         padding:0!important;
     }
 }
