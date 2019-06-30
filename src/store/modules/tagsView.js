@@ -9,13 +9,13 @@ const tagsview = {
                 menuItem: [
                     {
                         value: '用户列表',
-                        pathName: 'Test1',
-                        path: '/test1'
+                        pathName: 'UserList',
+                        path: '/sys-manage/user-list'
                     },
                     {
                         value: '登录记录',
-                        pathName: 'Test2',
-                        path: '/test2'
+                        pathName: 'LogonRecord',
+                        path: '/sys-manage/logon-record'
                     },
                     {
                         value: '修改密码',

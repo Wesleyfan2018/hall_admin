@@ -34,16 +34,25 @@ export const constantRouterMap = [
                 path: '/changepwd',
                 name: 'changePwd',
                 component: _import('changePwd/index'),
+            }
+        ]
+    },
+    // 系统管理
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: layout,
+        meta: { keepAlive: true },
+        children: [
+            {
+                path: '/sys-manage/user-list',
+                name: 'UserList',
+                component: _import('SysManage/UserList'),
             },
             {
-                path: '/test1',
-                name: 'Test1',
-                component: _import('test/test1'),
-            },
-            {
-                path: '/test2',
-                name: 'Test2',
-                component: _import('test/test2'),
+                path: '/sys-manage/logon-record',
+                name: 'LogonRecord',
+                component: _import('SysManage/LogonRecord'),
             }
         ]
     }
