@@ -19,7 +19,7 @@
                     <el-button class="filter-item" type="primary" icon="el-icon-search" @keyup.enter="searchName" @click="searchName"></el-button>
                 </el-form-item>
                 <el-form-item style="float:right;">
-                    <el-button class="filter-item" type="success" @keyup.enter="searchName" @click="searchName">添加用户</el-button>
+                    <el-button class="filter-item" type="success" @keyup.enter="searchName" @click="openAdd">添加用户</el-button>
                 </el-form-item>
             </el-form>
             <el-table border :data="tableData">
@@ -54,7 +54,7 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog title="编辑用户信息" :visible.sync="editVisble" width="30%" :before-close="handleClose">
+        <el-dialog title="编辑用户信息" :visible.sync="editVisble" width="30%" :before-close="handleEditClose">
             <el-form label-position="left" label-width="80px" :model="selectUser">
                 <el-form-item label="姓名">
                     <el-input disabled v-model="selectUser.name"></el-input>
@@ -83,7 +83,37 @@
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editVisble = false">取 消</el-button>
-                <el-button type="primary" @click="fuck">确 定</el-button>
+                <el-button type="success" @click="confirEdit">确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog title="新增用户信息" :visible.sync="addVisble" width="30%" :before-close="handleAddClose">
+            <el-form label-position="left" label-width="80px" :model="addUser">
+                <el-form-item label="账号名">
+                    <el-input v-model="addUser.name"></el-input>
+                </el-form-item>
+                <el-form-item label="姓名">
+                    <el-input v-model="addUser.real_name"></el-input>
+                </el-form-item>
+                <el-form-item label="角色">
+                    <el-select v-model="addUser.actor" placeholder="请选择角色">
+                        <el-option
+                            v-for="(i, t) in actors"
+                            :key="(i, t)"
+                            :label="i"
+                            :value="t">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="设置密码">
+                    <el-input type="password" placeholder="请设置密码" v-model="addUser.password"></el-input>
+                </el-form-item>
+                <el-form-item label="电话号码">
+                    <el-input placeholder="请输入电话号码" v-model="addUser.phone"></el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addVisble = false">取 消</el-button>
+                <el-button type="success" @click="confirAdd">添 加</el-button>
             </span>
         </el-dialog>
     </div>
@@ -105,6 +135,7 @@ export default {
             searchStr: '',
             currentPage: 1,
             editVisble: false,
+            addVisble: false,
             rePassword: '',
             selectUser: {
                 name: '',
@@ -112,16 +143,24 @@ export default {
                 status: '',
                 password: '',
                 phone: ''
+            },
+            addUser: {
+                name: '',
+                real_name: '',
+                actor: '',
+                password: '',
+                phone: ''
             }
         };
     },
     created() {
-        this.initList();
         this.selectOption();
     },
+    mounted() {
+        this.initList();
+    },
     methods: {
-        fuck() {
-            
+        confirEdit() {
             let data = {
                 id: this.selectUser.id,
                 real_name: this.selectUser.real_name,
@@ -137,6 +176,14 @@ export default {
                         message: '编辑成功！',
                         type: 'success'
                     });
+                    let data = {
+                        actor: this.actor,
+                        name: this.searchStr,
+                        page: this.currentPage,
+                        pageNum: this.pageSize,
+                    };
+                    data._sig = Enmd5(data);
+                    this.getTableList(data);
                 } else {
                     this.$message.error(res.msg);
                 }
@@ -168,11 +215,12 @@ export default {
             data._sig = Enmd5(data);
             ajax.post('/hall-admin-new/index.php?m=user&p=lists&g=10000', data).then(res => {
                 if (res.code === 0) {
-                    self.tableData = res.data.list;
-                    for (let i in self.tableData) {
-                        self.tableData[i].actorStr = self.actors[parseInt(self.tableData[i].actor)];
-                        self.tableData[i].statusStr = self.status[parseInt(self.tableData[i].status)];
+                    let tableData = res.data.list;
+                    for (let i in tableData) {
+                        tableData[i].actorStr = self.actors[Number(tableData[i].actor)];
+                        tableData[i].statusStr = self.status[Number(tableData[i].status)];
                     }
+                    self.tableData = tableData;
                     self.totalPage = res.data.total;
                 }
                 if (res.code === -99) {
@@ -185,11 +233,12 @@ export default {
         getTableList(data) {
             ajax.post('/hall-admin-new/index.php?m=user&p=lists&g=10000', data).then(res => {
                 if (res.code === 0) {
-                    this.tableData = res.data.list;
-                    for (let i in self.tableData) {
-                        self.tableData[i].actorStr = self.actors[parseInt(self.tableData[i].actor)];
-                        self.tableData[i].statusStr = self.status[parseInt(self.tableData[i].status)];
+                    let tableData = res.data.list;
+                    for (let i in tableData) {
+                        tableData[i].actorStr = this.actors[Number(tableData[i].actor)];
+                        tableData[i].statusStr = this.status[Number(tableData[i].status)];
                     }
+                    this.tableData = tableData;
                     this.totalPage = res.data.total;
                 }
                 if (res.code === -99) {
@@ -214,7 +263,7 @@ export default {
         handleSizeChange(val) {
             this.pageSize = val;
             let data = {
-                actor: 0,
+                actor: this.actor,
                 name: this.searchStr,
                 page: this.currentPage,
                 pageNum: this.pageSize,
@@ -226,7 +275,7 @@ export default {
         handleCurrentChange(val) {
             this.currentPage = val;
             let data = {
-                actor: 0,
+                actor: this.actor,
                 name: this.searchStr,
                 page: this.currentPage,
                 pageNum: this.pageSize,
@@ -246,13 +295,37 @@ export default {
             this.getTableList(data);
         },
         // 弹出框close
-        handleClose(done) {
+        handleEditClose(done) {
             this.editVisble = false;
-        }
-    },
-    watch: {
-        statusRadio(val) {
-            console.log(val);
+        },
+        // 弹出框close
+        handleAddClose(done) {
+            this.addVisble = false;
+        },
+        openAdd() {
+            this.addVisble = true;
+        },
+        confirAdd() {
+            this.addUser._sig = Enmd5(this.addUser);
+            ajax.post('/hall-admin-new/index.php?m=user&p=add&g=10000', this.addUser).then(res => {
+                if (res.code === 0) {
+                    this.addVisble = false;
+                    this.$message({
+                        message: '新增用户成功！',
+                        type: 'success'
+                    });
+                    let data = {
+                        actor: this.actor,
+                        name: this.searchStr,
+                        page: this.currentPage,
+                        pageNum: this.pageSize,
+                    };
+                    data._sig = Enmd5(data);
+                    this.getTableList(data);
+                } else {
+                    this.$message.error(res.msg);
+                }
+            });
         }
     }
 };
