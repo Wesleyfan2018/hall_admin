@@ -42,7 +42,9 @@ export function Enmd5(data) {
     }
     sortList = sortList.sort();
     for (let i in sortList) {
-        mDataStr += '&' + sortList[i] + '=' + data[sortList[i]];
+        if (data[sortList[i]] !== '') {
+            mDataStr += '&' + sortList[i] + '=' + data[sortList[i]];
+        }
     }
     mDataStr = mDataStr.substr(1) + secret;
     let md5Str = md5(mDataStr);

@@ -19,8 +19,9 @@
 </template>
 
 <script>
-// import { setStorageData } from '@/utils/auth';
+import { removeStorageData } from '@/utils/auth';
 import router from '@/router';
+import { mapActions } from 'vuex';
 import { Navbar } from '../layout/components';
 export default {
     components: {
@@ -42,7 +43,18 @@ export default {
         };
     },
     methods: {
+        ...mapActions([
+            'setTagsList',
+            'setTagsIndex',
+            'setActiveMenuItem'
+        ]),
         toSuit(str) {
+            removeStorageData('tagsList');
+            removeStorageData('tagIndex');
+            removeStorageData('activeMenuItem');
+            this.setTagsList([{ value: '首页', path: '/', pathName: '/' }]);
+            this.setTagsIndex(0);
+            this.setActiveMenuItem('0');
             router.push({
                 path: '/'
             });

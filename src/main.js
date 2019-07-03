@@ -4,7 +4,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
 import App from './App.vue';
 import router from './router/index';
-// import '@/router/routerMonitor';
+import '@/router/routerMonitor';
 import store from './store/index';
 import './assets/Icons/iconfont.css';
 import '@/styles/index.scss';   // global css

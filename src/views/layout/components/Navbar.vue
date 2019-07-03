@@ -67,7 +67,7 @@ export default {
             let data = {};
             data._sig = Enmd5(data);
             ajax.post('/hall-admin-new/index.php?m=login&p=logout&g=10000', data).then(res => {
-                if (res.code === 0) {
+                if (res.code === 0 || res.code === -99) {
                     removeStorageData('token');
                     removeStorageData('userInfo');
                     removeStorageData('tagsList');
