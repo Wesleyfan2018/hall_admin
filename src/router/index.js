@@ -53,7 +53,12 @@ export const constantRouterMap = [
                 path: '/sys-manage/logon-record',
                 name: 'LogonRecord',
                 component: _import('SysManage/LogonRecord'),
-            }
+            },
+            {
+                path: '/sys-manage/demo',
+                name: 'DemoPage',
+                component: _import('SysManage/demoPage'),
+            },
         ]
     }
 ];

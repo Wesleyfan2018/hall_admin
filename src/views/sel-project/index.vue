@@ -4,7 +4,7 @@
             <navbar />
             <el-row class="mainBox">
                 <div class="card text-center" v-for="(i, t) in proList" :key="(i, t)">
-                    <div class="cardItem" @click="toSuit(i.projectId)" :style="{ 'background-image': 'url('+ i.imgUrl +')'}" >
+                    <div class="cardItem" @click="toSuit(i.path)" :style="{ 'background-image': 'url('+ i.imgUrl +')'}" >
                         <div class="cardTitle opaciity">{{i.title}}</div>
                     </div>
                 </div>
@@ -29,16 +29,9 @@ export default {
     },
     data() {
         return {
-            username: 'admin',
-            password: '111111',
-            loading: false,
-            kk: 'img.png',
-            passwordType: 'password',
             proList: [
-                { title: '中控中心', projectId: 1, imgUrl: require('../../assets/image/bigData.png') },
-                { title: '数据中心', projectId: 2, imgUrl: require('../../assets/image/bigData2.png') },
-                { title: '配置中心', projectId: 3, imgUrl: require('../../assets/image/bigData3.png') },
-                { title: '助手中心', projectId: 4, imgUrl: require('../../assets/image/bigData4.png') }
+                { title: '数据中心', path: '/', imgUrl: require('../../assets/image/bigData.png') },
+                { title: '对比工具', path: 'http://flat.stv.com/diff/', imgUrl: require('../../assets/image/bigData3.png') }
             ]
         };
     },
@@ -55,9 +48,13 @@ export default {
             this.setTagsList([{ value: '首页', path: '/', pathName: '/' }]);
             this.setTagsIndex(0);
             this.setActiveMenuItem('0');
-            router.push({
-                path: '/'
-            });
+            if (str.indexOf('http') === -1) {
+                router.push({
+                    path: str
+                });
+            } else {
+                window.open(str);
+            }
         }
     }
 };
@@ -71,7 +68,8 @@ export default {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    background: url('../../assets/image/loginbg_01.jpg');
+    background: url('../../assets/image/loginbg_01.jpg')no-repeat;
+    background-size: 100% 100%;
 }
 .iconStyle { font-size: 100px!important; }
 .text-center{ text-align:center; }

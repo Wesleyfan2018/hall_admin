@@ -1,8 +1,11 @@
 <template>
     <div class="navbar">
         <div class="right-menu">
+            <div v-show="pathname !== '/sel-project'" class="chaEnv">
+                <a @click="backSelect">返回九宫格</a>
+            </div>
             <div v-show="showEnv" class="chaEnv">
-                <a href="#">切换环境</a>
+                <a>切换环境</a>
             </div>
             <el-dropdown class="avatar-container" trigger="click">
                 <div class="avatar-wrapper">
@@ -37,6 +40,7 @@ export default {
     data() {
         return {
             userInfo: {},
+            pathname: window.location.pathname
         };
     },
     created() {
@@ -85,6 +89,11 @@ export default {
         changePwd() {
             router.push({
                 path: '/changepwd'
+            });
+        },
+        backSelect() {
+            router.push({
+                path: '/sel-project'
             });
         }
     }
@@ -173,7 +182,8 @@ export default {
         }
         }
         .chaEnv {
-            margin: 0px 20px;
+            margin: 0;
+            margin-right:20px;
             line-height: 70px;
             font-size: 14px;
             a {

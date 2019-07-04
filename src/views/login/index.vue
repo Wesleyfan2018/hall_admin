@@ -82,6 +82,8 @@ export default {
                     router.push({
                         path: '/sel-project'
                     });
+                } else {
+                    this.$message.error(res.msg);
                 }
             });
         }
