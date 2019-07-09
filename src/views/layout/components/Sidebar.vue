@@ -110,7 +110,6 @@ export default {
                     List.push(itemList[t]);
                 }
             }
-            console.log(List);
             return List;
         },
         handleSelect(obj) {

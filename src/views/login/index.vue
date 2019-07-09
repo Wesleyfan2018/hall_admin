@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import ajax from '@/utils/ajax';
+import { revoke } from '@/api/getApi';
 import router from '@/router';
-import { Enmd5, setStorageData } from '@/utils/auth';
+import { setStorageData } from '@/utils/auth';
 export default {
     data() {
         return {
@@ -74,8 +74,7 @@ export default {
                 userName: this.username,
                 password: this.password,
             };
-            data._sig = Enmd5(data);
-            ajax.post('/hall-admin-new/index.php?m=login&p=index&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=login&p=index&g=10000', data).then(res => {
                 if (res.code === 0) {
                     setStorageData('userInfo', res.data);
                     setStorageData('token', res.data.token);

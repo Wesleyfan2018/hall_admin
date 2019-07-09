@@ -293,7 +293,7 @@ module.exports = {
         // 禁止使用八进制的转义符
         'no-octal-escape': 'error',
         // 禁止对函数的参数重新赋值
-        'no-param-reassign': 'error',
+        // 'no-param-reassign': 'error',
         // 禁止使用 __proto__
         'no-proto': 'error',
         // 禁止重复定义变量

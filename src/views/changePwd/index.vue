@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import ajax from '@/utils/ajax';
-import { getStorageData, Enmd5 } from '@/utils/auth';
+import { revoke } from '@/api/getApi';
+import { getStorageData } from '@/utils/auth';
 import { setInterval } from 'timers';
 export default {
     name: 'changePwd',
@@ -70,8 +70,7 @@ export default {
                 oldPwd: this.oldpwd,
                 newPwd: this.newpwd
             };
-            data._sig = Enmd5(data);
-            ajax.post('/hall-admin-new/index.php?m=user&p=changePwd&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=user&p=changePwd', data).then(res => {
                 if (res.code === 0) {
                     this.$message({
                         message: '密码修改成功！',
@@ -79,7 +78,7 @@ export default {
                     });
                     setInterval(function() {
                         window.location.reload();
-                    }, 1000);
+                    }, 500);
                 } else {
                     this.$message.error(res.msg);
                 }

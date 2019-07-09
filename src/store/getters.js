@@ -1,5 +1,7 @@
 const getters = {
     token: state => state.user.token,
+    g: state => state.user.g,
+    e: state => state.user.e,
     menuList: state => state.tagsview.menuList,
     tagsList: state => state.tagsview.tagsList,
     tagIndex: state => state.tagsview.tagIndex,

@@ -54,74 +54,75 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog title="编辑用户信息" :visible.sync="editVisble" width="30%" :before-close="handleEditClose">
-            <el-form label-position="right" label-width="120px" :model="selectUser">
-                <el-form-item label="姓名">
-                    <el-input class="form-input" disabled v-model="selectUser.name"></el-input>
-                </el-form-item>
-                <el-form-item label="角色">
-                    <el-select class="form-input" v-model="selectUser.actor">
-                        <el-option
-                            v-for="(i, t) in actors"
-                            :key="(i, t)"
-                            :label="i"
-                            :value="t">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="重置密码">
-                    <el-input class="form-input" placeholder="如需修改请输入新密码" v-model="rePassword"></el-input>
-                </el-form-item>
-                <el-form-item label="电话号码">
-                    <el-input class="form-input" placeholder="请输入电话号码" v-model="selectUser.phone"></el-input>
-                </el-form-item>
-                <el-form-item label="状态">
-                    <el-radio-group v-model="selectUser.status">
-                    <el-radio v-for="(i, t) in status" :key="(i, t)" :label="t">{{i}}</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisble = false">取 消</el-button>
-                <el-button type="success" @click="confirEdit">确 定</el-button>
-            </span>
-        </el-dialog>
-        <el-dialog title="新增用户信息" :visible.sync="addVisble" width="30%" :before-close="handleAddClose">
-            <el-form label-position="right" label-width="120px" :model="addUser" class="dialog-form">
-                <el-form-item label="账号名">
-                    <el-input class="form-input" v-model="addUser.name"></el-input>
-                </el-form-item>
-                <el-form-item label="姓名">
-                    <el-input class="form-input" v-model="addUser.real_name"></el-input>
-                </el-form-item>
-                <el-form-item label="角色">
-                    <el-select class="form-input" v-model="addUser.actor" placeholder="请选择角色">
-                        <el-option
-                            v-for="(i, t) in actors"
-                            :key="(i, t)"
-                            :label="i"
-                            :value="t">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="设置密码">
-                    <el-input class="form-input" type="password" placeholder="请设置密码" v-model="addUser.password"></el-input>
-                </el-form-item>
-                <el-form-item label="电话号码">
-                    <el-input class="form-input" placeholder="请输入电话号码" v-model="addUser.phone"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="addVisble = false">取 消</el-button>
-                <el-button type="success" @click="confirAdd">添 加</el-button>
-            </span>
-        </el-dialog>
+        <div class="dialog_div">
+            <el-dialog title="编辑用户信息" :visible.sync="editVisble" width="30%" :before-close="handleEditClose">
+                <el-form label-position="right" label-width="120px" :model="selectUser">
+                    <el-form-item label="姓名">
+                        <el-input class="form-input" disabled v-model="selectUser.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="角色">
+                        <el-select class="form-input" v-model="selectUser.actor">
+                            <el-option
+                                v-for="(i, t) in actors"
+                                :key="(i, t)"
+                                :label="i"
+                                :value="t">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="重置密码">
+                        <el-input class="form-input" placeholder="如需修改请输入新密码" v-model="rePassword"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话号码">
+                        <el-input class="form-input" placeholder="请输入电话号码" v-model="selectUser.phone"></el-input>
+                    </el-form-item>
+                    <el-form-item label="状态">
+                        <el-radio-group v-model="selectUser.status">
+                        <el-radio v-for="(i, t) in status" :key="(i, t)" :label="t">{{i}}</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="editVisble = false">取 消</el-button>
+                    <el-button type="success" @click="confirEdit">确 定</el-button>
+                </span>
+            </el-dialog>
+            <el-dialog title="新增用户信息" :visible.sync="addVisble" width="30%" :before-close="handleAddClose">
+                <el-form label-position="right" label-width="120px" :model="addUser" class="dialog-form">
+                    <el-form-item label="账号名">
+                        <el-input class="form-input" v-model="addUser.name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="姓名">
+                        <el-input class="form-input" v-model="addUser.real_name"></el-input>
+                    </el-form-item>
+                    <el-form-item label="角色">
+                        <el-select class="form-input" v-model="addUser.actor" placeholder="请选择角色">
+                            <el-option
+                                v-for="(i, t) in actors"
+                                :key="(i, t)"
+                                :label="i"
+                                :value="t">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="设置密码">
+                        <el-input class="form-input" type="password" placeholder="请设置密码" v-model="addUser.password"></el-input>
+                    </el-form-item>
+                    <el-form-item label="电话号码">
+                        <el-input class="form-input" placeholder="请输入电话号码" v-model="addUser.phone"></el-input>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="addVisble = false">取 消</el-button>
+                    <el-button type="success" @click="confirAdd">添 加</el-button>
+                </span>
+            </el-dialog>
+        </div>
     </div>
 </template>
 <script>
-import ajax from '@/utils/ajax';
+import { revoke } from '@/api/getApi';
 import router from '@/router';
-import { Enmd5 } from '@/utils/auth';
 export default {
     name: 'UserList',
     data() {
@@ -168,8 +169,7 @@ export default {
                 actor: this.selectUser.actor,
                 status: this.selectUser.status
             };
-            data._sig = Enmd5(data);
-            ajax.post('/hall-admin-new/index.php?m=user&p=edit&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=user&p=edit', data).then(res => {
                 if (res.code === 0) {
                     this.editVisble = false;
                     this.$message({
@@ -182,7 +182,6 @@ export default {
                         page: this.currentPage,
                         pageNum: this.pageSize,
                     };
-                    data._sig = Enmd5(data);
                     this.getTableList(data);
                 } else {
                     this.$message.error(res.msg);
@@ -191,8 +190,7 @@ export default {
         },
         selectOption() {
             let data = {};
-            data._sig = Enmd5(data);
-            ajax.post('/hall-admin-new/index.php?m=config&p=user&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=config&p=user', data).then(res => {
                 if (res.code === 0) {
                     this.actors = res.data.actor;
                     this.status = res.data.status;
@@ -212,8 +210,7 @@ export default {
                 page: self.currentPage,
                 pageNum: self.pageSize,
             };
-            data._sig = Enmd5(data);
-            ajax.post('/hall-admin-new/index.php?m=user&p=lists&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=user&p=lists', data).then(res => {
                 if (res.code === 0) {
                     let tableData = res.data.list;
                     for (let i in tableData) {
@@ -231,7 +228,7 @@ export default {
             });
         },
         getTableList(data) {
-            ajax.post('/hall-admin-new/index.php?m=user&p=lists&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=user&p=lists', data).then(res => {
                 if (res.code === 0) {
                     let tableData = res.data.list;
                     for (let i in tableData) {
@@ -268,7 +265,6 @@ export default {
                 page: this.currentPage,
                 pageNum: this.pageSize,
             };
-            data._sig = Enmd5(data);
             this.getTableList(data);
         },
         // 切换分页器
@@ -280,7 +276,6 @@ export default {
                 page: this.currentPage,
                 pageNum: this.pageSize,
             };
-            data._sig = Enmd5(data);
             this.getTableList(data);
         },
         // 搜索
@@ -291,7 +286,6 @@ export default {
                 page: this.currentPage,
                 pageNum: this.pageSize,
             };
-            data._sig = Enmd5(data);
             this.getTableList(data);
         },
         // 弹出框close
@@ -306,8 +300,7 @@ export default {
             this.addVisble = true;
         },
         confirAdd() {
-            this.addUser._sig = Enmd5(this.addUser);
-            ajax.post('/hall-admin-new/index.php?m=user&p=add&g=10000', this.addUser).then(res => {
+            revoke('/hall-admin-new/index.php?m=user&p=add', this.addUser).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;
                     this.$message({
@@ -320,7 +313,6 @@ export default {
                         page: this.currentPage,
                         pageNum: this.pageSize,
                     };
-                    data._sig = Enmd5(data);
                     this.getTableList(data);
                 } else {
                     this.$message.error(res.msg);
@@ -353,9 +345,9 @@ export default {
 </style>
 <style lang="scss">
 .el-dialog__header {
-    padding: 20px 20px 10px;
-    background-color: #f0f2f5;
-}
+        padding: 20px 20px 10px;
+        background-color: #f0f2f5;
+    }
 .el-dialog__footer {
     padding: 10px 20px 20px;
     text-align: right;

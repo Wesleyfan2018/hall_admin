@@ -13,7 +13,6 @@
     </div>
 </template>
 <script>
-// import ajax from '@/utils/ajax';
 import { Navbar, AppMain, Sidebar, TagsView } from './components';
 export default {
     name: 'Layout',

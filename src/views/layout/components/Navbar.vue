@@ -5,7 +5,7 @@
                 <a @click="backSelect">返回九宫格</a>
             </div>
             <div v-show="showEnv" class="chaEnv">
-                <a>切换环境</a>
+                <a @click="changeEnv">{{curEnv}}</a>
             </div>
             <el-dropdown class="avatar-container" trigger="click">
                 <div class="avatar-wrapper">
@@ -28,25 +28,104 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
+        <div class="dialog_div">
+            <el-dialog title="选择环境" :visible.sync="envVisible" width="40%">
+            <el-form label-position="right" label-width="120px" class="dialog-form">
+                <el-form-item v-for="(item, idx) in envList" :key="(item, idx)" :label="item.gameName + ':'">
+                        <el-radio-group v-model="envRadio">
+                            <el-radio-button v-for="(t, i) in item.list" :key="(t, i)" :label="item.game + '-' + t.env">{{t.label}}</el-radio-button>
+                        </el-radio-group>
+                    </el-form-item>
+                </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="envVisible = false">关 闭</el-button>
+                <el-button type="success" @click="confirmEnv">确 认</el-button>
+            </span>
+        </el-dialog>
+        </div>
     </div>
 </template>
 
 <script>
-import ajax from '@/utils/ajax';
+import { revoke } from '@/api/getApi';
 import router from '@/router';
-import { getStorageData, Enmd5, removeStorageData } from '@/utils/auth';
-import { mapActions } from 'vuex';
+import { getStorageData, removeStorageData } from '@/utils/auth';
+import { mapState, mapActions } from 'vuex';
 export default {
     data() {
         return {
             userInfo: {},
-            pathname: window.location.pathname
+            pathname: window.location.pathname,
+            envVisible: false,
+            envRadio: '',
+            curEnv: '',
+            envList: [
+                {
+                    game: 10000,
+                    gameName: '红幺鸡麻将',
+                    list: [
+                        {
+                            env: 1,
+                            label: '测试服'
+                        },
+                        {
+                            env: 2,
+                            label: '预发布服'
+                        },
+                        {
+                            env: 3,
+                            label: '正式服'
+                        },
+                    ]
+                },
+                {
+                    game: 10001,
+                    gameName: '微信小游戏',
+                    list: [
+                        {
+                            env: 1,
+                            label: '测试服'
+                        },
+                        {
+                            env: 2,
+                            label: '预发布服'
+                        },
+                        {
+                            env: 3,
+                            label: '正式服'
+                        },
+                    ]
+                },
+                {
+                    game: 10002,
+                    gameName: '大圣游戏大厅',
+                    list: [
+                        {
+                            env: 1,
+                            label: '测试服'
+                        },
+                        {
+                            env: 2,
+                            label: '预发布服'
+                        },
+                        {
+                            env: 3,
+                            label: '正式服'
+                        },
+                    ]
+                }
+            ]
         };
     },
     created() {
         this.getUserInfo();
+        this.getEnvParam();
     },
     computed: {
+        ...mapState({
+            g: state => state.user.g,
+            e: state => state.user.e,
+        }),
         showEnv: function() {
             let pathname = window.location.pathname;
             if (pathname === '/sel-project') {
@@ -58,19 +137,22 @@ export default {
     },
     methods: {
         ...mapActions([
+            'setGame',
+            'setEnv',
             'setTagsList',
             'setTagsIndex',
             'setActiveMenuItem'
         ]),
+        // 获取个人信息
         getUserInfo() {
             let self = this;
             let userInfoStr = getStorageData('userInfo');
             self.userInfo = JSON.parse(userInfoStr);
         },
+        // 注销
         layLogout() {
             let data = {};
-            data._sig = Enmd5(data);
-            ajax.post('/hall-admin-new/index.php?m=login&p=logout&g=10000', data).then(res => {
+            revoke('/hall-admin-new/index.php?m=login&p=logout&g=10000', data).then(res => {
                 if (res.code === 0 || res.code === -99) {
                     removeStorageData('token');
                     removeStorageData('userInfo');
@@ -86,15 +168,42 @@ export default {
                 }
             });
         },
+        // 跳转修改密码
         changePwd() {
             router.push({
                 path: '/changepwd'
             });
         },
+        // 返回九宫格
         backSelect() {
             router.push({
                 path: '/sel-project'
             });
+        },
+        // 切换环境弹层
+        changeEnv() {
+            this.envVisible = true;
+        },
+        // 环境选择确认
+        confirmEnv() {
+            this.envVisible = false;
+            let selectEnvStr = this.envRadio;
+            selectEnvStr = selectEnvStr.split(/-/);
+            let g = Number(selectEnvStr[0]);
+            let e = Number(selectEnvStr[1]);
+            this.setGame(g);
+            this.setEnv(e);
+            let selectGame = this.envList.find(item => item.game === g);
+            let selectEnv = selectGame.list.find(item => item.env === e);
+            this.curEnv = selectGame.gameName + '-' + selectEnv.label;
+            window.location.reload();
+        },
+        // 获取项目、环境参数
+        getEnvParam() {
+            this.envRadio = this.g + '-' + this.e;
+            let selectGame = this.envList.find(item => item.game === this.g);
+            let selectEnv = selectGame.list.find(item => item.env === this.e);
+            this.curEnv = selectGame.gameName + '-' + selectEnv.label;
         }
     }
 };
@@ -190,6 +299,20 @@ export default {
                 text-decoration: none;
                 color: coral;
             }
+        }
+    }
+    .dialog_div {
+        line-height: 28px;
+        .el-dialog__header {
+        padding: 20px 20px 10px;
+        background-color: #f0f2f5;
+        }
+        .el-dialog__footer {
+            padding: 10px 20px 20px;
+            text-align: right;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            background-color: #f0f2f5;
         }
     }
 }
