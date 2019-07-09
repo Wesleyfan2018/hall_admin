@@ -20,7 +20,7 @@
                 label="地址">
                 </el-table-column>
             </el-table>
-            <div class="block" style="margin: 20px 0;">
+            <!-- <div class="block" style="margin: 20px 0;">
                 <el-pagination
                     background
                     @size-change="handleSizeChange"
@@ -31,7 +31,7 @@
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="4">
                 </el-pagination>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

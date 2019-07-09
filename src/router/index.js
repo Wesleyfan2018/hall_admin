@@ -53,11 +53,20 @@ export const constantRouterMap = [
                 path: '/sys-manage/logon-record',
                 name: 'LogonRecord',
                 component: _import('SysManage/LogonRecord'),
-            },
+            }
+        ]
+    },
+    // 页面demo
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: layout,
+        meta: { keepAlive: true },
+        children: [
             {
-                path: '/sys-manage/demo',
-                name: 'DemoPage',
-                component: _import('SysManage/demoPage'),
+                path: '/demo-module/demo1',
+                name: 'Demo1',
+                component: _import('DemoModule/demo1'),
             },
         ]
     }

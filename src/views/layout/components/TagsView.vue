@@ -45,6 +45,22 @@ export default {
                 this.tagsList.splice(num, 1);
                 this.cachedViews.splice(num, 1);
                 this.setTagsList(this.tagsList);
+                let str = this.tagsList[this.tagIndex].path;
+                let menuIndex = Number;
+                let itemIndex = Number;
+                let activeIndex = '';
+                if (str === '/') {
+                    activeIndex = '0';
+                } else {
+                    for (let i in this.menuList) {
+                        if (this.menuList[i].menuItem.findIndex(item => item.path === str) !== -1) {
+                            menuIndex = i;
+                            itemIndex = this.menuList[i].menuItem.map(item => item.path).indexOf(str);
+                        }
+                    }
+                    activeIndex = menuIndex + '-' + itemIndex;
+                }
+                this.setActiveMenuItem(activeIndex);
                 router.push({
                     path: this.tagsList[this.tagIndex].path
                 });

@@ -23,6 +23,17 @@ const tagsview = {
                         path: '/changepwd'
                     }
                 ]
+            },
+            {
+                name: 'Demo模板',
+                iconCLass: 'el-icon-monitor',
+                menuItem: [
+                    {
+                        value: 'demo模板1',
+                        pathName: 'Demo1',
+                        path: '/demo-module/demo1'
+                    }
+                ]
             }
         ] || [],
         tagsList: JSON.parse(getStorageData('tagsList')) || [{ value: '首页', path: '/', pathName: '/' }],
