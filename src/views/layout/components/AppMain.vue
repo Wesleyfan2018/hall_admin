@@ -3,7 +3,9 @@
         <div class="app-container">
             <transition name="fade-transform" mode="out-in">
                 <keep-alive :include="this.cachedViews">
+                    <!-- <el-scrollbar wrap-class="scrollbar-wrapper"> -->
                     <router-view :key="key" />
+                    <!-- </el-scrollbar> -->
                 </keep-alive>
             </transition>
         </div>
@@ -32,7 +34,7 @@ export default {
     min-height: calc(100vh - 110px);
     width: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     background-color: #f0f2f5;
 }
 .app-container {

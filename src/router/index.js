@@ -68,6 +68,11 @@ export const constantRouterMap = [
                 name: 'Demo1',
                 component: _import('DemoModule/demo1'),
             },
+            {
+                path: '/demo-module/demo2',
+                name: 'Demo2',
+                component: _import('testMd/editor'),
+            }
         ]
     }
 ];
