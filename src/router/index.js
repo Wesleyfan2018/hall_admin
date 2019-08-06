@@ -50,10 +50,92 @@ export const constantRouterMap = [
                 component: _import('SysManage/UserList'),
             },
             {
+                path: '/sys-manage/actor',
+                name: 'Actor',
+                component: _import('SysManage/actor'),
+            },
+            {
                 path: '/sys-manage/logon-record',
                 name: 'LogonRecord',
                 component: _import('SysManage/LogonRecord'),
+            },
+            {
+                path: '/sys-manage/menu',
+                name: 'Menu',
+                component: _import('SysManage/menu'),
             }
+
+
+        ]
+    },
+    // 业务
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: layout,
+        meta: { keepAlive: true },
+        children: [
+            {
+                path: '/business/smslog',
+                name: 'smslog',
+                component: _import('business/smslog'),
+            },
+            {
+                path: '/business/exchangelog',
+                name: 'Exchangelog',
+                component: _import('business/exchangelog'),
+            },
+            {
+                path: '/business/userinfo',
+                name: 'userinfo',
+                component: _import('business/userinfo'),
+            },
+
+
+
+        ]
+    },
+    // 调试工具
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: layout,
+        meta: { keepAlive: true },
+        children: [
+            {
+                path: '/debug/run',
+                name: 'phprun',
+                component: _import('debug/run'),
+            },
+            {
+                path: '/debug/logs',
+                name: 'index',
+                component: _import('debug/logs'),
+            },
+            {
+                path: '/debug/statistics',
+                name: 'statistics',
+                component: _import('debug/statistics'),
+            },
+        ]
+    },
+    // 配置管理
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: layout,
+        meta: { keepAlive: true },
+        children: [
+            {
+                path: '/confmanage/exchangetag',
+                name: 'index',
+                component: _import('ConfManage/exchangeTag'),
+            },
+            {
+                path: '/confmanage/sendlog',
+                name: 'index',
+                component: _import('ConfManage/sendlog'),
+            },
         ]
     },
     // 页面demo
@@ -71,7 +153,7 @@ export const constantRouterMap = [
             {
                 path: '/demo-module/demo2',
                 name: 'Demo2',
-                component: _import('testMd/editor'),
+                component: _import('DemoModule/demo2'),
             }
         ]
     }

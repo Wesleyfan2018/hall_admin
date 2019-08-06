@@ -7,7 +7,7 @@
                 :key="(item, idx)"
                 :closable="idx !== 0"
                 size="medium"
-                @click="handleClick(idx, item.path)"
+                @click="handleClick(idx, item)"
                 @close="handleClose(idx)"
                 :effect="idx === tagIndex ? 'dark' : 'plain'">
                 {{ item.value }}
@@ -28,6 +28,7 @@ export default {
         ...mapState({
             menuList: state => state.tagsview.menuList,
             cachedViews: state => state.tagsview.cachedViews,
+            visiHistory: state => state.tagsview.visiHistory,
             tagsList: state => state.tagsview.tagsList,
             tagIndex: state => state.tagsview.tagIndex,
             activeMenuItem: state => state.tagsview.activeMenuItem
@@ -37,7 +38,8 @@ export default {
         ...mapActions([
             'setTagsList',
             'setTagsIndex',
-            'setActiveMenuItem'
+            'setActiveMenuItem',
+            'setVisiHistory'
         ]),
         handleClose(num) {
             if (num === this.tagIndex) {
@@ -74,12 +76,16 @@ export default {
                 }
             }
         },
-        handleClick(num, str) {
+        handleClick(num, obj) {
+            if (this.visiHistory.findIndex(item => item.path === obj.path) === -1 && obj.path !== '/') {
+                this.visiHistory.unshift(obj);
+                this.setVisiHistory(this.visiHistory);
+            }
             this.setTagsIndex(num);
-            let index = this.activeItem(str);
+            let index = this.activeItem(obj.path);
             this.setActiveMenuItem(index);
             router.push({
-                path: str
+                path: obj.path
             });
         },
         // 更改menuItem打开的index

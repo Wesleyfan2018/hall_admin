@@ -35,6 +35,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { revoke } from '@/api/getApi';
 import router from '@/router';
 export default {
     name: 'Sidebar',
@@ -50,16 +51,34 @@ export default {
             menuList: state => state.tagsview.menuList,
             cachedViews: state => state.tagsview.cachedViews,
             tagsList: state => state.tagsview.tagsList,
+            visiHistory: state => state.tagsview.visiHistory,
             tagIndex: state => state.tagsview.tagIndex,
             activeMenuItem: state => state.tagsview.activeMenuItem
         })
     },
+    created() {
+        this.getMenList();
+    },
     methods: {
         ...mapActions([
             'setTagsList',
+            'setMenuList',
             'setTagsIndex',
-            'setActiveMenuItem'
+            'setActiveMenuItem',
+            'setVisiHistory'
         ]),
+        // 获取菜单
+        getMenList() {
+            let data = {};
+            revoke('/hall-admin-new/index.php?m=system&p=init', data).then(res => {
+                if (res.code === 0) {
+                    let menuList = res.data.menu;
+                    this.setMenuList(menuList);
+                } else {
+                    this.$message.error(res.msg);
+                }
+            });
+        },
         // 更改menuItem打开的index
         activeItem(str) {
             let menuIndex = Number;
@@ -77,6 +96,10 @@ export default {
             return activeIndex;
         },
         clickItem(obj) {
+            if (this.visiHistory.findIndex(item => item.path === obj.path) === -1 && obj.path !== '/') {
+                this.visiHistory.unshift(obj);
+                this.setVisiHistory(this.visiHistory);
+            }
             if (this.tagsList.findIndex(item => item.path === obj.path) === -1) {
                 this.tagsList.push(obj);
                 this.setTagsList(this.tagsList);

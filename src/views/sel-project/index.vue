@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             proList: [
-                { title: '数据中心', path: '/', imgUrl: require('../../assets/image/bigData.png') },
+                { title: '配置中心', path: '/', imgUrl: require('../../assets/image/bigData.png') },
                 { title: '对比工具', path: 'http://flat.stv.com/diff/', imgUrl: require('../../assets/image/bigData3.png') }
             ]
         };

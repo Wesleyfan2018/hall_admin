@@ -61,7 +61,7 @@ export default {
             curEnv: '',
             envList: [
                 {
-                    game: 10000,
+                    game: 9999,
                     gameName: '红幺鸡麻将',
                     list: [
                         {
@@ -70,16 +70,20 @@ export default {
                         },
                         {
                             env: 2,
-                            label: '预发布服'
+                            label: '体验服'
                         },
                         {
                             env: 3,
+                            label: '预发布服'
+                        },
+                        {
+                            env: 4,
                             label: '正式服'
                         },
                     ]
                 },
                 {
-                    game: 10001,
+                    game: 10000,
                     gameName: '微信小游戏',
                     list: [
                         {
@@ -88,16 +92,20 @@ export default {
                         },
                         {
                             env: 2,
-                            label: '预发布服'
+                            label: '体验服'
                         },
                         {
                             env: 3,
+                            label: '预发布服'
+                        },
+                        {
+                            env: 4,
                             label: '正式服'
                         },
                     ]
                 },
                 {
-                    game: 10002,
+                    game: 10001,
                     gameName: '大圣游戏大厅',
                     list: [
                         {
@@ -106,10 +114,14 @@ export default {
                         },
                         {
                             env: 2,
-                            label: '预发布服'
+                            label: '体验服'
                         },
                         {
                             env: 3,
+                            label: '预发布服'
+                        },
+                        {
+                            env: 4,
                             label: '正式服'
                         },
                     ]

@@ -81,6 +81,12 @@
                         <el-radio v-for="(i, t) in status" :key="(i, t)" :label="t">{{i}}</el-radio>
                         </el-radio-group>
                     </el-form-item>
+
+                  <el-form-item label="特殊权限">
+                        <el-checkbox-group  v-model="usepermission">
+                        <el-checkbox v-for="v in permission"  :label="v.id" :key="v.id">{{v.name}}</el-checkbox>
+                        </el-checkbox-group>
+                   </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="editVisble = false">取 消</el-button>
@@ -111,6 +117,11 @@
                     <el-form-item label="电话号码">
                         <el-input class="form-input" placeholder="请输入电话号码" v-model="addUser.phone"></el-input>
                     </el-form-item>
+                    <el-form-item label="特殊权限">
+                        <el-checkbox-group  v-model="addUser.permission">
+                        <el-checkbox v-for="v in permission"  :label="v.id" :key="v.id">{{v.name}}</el-checkbox>
+                        </el-checkbox-group>
+                   </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addVisble = false">取 消</el-button>
@@ -122,7 +133,6 @@
 </template>
 <script>
 import { revoke } from '@/api/getApi';
-import router from '@/router';
 export default {
     name: 'UserList',
     data() {
@@ -130,6 +140,8 @@ export default {
             status: [],
             tableData: [],
             actors: [],
+            permission: [], // 权限
+            usepermission: [], // 已有权限
             actor: 0,
             totalPage: 0,
             pageSize: 5,
@@ -143,14 +155,16 @@ export default {
                 actor: '',
                 status: '',
                 password: '',
-                phone: ''
+                phone: '',
+                permission: '',
             },
             addUser: {
                 name: '',
                 real_name: '',
                 actor: '',
                 password: '',
-                phone: ''
+                phone: '',
+                permission: [],
             }
         };
     },
@@ -167,7 +181,9 @@ export default {
                 real_name: this.selectUser.real_name,
                 phone: this.selectUser.phone,
                 actor: this.selectUser.actor,
-                status: this.selectUser.status
+                password: this.rePassword,
+                status: this.selectUser.status,
+                permission: this.usepermission.join(','),
             };
             revoke('/hall-admin-new/index.php?m=user&p=edit', data).then(res => {
                 if (res.code === 0) {
@@ -191,14 +207,11 @@ export default {
         selectOption() {
             let data = {};
             revoke('/hall-admin-new/index.php?m=config&p=user', data).then(res => {
+                console.log(res);
                 if (res.code === 0) {
                     this.actors = res.data.actor;
                     this.status = res.data.status;
-                }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
+                    this.permission = res.data.permission;
                 }
             });
         },
@@ -220,11 +233,6 @@ export default {
                     self.tableData = tableData;
                     self.totalPage = res.data.total;
                 }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
-                }
             });
         },
         getTableList(data) {
@@ -238,20 +246,17 @@ export default {
                     this.tableData = tableData;
                     this.totalPage = res.data.total;
                 }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
-                }
             });
         },
         // 编辑用户信息
         handleEdit(index, row) {
+            console.log(row);
             this.editVisble = true;
             this.selectUser.id = row.id;
             this.selectUser.phone = row.phone;
             this.selectUser.password = this.rePassword;
             this.selectUser.real_name = row.real_name;
+            this.usepermission = row.permission.split(',');// 逗号切割
             this.selectUser.name = row.real_name + '(' + row.name + ')';
             this.selectUser.actor = parseInt(row.actor, 10);
             this.selectUser.status = parseInt(row.status, 10);
@@ -300,6 +305,7 @@ export default {
             this.addVisble = true;
         },
         confirAdd() {
+            this.addUser.permission = this.addUser.permission.join(',');
             revoke('/hall-admin-new/index.php?m=user&p=add', this.addUser).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;

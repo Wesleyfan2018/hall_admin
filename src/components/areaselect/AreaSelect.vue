@@ -1,181 +1,160 @@
 <template>
     <div>
-        <div class="area-select" @click="fuck2">
+        <div class="area-select" @click="select_area">
             <div class="area-select-input">
-                <el-tag v-show="areaVal.length > 0" size="small" closable type="info" @close="fuck">{{options[areaVal[0]]}}</el-tag>
-                <el-tag v-show="areaVal.length > 1" size="small" type="info">+{{areaVal.length - 1}}</el-tag>
+                <el-tag v-show="areaValue.length > 0" size="small" closable type="info" @close="delete_tag">{{showTag}}</el-tag>
+                <el-tag v-show="areaValue.length > 1" size="small" type="info">.....</el-tag>
             </div>
             <div class="el-input el-input--suffix is-focus">
                 <input type="text" readonly="readonly" placeholder="" class="el-input__inner" style="height: 40px;">
             </div>
         </div>
-        <el-dialog title="选择地区" :visible.sync="aeraVisble" width="40%">
-            <el-transfer
-                style="width:90%;margin:0 5%;"
-                filterable
-                filter-placeholder="请输入地区名"
-                v-model="areaVal"
-                :data="areaData">
-            </el-transfer>
-            <!-- <span slot="footer" class="dialog-footer">
-                <el-button @click="aeraVisble = false">关 闭</el-button>
-            </span> -->
+        <el-dialog title="选择地区" :visible.sync="aeraVisble" width="20%">
+            <el-form class="text-center">
+                <el-form-item>
+                    <el-input placeholder="输入关键字进行搜索" v-model="filterText"></el-input>
+                    <div v-show="isMultiple" class="aera_select_tree_box">
+                        <el-tree
+                            show-checkbox
+                            class="filter-tree"
+                            :data="data"
+                            node-key="id"
+                            :props="defaultProps"
+                            :default-expand-all="false"
+                            :filter-node-method="filterNode"
+                            ref="tree_multiple">
+                        </el-tree>
+                    </div>
+                    <div v-show="!isMultiple" class="aera_select_tree_box">
+                        <el-tree
+                            class="filter-tree"
+                            :data="data"
+                            node-key="id"
+                            @node-click="single_click"
+                            :props="defaultProps"
+                            :default-expand-all="false"
+                            :filter-node-method="filterNode"
+                            ref="tree_single">
+                        </el-tree>
+                    </div>
+                    <el-button v-show="isMultiple" type="success" @click="confirmSelect">确认</el-button>
+                </el-form-item>
+            </el-form>
         </el-dialog>
     </div>
 </template>
 
 <script>
+import { revoke } from '@/api/getApi';
 export default {
     name: 'Areaselect',
-    props: ['areaList'],
+    props: ['isMultiple', 'has_area'],
     data() {
         return {
-            areaData: [],
-            areaVal: [],
-            options: {
-                51: '四川省',
-                5101: '成都市',
-                510107: '武侯区',
-                510104: '锦江区',
-                510105: '青羊区',
-                510106: '金牛区',
-                510108: '成华区',
-                510112: '龙泉驿区',
-                510115: '温江区',
-                510114: '新都区',
-                510113: '青白江区',
-                510116: '双流区',
-                510117: '郫都区',
-                510181: '都江堰市',
-                510182: '彭州市',
-                510183: '邛崃市',
-                510184: '崇州市',
-                512081: '简阳市',
-                510121: '金堂县',
-                510129: '大邑县',
-                510131: '蒲江县',
-                510132: '新津县',
-                5103: '自贡市',
-                510302: '自流井区',
-                510303: '贡井区',
-                510304: '大安区',
-                510311: '沿滩区',
-                510321: '荣县',
-                510322: '富顺区',
-                5104: '攀枝花市',
-                5105: '泸州市',
-                5106: '德阳市',
-                5107: '绵阳市',
-                5108: '广元市',
-                5109: '遂宁市',
-                5110: '内江市',
-                511001: '市辖区',
-                511002: '市中区',
-                511011: '东兴区',
-                511024: '威远县',
-                511025: '资中县',
-                511028: '隆昌市',
-                5111: '乐山市',
-                5113: '南充市',
-                5114: '眉山市',
-                5115: '宜宾市',
-                5116: '广安市',
-                5117: '达州市',
-                5118: '雅安市',
-                5119: '巴中市',
-                5120: '资阳市',
-                52: '贵州省',
-                5201: '贵阳市',
-                5202: '六盘水市',
-                5203: '遵义市',
-                5204: '安顺市',
-                5222: '铜仁地区',
-                5223: '黔西南州',
-                5224: '毕节地区',
-                5226: '黔东南苗族侗族自治州',
-                5227: '黔南布依族苗族自治州',
-                34: '安徽省',
-                3401: '合肥市',
-                340101: '市辖区',
-                340102: '瑶海区',
-                340103: '庐阳区',
-                340104: '蜀山区',
-                340111: '包河区',
-                340121: '长丰县',
-                340122: '肥东县',
-                340123: '肥西县',
-                3402: '芜湖市',
-                3403: '蚌埠市',
-                340301: '市辖区',
-                340302: '龙子湖区',
-                340303: '蚌山区',
-                340304: '禹会区',
-                340311: '淮上区',
-                340321: '怀远县',
-                340322: '五河县',
-                340323: '固镇县',
-                3404: '淮南市',
-                3405: '马鞍山市',
-                3406: '淮北市',
-                3407: '铜陵市',
-                3408: '安庆市',
-                3410: '黄山市',
-                3411: '滁州市',
-                3412: '阜阳市',
-                341201: '市辖区',
-                341202: '颍州区',
-                341203: '颍东区',
-                341204: '颍泉区',
-                341221: '临泉县',
-                341222: '太和县',
-                341225: '阜南县',
-                341226: '颍上县',
-                341282: '界首市',
-                3413: '宿州市',
-                3414: '巢湖市',
-                3415: '六安市',
-                3416: '亳州市',
-                3417: '池州市',
-                3418: '宣城市'
-            },
             aeraVisble: false,
-            areaValue: []
+            areaValue: [],
+            filterText: '',
+            data: [],
+            defaultProps: {
+                children: 'children',
+                label: 'name'
+            },
+            selectTrees: [],
+            showTag: ''
         };
     },
     created() {
-        this.getAreaOption();
+        this.getOptions();
     },
     methods: {
-        getAreaOption() {
-            let data = [];
-            for (let i in this.options) {
-                data.push({
-                    label: this.options[i],
-                    key: i
-                });
+        getOptions() {
+            let data = {};
+            revoke('/hall-admin-new/index.php?m=config&p=area', data).then(res => {
+                if (res.code === 0) {
+                    this.data = res.data;
+                    this.filter_data();
+                }
+            });
+        },
+        // 是否包含区选项适配
+        filter_data() {
+            let self = this;
+            if (!self.has_area) {
+                for (let i in self.data) {
+                    for (let t in self.data[i].children) {
+                        delete self.data[i].children[t].children;
+                    }
+                }
             }
-            this.areaData = data;
         },
-        // 地区选择
-        fuck() {
-            this.areaVal.splice(0, 1);
+        // 地区选择删除
+        delete_tag() {
+            this.areaValue.splice(0, 1);
         },
-        fuck2() {
+        // 弹框显示
+        select_area() {
             this.aeraVisble = true;
         },
-        closeDialog() {
+        // 复选确认
+        confirmSelect() {
+            this.formatData();
             this.aeraVisble = false;
-        }
+        },
+        // 单选点击
+        single_click(data) {
+            this.aeraVisble = false;
+            this.showTag = data.name;
+            this.areaValue.length = 0;
+            this.areaValue.push(data.id);
+        },
+        // 数据结构处理
+        formatData() {
+            this.areaValue = this.$refs.tree_multiple.getCheckedKeys();
+            if (this.areaValue.length === 0) { return false }
+            let showTagId = this.areaValue[0];
+            let showTagIdStr = this.areaValue[0].toString();
+            let showTagIdStr_prov = this.areaValue[0].toString().substring(0, 2);
+            let showTagIdStr_city = this.areaValue[0].toString().substring(0, 4);
+            if (showTagIdStr.length === 2) {
+                let province_index = this.data.find(item => item.id === showTagId);
+                this.showTag = province_index.name;
+            } else if (showTagIdStr.length === 4) {
+                let province_index = this.data.find(item => item.id === Number(showTagIdStr_prov));
+                province_index = province_index.children;
+                let city_index = province_index.find(item => item.id === showTagId);
+                this.showTag = city_index.name;
+            } else {
+                let province_index = this.data.find(item => item.id === Number(showTagIdStr_prov));
+                province_index = province_index.children;
+                let city_index = province_index.find(item => item.id === Number(showTagIdStr_city));
+                city_index = city_index.children;
+                let aera_index = city_index.find(item => item.id === showTagId);
+                this.showTag = aera_index.name;
+            }
+        },
+        // 搜索
+        filterNode(value, data) {
+            if (!value) return true;
+            return data.name.indexOf(value) !== -1;
+        },
     },
     watch: {
-        areaVal(val) {
+        // 监听选项变化
+        areaValue(val) {
             this.areaValue = val;
             this.$emit('areaValue', this.areaValue);
+        },
+        // 监听搜索内容变化
+        filterText(val) {
+            if (this.isMultiple) {
+                this.$refs.tree_multiple.filter(val);
+            } else {
+                this.$refs.tree_single.filter(val);
+            }
         }
     }
 };
 </script>
-
 <style lang="scss" scoped>
 .area-select {
     display:inline-block;
@@ -201,5 +180,7 @@ export default {
         flex-wrap: wrap;
     }
 }
+.aera_select_tree_box {
+    margin: 10px auto;min-height: 150px;max-height:250px;overflow: auto;border: 1px solid #DCDFE6;border-radius:5px;
+}
 </style>
-

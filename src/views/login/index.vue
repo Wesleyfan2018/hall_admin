@@ -52,8 +52,8 @@ import { setStorageData } from '@/utils/auth';
 export default {
     data() {
         return {
-            username: 'wade',
-            password: 123456,
+            username: '',
+            password: '',
             loading: false,
             passwordType: 'password'
         };

@@ -28,7 +28,6 @@
 </template>
 <script>
 import { revoke } from '@/api/getApi';
-import router from '@/router';
 export default {
     data() {
         return {
@@ -55,11 +54,6 @@ export default {
                 if (res.code === 0) {
                     this.tableData = res.data.list;
                     this.totalPage = res.data.total;
-                }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
                 }
             });
         },

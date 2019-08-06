@@ -1,5 +1,5 @@
-'use strict';
-const path = require('path');
+"use strict";
+const path = require("path");
 const port = 9527; // dev port
 
 function resolve(dir) {
@@ -9,10 +9,10 @@ module.exports = {
     // publicPath: process.env.NODE_ENV === 'produvtion'
     //   ? '/production-sub-path/'
     //   : '/main',
-    outputDir: 'dist',
-    assetsDir: 'static',
-    indexPath: 'index.html',
-    lintOnSave: process.env.NODE_ENV === 'development',
+    outputDir: "dist",
+    assetsDir: "static",
+    indexPath: "index.html",
+    lintOnSave: process.env.NODE_ENV === "development",
     productionSourceMap: false,
     // webpack-dev-server 相关配置
     devServer: {
@@ -22,31 +22,33 @@ module.exports = {
             warnings: false,
             errors: true
         }
-    // proxy: {
-    //   // change xxx-api/login => mock/login
-    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
-    //   '/api': {
-    //     target: 'http://192.168.8.229', // 设置你调用的接口域名和端口号
-    //     changeOrigin: true,     // 跨域
-    //     pathRewrite: {
-    //       '^/api': '/'
-    //     }
-    //   }
-    // },
+        // proxy: {
+        //   // change xxx-api/login => mock/login
+        //   // detail: https://cli.vuejs.org/config/#devserver-proxy
+        //   '/api': {
+        //     target: 'http://192.168.8.229', // 设置你调用的接口域名和端口号
+        //     changeOrigin: true,     // 跨域
+        //     pathRewrite: {
+        //       '^/api': '/'
+        //     }
+        //   }
+        // },
     },
     configureWebpack: {
-    // provide the app's title in webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
-        name: 'hall data',
+        // provide the app's title in webpack's name field, so that
+        // it can be accessed in index.html to inject the correct title.
+        name: "hall data",
         resolve: {
             alias: {
-                '@': resolve('src')
+                "@": resolve("src")
             }
         }
     },
     // 是一个函数，会接收一个基于 webpack-chain 的 ChainableConfig 实例。允许对内部的 webpack 配置进行更细粒度的修改。
     chainWebpack: config => {
-    /* config.module
+        // 热更新配置
+        config.resolve.symlinks(true);
+        /* config.module
       .rule('images')
       .use('url-loader')
         .loader('url-loader')
@@ -57,10 +59,10 @@ module.exports = {
     },
     // css相关配置
     css: {
-    // 启用 CSS modules
+        // 启用 CSS modules
         modules: false,
         // 是否使用css分离插件
-        extract: true,
+        // extract: true,
         // 开启 CSS source maps?
         sourceMap: false,
         // css预设器配置项
@@ -70,6 +72,5 @@ module.exports = {
     // PWA 插件相关配置
     pwa: {},
     // 第三方插件配置
-    pluginOptions: {
-    }
+    pluginOptions: {}
 };

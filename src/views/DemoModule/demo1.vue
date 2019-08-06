@@ -6,7 +6,7 @@
                 <el-form :inline="true" class="demo-form-inline">
                     <!-- 地区选择select -->
                     <el-form-item label="地区：">
-                        <area-select @areaValue="selectArea"></area-select>
+                        <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectArea"></area-select>
                     </el-form-item>
                     <!-- 通用select样式 -->
                     <el-form-item label="角色：">
@@ -138,12 +138,15 @@
 <script>
 import { revoke } from '@/api/getApi';
 import { AreaSelect } from '@/components/areaselect';
-import router from '@/router';
 export default {
     name: 'UserList',
     components: { AreaSelect },
     data() {
         return {
+            // 地区选择插件单、复选开关
+            area_multiple: true,
+            // 地区选择插件是否分区
+            isHasArea: true,
             status: [],
             tableData: [],
             actors: [],
@@ -215,11 +218,6 @@ export default {
                     this.actors = res.data.actor;
                     this.status = res.data.status;
                 }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
-                }
             });
         },
         // 初始化表格
@@ -241,12 +239,16 @@ export default {
                     self.tableData = tableData;
                     self.totalPage = res.data.total;
                 }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
+            });
+            let data1 = {
+
+            };
+            revoke('/hall-admin-new/index.php?m=system&p=init', data1).then(res => {
+                if (res.code === 0) {
+                    console.log(data1);
                 }
             });
+
         },
         // 获取表格信息
         getTableList(data) {
@@ -260,16 +262,10 @@ export default {
                     this.tableData = tableData;
                     this.totalPage = res.data.total;
                 }
-                if (res.code === -99) {
-                    router.push({
-                        path: '/login'
-                    });
-                }
             });
         },
         // 编辑用户信息
         handleEdit(index, row) {
-            debugger;
             this.editVisble = true;
             this.selectUser.id = row.id;
             this.selectUser.phone = row.phone;
