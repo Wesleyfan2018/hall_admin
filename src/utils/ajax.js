@@ -5,7 +5,7 @@ import { getStorageData } from '@/utils/auth';
 axios.defaults.withCredentials = false;
 const service = axios.create({
     baseURL: process.env.VUE_APP_URL,
-    timeout: 5000
+    timeout: 8000
 });
 // request
 service.interceptors.request.use(config => {

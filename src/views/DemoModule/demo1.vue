@@ -6,7 +6,7 @@
                 <el-form :inline="true" class="demo-form-inline">
                     <!-- 地区选择select -->
                     <el-form-item label="地区：">
-                        <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectArea"></area-select>
+                        <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectArea" :initArea="initArea"></area-select>
                     </el-form-item>
                     <!-- 通用select样式 -->
                     <el-form-item label="角色：">
@@ -143,6 +143,7 @@ export default {
     components: { AreaSelect },
     data() {
         return {
+            initArea: [0],
             // 地区选择插件单、复选开关
             area_multiple: true,
             // 地区选择插件是否分区
@@ -191,7 +192,7 @@ export default {
                 actor: this.selectUser.actor,
                 status: this.selectUser.status
             };
-            revoke('/hall-admin-new/index.php?m=user&p=edit', data).then(res => {
+            revoke('/index.php?m=user&p=edit', data).then(res => {
                 if (res.code === 0) {
                     this.editVisble = false;
                     this.$message({
@@ -213,7 +214,7 @@ export default {
         // 初始化加载通用配置
         selectOption() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=config&p=user', data).then(res => {
+            revoke('/index.php?m=config&p=user', data).then(res => {
                 if (res.code === 0) {
                     this.actors = res.data.actor;
                     this.status = res.data.status;
@@ -229,7 +230,7 @@ export default {
                 page: self.currentPage,
                 pageNum: self.pageSize,
             };
-            revoke('/hall-admin-new/index.php?m=user&p=lists', data).then(res => {
+            revoke('/index.php?m=user&p=lists', data).then(res => {
                 if (res.code === 0) {
                     let tableData = res.data.list;
                     for (let i in tableData) {
@@ -243,7 +244,7 @@ export default {
             let data1 = {
 
             };
-            revoke('/hall-admin-new/index.php?m=system&p=init', data1).then(res => {
+            revoke('/index.php?m=system&p=init', data1).then(res => {
                 if (res.code === 0) {
                     console.log(data1);
                 }
@@ -252,7 +253,7 @@ export default {
         },
         // 获取表格信息
         getTableList(data) {
-            revoke('/hall-admin-new/index.php?m=user&p=lists', data).then(res => {
+            revoke('/index.php?m=user&p=lists', data).then(res => {
                 if (res.code === 0) {
                     let tableData = res.data.list;
                     for (let i in tableData) {
@@ -313,7 +314,7 @@ export default {
         },
         // 新增用户确认提交
         confirAdd() {
-            revoke('/hall-admin-new/index.php?m=user&p=add', this.addUser).then(res => {
+            revoke('/index.php?m=user&p=add', this.addUser).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;
                     this.$message({

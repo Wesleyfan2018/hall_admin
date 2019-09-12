@@ -47,7 +47,7 @@ export default {
     methods: {
         load() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=exchangetag&p=get', data).then(res => {
+            revoke('/index.php?m=exchangetag&p=get', data).then(res => {
                 if (res.code === 0) {
                     let jsArr = JSON.parse(res.data.info.value);
                     this.selectData = jsArr;

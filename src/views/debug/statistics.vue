@@ -76,7 +76,7 @@ export default {
                 callp: 'catLog',
                 args: JSON.stringify(args),
             };
-            revoke('/hall-admin-new/index.php?m=CallProxy&p=callCommon', data).then(res => {
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
                 if (res.code === 0) {
                     this.ips = res.data.ips;
                 }
@@ -98,7 +98,7 @@ export default {
                 callp: 'catLog',
                 args: JSON.stringify(args),
             };
-            revoke('/hall-admin-new/index.php?m=CallProxy&p=callCommon', data).then(res => {
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
                 if (res.code === 0) {
                     let tableData = res.data.list;
                     for (let i in tableData) {
@@ -141,7 +141,7 @@ export default {
                 callp: 'chart',
                 args: JSON.stringify(args),
             };
-            revoke('/hall-admin-new/index.php?m=CallProxy&p=callCommon', data).then(res => {
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
                 if (res.code === 0) {
                     this.chartdata = res.data.list;
                     this.chartfeild = res.data.keys;
@@ -155,11 +155,11 @@ export default {
                 }
             });
         },
-        _dispChart(clickFeild, unit, api, label) {
-            clickFeild = this.chart_clickFeild;
-            unit = this.chart_unit;
-            api = this.chart_api;
-            label = this.chart_label;
+        _dispChart() {
+            let clickFeild = this.chart_clickFeild;
+            let unit = this.chart_unit;
+            let api = this.chart_api;
+            let label = this.chart_label;
             let xdata = [];
             let sdata = {};
             let legenddata = [];

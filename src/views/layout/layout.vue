@@ -1,8 +1,8 @@
 <template>
     <div class="app-wrapper">
         <el-container style="height:100%;">
-            <sidebar />
-            <el-container>
+            <sidebar style="width:200px;" />
+            <el-container style="width:200px;">
                 <el-header class="headers">
                     <navbar />
                     <tags-view />
@@ -27,8 +27,29 @@ export default {
             dataInfo: null
         };
     },
-    methods: {
-    }
+    created() {
+        // console.log(
+        //     'created Layout Page ',
+        //     this.$route.name,
+        //     this.$route.meta,
+        //     this.$route.meta.keepAlive
+        // )
+    },
+    updated() {
+        // console.log(
+        //     'updated Layout Page ',
+        //     this.$route.name,
+        //     this.$route.meta.keepAlive
+        // )
+    },
+    activated() {
+        // console.log(
+        //     'activated Layout Page ',
+        //     this.$route.name,
+        //     this.$route.meta.keepAlive
+        // )
+    },
+    methods: {}
 };
 </script>
 <style lang="scss">
@@ -37,8 +58,8 @@ export default {
     height: 100%;
     width: 100%;
     .headers {
-        height:110px!important;
-        padding:0!important;
+        height: 80px !important;
+        padding: 0 !important;
     }
 }
 </style>

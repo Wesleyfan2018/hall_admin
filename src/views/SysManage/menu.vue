@@ -137,6 +137,7 @@ export default {
                 path_name: '',
                 icon: '',
                 project: [],
+                pid: '0',
                 sort: '',
             }
         };
@@ -160,7 +161,7 @@ export default {
                 project: JSON.stringify(this.useproject),
             };
             console.log(data);
-            revoke('/hall-admin-new/index.php?m=menu&p=edit', data).then(res => {
+            revoke('/index.php?m=menu&p=edit', data).then(res => {
                 if (res.code === 0) {
                     this.editVisble = false;
                     this.$message({
@@ -175,10 +176,11 @@ export default {
         },
         selectOption() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=menu&p=config', data).then(res => {
+            revoke('/index.php?m=menu&p=config', data).then(res => {
                 console.log(res);
                 if (res.code === 0) {
                     this.pMenus = res.data.list;
+                    this.pMenus.push({ 'id': '0', 'name': '无' });
                     this.projects = res.data.projects;
                 }
             });
@@ -188,7 +190,7 @@ export default {
         },
         getTableList() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=menu&p=getMenus', data).then(res => {
+            revoke('/index.php?m=menu&p=getMenus', data).then(res => {
                 if (res.code === 0) {
                     // for
                     this.tableData = res.data.list;
@@ -223,7 +225,7 @@ export default {
         confirAdd() {
             let data = this.addData;
             data.project = typeof this.addData.project === 'string' ? this.addData.project : JSON.stringify(this.addData.project);
-            revoke('/hall-admin-new/index.php?m=menu&p=add', data).then(res => {
+            revoke('/index.php?m=menu&p=add', data).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;
                     this.$message({

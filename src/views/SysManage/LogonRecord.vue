@@ -50,7 +50,7 @@ export default {
         },
         // 获取表格信息
         getTableList(data) {
-            revoke('/hall-admin-new/index.php?m=login&p=userLog', data).then(res => {
+            revoke('/index.php?m=login&p=userLog', data).then(res => {
                 if (res.code === 0) {
                     this.tableData = res.data.list;
                     this.totalPage = res.data.total;

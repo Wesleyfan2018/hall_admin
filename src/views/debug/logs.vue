@@ -30,7 +30,7 @@ export default {
                 admin: this.admin ? 1 : 0,
                 cmd: this.cmd,
             };
-            revoke('/hall-admin-new/index.php?m=debug&p=Run', data).then(res => {
+            revoke('/index.php?m=debug&p=Run', data).then(res => {
                 if (res.code === 0) {
                     this.runOutPut = '运行时间:' + res.data.runTime + '秒 \r\n' + res.data.runOutPut;
                 } else {
@@ -46,7 +46,7 @@ export default {
         // 加载历史记录
         loadLog() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=debug&p=getPhpRunLog', data).then(res => {
+            revoke('/index.php?m=debug&p=getPhpRunLog', data).then(res => {
                 if (res.code === 0) {
                     this.phpRunLog = res.data.phpRunLog;
                 }

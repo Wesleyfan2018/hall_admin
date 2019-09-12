@@ -1,4 +1,5 @@
 <template>
+<el-scrollbar wrap-class="scrollbar-wrapper1" style="width:200px;background-color: #304156;" :style="{height: resizeHeight + 'px'}">
     <el-aside class="sidebar" width="200px" style=" background-color: #304156;">
         <div class="logo">
             <img :src="require('@/assets/image/bigData.png')">
@@ -11,7 +12,7 @@
             @select="handleSelect"
             ></el-autocomplete>
         </div>
-        <el-scrollbar wrap-class="scrollbar-wrapper">
+        <el-scrollbar wrap-class="scrollbar-wrapper2">
             <div class="menu">
                 <el-menu
                 :default-active="activeMenuItem"
@@ -31,6 +32,7 @@
             </div>
         </el-scrollbar>
     </el-aside>
+</el-scrollbar>
 </template>
 
 <script>
@@ -54,7 +56,10 @@ export default {
             visiHistory: state => state.tagsview.visiHistory,
             tagIndex: state => state.tagsview.tagIndex,
             activeMenuItem: state => state.tagsview.activeMenuItem
-        })
+        }),
+        resizeHeight() {
+            return document.body.clientHeight;
+        }
     },
     created() {
         this.getMenList();
@@ -70,7 +75,7 @@ export default {
         // 获取菜单
         getMenList() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=system&p=init', data).then(res => {
+            revoke('/index.php?m=system&p=init', data).then(res => {
                 if (res.code === 0) {
                     let menuList = res.data.menu;
                     this.setMenuList(menuList);
@@ -126,14 +131,13 @@ export default {
             };
         },
         loadAll() {
-            let List = [];
-            for (let i in this.menuList) {
-                let itemList = this.menuList[i].menuItem;
+            let self = this;
+            for (let i in self.menuList) {
+                let itemList = self.menuList[i].menuItem;
                 for (let t in itemList) {
-                    List.push(itemList[t]);
+                    self.menuItems.push(itemList[t]);
                 }
             }
-            return List;
         },
         handleSelect(obj) {
             if (this.tagsList.findIndex(item => item.path === obj.path) === -1) {
@@ -150,7 +154,8 @@ export default {
         }
     },
     mounted() {
-        this.menuItems = this.loadAll();
+        this.loadAll();
+        console.log(this.menuItems);
     }
 };
 </script>
@@ -176,6 +181,11 @@ export default {
         line-height: 30px;
         font-size: 12px;
     }
+}
+.scrollbar-wrapper1 {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 100%;
 }
 </style>
 <style>

@@ -29,7 +29,7 @@
             </el-dropdown>
         </div>
         <div class="dialog_div">
-            <el-dialog title="选择环境" :visible.sync="envVisible" width="40%">
+            <el-dialog title="选择环境" :visible.sync="envVisible" width="30%">
             <el-form label-position="right" label-width="120px" class="dialog-form">
                 <el-form-item v-for="(item, idx) in envList" :key="(item, idx)" :label="item.gameName + ':'">
                         <el-radio-group v-model="envRadio">
@@ -59,74 +59,7 @@ export default {
             envVisible: false,
             envRadio: '',
             curEnv: '',
-            envList: [
-                {
-                    game: 9999,
-                    gameName: '红幺鸡麻将',
-                    list: [
-                        {
-                            env: 1,
-                            label: '测试服'
-                        },
-                        {
-                            env: 2,
-                            label: '体验服'
-                        },
-                        {
-                            env: 3,
-                            label: '预发布服'
-                        },
-                        {
-                            env: 4,
-                            label: '正式服'
-                        },
-                    ]
-                },
-                {
-                    game: 10000,
-                    gameName: '微信小游戏',
-                    list: [
-                        {
-                            env: 1,
-                            label: '测试服'
-                        },
-                        {
-                            env: 2,
-                            label: '体验服'
-                        },
-                        {
-                            env: 3,
-                            label: '预发布服'
-                        },
-                        {
-                            env: 4,
-                            label: '正式服'
-                        },
-                    ]
-                },
-                {
-                    game: 10001,
-                    gameName: '大圣游戏大厅',
-                    list: [
-                        {
-                            env: 1,
-                            label: '测试服'
-                        },
-                        {
-                            env: 2,
-                            label: '体验服'
-                        },
-                        {
-                            env: 3,
-                            label: '预发布服'
-                        },
-                        {
-                            env: 4,
-                            label: '正式服'
-                        },
-                    ]
-                }
-            ]
+
         };
     },
     created() {
@@ -137,6 +70,7 @@ export default {
         ...mapState({
             g: state => state.user.g,
             e: state => state.user.e,
+            envList: state => state.base.envList
         }),
         showEnv: function() {
             let pathname = window.location.pathname;
@@ -164,7 +98,7 @@ export default {
         // 注销
         layLogout() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=login&p=logout&g=10000', data).then(res => {
+            revoke('/index.php?m=login&p=logout&g=10000', data).then(res => {
                 if (res.code === 0 || res.code === -99) {
                     removeStorageData('token');
                     removeStorageData('userInfo');
@@ -223,8 +157,8 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-    height: 70px;
-    line-height: 70px;
+    height: 40px;
+    line-height: 40px;
     overflow: hidden;
     position: relative;
     background: #fff;
@@ -277,7 +211,7 @@ export default {
         }
 
         .avatar-container {
-            line-height: 70px;
+            line-height: 40px;
             margin-right: 40px;
 
         .avatar-wrapper {
@@ -295,7 +229,7 @@ export default {
             .el-icon-caret-bottom {
             cursor: pointer;
             position: absolute;
-            line-height: 70px;
+            line-height: 40px;
             right: -20px;
             // top: 16px;
             font-size: 20px;
@@ -305,7 +239,7 @@ export default {
         .chaEnv {
             margin: 0;
             margin-right:20px;
-            line-height: 70px;
+            line-height: 40px;
             font-size: 14px;
             a {
                 text-decoration: none;

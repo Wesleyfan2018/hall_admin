@@ -103,7 +103,7 @@ export default {
             };
 
             console.log(this.selectDate[0]);
-            revoke('/hall-admin-new/index.php?m=CallProxy&p=callCommon', data).then(res => {
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
                 if (res.code === 0) {
                     console.log(res);
                     this.tableData = res.data.list;

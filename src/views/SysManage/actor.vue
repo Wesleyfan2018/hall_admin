@@ -92,7 +92,7 @@ export default {
                 name: this.selectData.name,
                 permission: this.usepermission.join(','),
             };
-            revoke('/hall-admin-new/index.php?m=actor&p=edit', data).then(res => {
+            revoke('/index.php?m=actor&p=edit', data).then(res => {
                 if (res.code === 0) {
                     this.editVisble = false;
                     this.$message({
@@ -107,7 +107,7 @@ export default {
         },
         selectOption() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=config&p=user', data).then(res => {
+            revoke('/index.php?m=config&p=user', data).then(res => {
                 console.log(res);
                 if (res.code === 0) {
                     this.actors = res.data.actor;
@@ -121,7 +121,7 @@ export default {
         },
         getTableList() {
             let data = {};
-            revoke('/hall-admin-new/index.php?m=actor&p=getActors', data).then(res => {
+            revoke('/index.php?m=actor&p=getActors', data).then(res => {
                 if (res.code === 0) {
                     // for
                     this.tableData = res.data.list;
@@ -150,7 +150,7 @@ export default {
         },
         confirAdd() {
             this.addData.permission = this.addData.permission.join(',');
-            revoke('/hall-admin-new/index.php?m=actor&p=add', this.addData).then(res => {
+            revoke('/index.php?m=actor&p=add', this.addData).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;
                     this.$message({

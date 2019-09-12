@@ -9,7 +9,7 @@
                 <input type="text" readonly="readonly" placeholder="" class="el-input__inner" style="height: 40px;">
             </div>
         </div>
-        <el-dialog title="选择地区" :visible.sync="aeraVisble" width="20%">
+        <el-dialog title="选择地区" :visible.sync="aeraVisble" width="20%" :append-to-body="true">
             <el-form class="text-center">
                 <el-form-item>
                     <el-input placeholder="输入关键字进行搜索" v-model="filterText"></el-input>
@@ -48,7 +48,7 @@
 import { revoke } from '@/api/getApi';
 export default {
     name: 'Areaselect',
-    props: ['isMultiple', 'has_area'],
+    props: ['isMultiple', 'has_area', 'initArea'],
     data() {
         return {
             aeraVisble: false,
@@ -60,19 +60,22 @@ export default {
                 label: 'name'
             },
             selectTrees: [],
-            showTag: ''
+            showTag: '全国'
         };
     },
     created() {
+        this.areaValue = this.initArea;
+        this.$emit('areaValue', this.areaValue);
         this.getOptions();
     },
     methods: {
         getOptions() {
+            let self = this;
             let data = {};
-            revoke('/hall-admin-new/index.php?m=config&p=area', data).then(res => {
+            revoke('/index.php?m=config&p=area', data).then(res => {
                 if (res.code === 0) {
-                    this.data = res.data;
-                    this.filter_data();
+                    self.data = res.data;
+                    self.filter_data();
                 }
             });
         },
@@ -80,9 +83,10 @@ export default {
         filter_data() {
             let self = this;
             if (!self.has_area) {
-                for (let i in self.data) {
-                    for (let t in self.data[i].children) {
-                        delete self.data[i].children[t].children;
+                let dataChildren = self.data[0].children;
+                for (let i in dataChildren) {
+                    for (let t in dataChildren[i].children) {
+                        delete dataChildren[i].children[t].children;
                     }
                 }
             }
@@ -115,16 +119,19 @@ export default {
             let showTagIdStr = this.areaValue[0].toString();
             let showTagIdStr_prov = this.areaValue[0].toString().substring(0, 2);
             let showTagIdStr_city = this.areaValue[0].toString().substring(0, 4);
-            if (showTagIdStr.length === 2) {
+            if (showTagIdStr.length === 1) {
                 let province_index = this.data.find(item => item.id === showTagId);
                 this.showTag = province_index.name;
+            } else if (showTagIdStr.length === 2) {
+                let province_index = this.data[0].children.find(item => item.id === showTagId);
+                this.showTag = province_index.name;
             } else if (showTagIdStr.length === 4) {
-                let province_index = this.data.find(item => item.id === Number(showTagIdStr_prov));
+                let province_index = this.data[0].children.find(item => item.id === Number(showTagIdStr_prov));
                 province_index = province_index.children;
                 let city_index = province_index.find(item => item.id === showTagId);
                 this.showTag = city_index.name;
             } else {
-                let province_index = this.data.find(item => item.id === Number(showTagIdStr_prov));
+                let province_index = this.data[0].children.find(item => item.id === Number(showTagIdStr_prov));
                 province_index = province_index.children;
                 let city_index = province_index.find(item => item.id === Number(showTagIdStr_city));
                 city_index = city_index.children;

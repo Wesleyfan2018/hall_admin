@@ -70,7 +70,7 @@ export default {
                 oldPwd: this.oldpwd,
                 newPwd: this.newpwd
             };
-            revoke('/hall-admin-new/index.php?m=user&p=changePwd', data).then(res => {
+            revoke('/index.php?m=user&p=changePwd', data).then(res => {
                 if (res.code === 0) {
                     this.$message({
                         message: '密码修改成功！',

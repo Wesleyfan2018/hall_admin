@@ -3,13 +3,19 @@ import { setStorageData, getStorageData } from '@/utils/auth';
 const tagsview = {
     state: {
         menuList: [],
-        tagsList: JSON.parse(getStorageData('tagsList')) || [{ value: '首页', path: '/', pathName: '/' }],
+        tagsList: JSON.parse(getStorageData('tagsList')) || [
+            { value: '首页', path: '/', pathName: '/' }
+        ],
         visiHistory: JSON.parse(getStorageData('visiHistory')) || [],
         tagIndex: Number(getStorageData('tagIndex')) || 0,
         cachedViews: JSON.parse(getStorageData('cachedViews')) || ['Dashboard'],
-        activeMenuItem: getStorageData('activeMenuItem') || '0'
+        activeMenuItem: getStorageData('activeMenuItem') || '0',
+        Approver: []
     },
     mutations: {
+        SET_APPROVER: (state, approverList) => {
+            state.Approver = approverList;
+        },
         SET_TAGSLIST: (state, tagsList) => {
             state.tagsList = tagsList;
         },

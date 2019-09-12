@@ -74,7 +74,7 @@ export default {
                 userName: this.username,
                 password: this.password,
             };
-            revoke('/hall-admin-new/index.php?m=login&p=index&g=10000', data).then(res => {
+            revoke('/index.php?m=login&p=index&g=10000', data).then(res => {
                 if (res.code === 0) {
                     setStorageData('userInfo', res.data);
                     setStorageData('token', res.data.token);

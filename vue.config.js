@@ -1,5 +1,5 @@
-"use strict";
-const path = require("path");
+
+const path = require('path');
 const port = 9527; // dev port
 
 function resolve(dir) {
@@ -9,10 +9,10 @@ module.exports = {
     // publicPath: process.env.NODE_ENV === 'produvtion'
     //   ? '/production-sub-path/'
     //   : '/main',
-    outputDir: "dist",
-    assetsDir: "static",
-    indexPath: "index.html",
-    lintOnSave: process.env.NODE_ENV === "development",
+    outputDir: 'dist',
+    assetsDir: 'static',
+    indexPath: 'index.html',
+    lintOnSave: process.env.NODE_ENV === 'development',
     productionSourceMap: false,
     // webpack-dev-server 相关配置
     devServer: {
@@ -37,10 +37,10 @@ module.exports = {
     configureWebpack: {
         // provide the app's title in webpack's name field, so that
         // it can be accessed in index.html to inject the correct title.
-        name: "hall data",
+        name: 'hall data',
         resolve: {
             alias: {
-                "@": resolve("src")
+                '@': resolve('src')
             }
         }
     },
@@ -48,6 +48,7 @@ module.exports = {
     chainWebpack: config => {
         // 热更新配置
         config.resolve.symlinks(true);
+        // config.externals({});
         /* config.module
       .rule('images')
       .use('url-loader')
