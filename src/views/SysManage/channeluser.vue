@@ -2,9 +2,9 @@
     <div class="app-containei">
         <div class="filter-container">
             <el-form :inline="true" class="demo-form-inline">
-                <el-form-item label="角色：">
-                    <el-select v-model="actor" placeholder="请选择角色" class="nav-select">
-                        <el-option v-for="(i, t) in actors" :key="(i, t)" :label="i" :value="t"></el-option>
+                <el-form-item label="渠道：">
+                    <el-select v-model="channel_code" placeholder="请选择渠道" class="nav-select">
+                        <el-option v-for="(i, t) in schannels" :key="(i.id, t)" :label="i.name" :value="i.id"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="用户名：">
@@ -30,16 +30,16 @@
                         type="success"
                         @keyup.enter="searchName"
                         @click="openAdd"
-                    >添加用户</el-button>
+                    >添加账号</el-button>
                 </el-form-item>
             </el-form>
             <el-table border :data="tableData">
                 <el-table-column align="center" label="id" prop="id"></el-table-column>
-                <el-table-column align="center" label="账户名" prop="name"></el-table-column>
-                <el-table-column align="center" label="姓名" prop="real_name"></el-table-column>
-                <el-table-column align="center" label="角色" prop="actorStr"></el-table-column>
+                <el-table-column align="center" label="账户名" prop="username"></el-table-column>
+                <el-table-column align="center" label="姓名" prop="name"></el-table-column>
+                <el-table-column align="center" label="渠道" prop="channelStr"></el-table-column>
                 <el-table-column align="center" label="状态" prop="statusStr"></el-table-column>
-                <el-table-column align="center" label="电话号码" prop="phone"></el-table-column>
+                <el-table-column align="center" label="手机" prop="phone"></el-table-column>
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope">
                         <el-button type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -68,11 +68,11 @@
             >
                 <el-form label-position="right" label-width="120px" :model="selectUser">
                     <el-form-item label="姓名">
-                        <el-input class="form-input" disabled v-model="selectUser.name"></el-input>
+                        <el-input class="form-input"  v-model="selectUser.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="角色">
-                        <el-select class="form-input" v-model="selectUser.actor">
-                            <el-option v-for="(i, t) in actors" :key="(i, t)" :label="i" :value="t"></el-option>
+                    <el-form-item label="渠道">
+                        <el-select class="form-input" v-model="selectUser.channel_code">
+                            <el-option v-for="(i, t) in channels" :key="(i.id, t)" :label="i.name" :value="i.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="重置密码">
@@ -91,29 +91,7 @@
                         </el-radio-group>
                     </el-form-item>
 
-                    <!-- <el-form-item label="特殊权限">
-                        <el-checkbox-group v-model="usepermission">
-                            <el-checkbox
-                                v-for="v in permission"
-                                :label="v.id"
-                                :key="v.id"
-                            >{{v.name}}</el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item> -->
 
-                    <!-- 特殊权限 -->
-                    <el-form-item label="特殊权限" class="permission_settings">
-                        <el-checkbox-group v-model="usepermission">
-                            <div class="group" v-for="item in permission" :key="item.id">
-                                <h2>{{item.name}}</h2>
-                                <el-checkbox
-                                    v-for="v in item.children"
-                                    :label="v.id"
-                                    :key="v.id"
-                                >{{v.name}}</el-checkbox>
-                            </div>
-                        </el-checkbox-group>
-                    </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="editVisble = false">取 消</el-button>
@@ -133,14 +111,14 @@
                     class="dialog-form"
                 >
                     <el-form-item label="账号名">
-                        <el-input class="form-input" v-model="addUser.name"></el-input>
+                        <el-input class="form-input" v-model="addUser.username"></el-input>
                     </el-form-item>
                     <el-form-item label="姓名">
-                        <el-input class="form-input" v-model="addUser.real_name"></el-input>
+                        <el-input class="form-input" v-model="addUser.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="角色">
-                        <el-select class="form-input" v-model="addUser.actor" placeholder="请选择角色">
-                            <el-option v-for="(i, t) in actors" :key="(i, t)" :label="i" :value="t"></el-option>
+                    <el-form-item label="渠道">
+                        <el-select class="form-input" v-model="addUser.channel_code" placeholder="请选择渠道">
+                            <el-option v-for="(i, t) in channels" :key="(i.id, t)" :label="i.name" :value="i.id"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="设置密码">
@@ -155,28 +133,6 @@
                         <el-input class="form-input" placeholder="请输入电话号码" v-model="addUser.phone"></el-input>
                     </el-form-item>
 
-                    <!-- <el-form-item label="特殊权限">
-                        <el-checkbox-group v-model="addUser.permission">
-                            <el-checkbox
-                                v-for="v in permission"
-                                :label="v.id"
-                                :key="v.id"
-                            >{{v.name}}</el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item> -->
-                    <!-- 特殊权限 -->
-                    <el-form-item label="特殊权限" class="permission_settings">
-                        <el-checkbox-group v-model="addUser.usepermission">
-                            <div class="group" v-for="item in permission" :key="item.id">
-                                <h2>{{item.name}}</h2>
-                                <el-checkbox
-                                    v-for="v in item.children"
-                                    :label="v.id"
-                                    :key="v.id"
-                                >{{v.name}}</el-checkbox>
-                            </div>
-                        </el-checkbox-group>
-                    </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addVisble = false">取 消</el-button>
@@ -192,12 +148,11 @@ export default {
     name: 'UserList',
     data() {
         return {
-            status: [],
+            status: { '0': '正常', '1': '封禁' },
             tableData: [],
-            actors: [],
-            permission: [], // 权限
-            usepermission: [], // 已有权限
-            actor: 0,
+            channels: [],
+            schannels: [], // 单独要全部的选项
+            channel_code: '0',
             totalPage: 0,
             pageSize: 10,
             searchStr: '',
@@ -207,40 +162,37 @@ export default {
             rePassword: '',
             selectUser: {
                 name: '',
-                actor: '',
+                channel_code: '',
                 status: '',
                 password: '',
                 phone: '',
-                permission: ''
             },
             addUser: {
                 name: '',
-                real_name: '',
-                actor: '',
+                username: '',
+                channel_code: '',
                 password: '',
                 phone: '',
-                permission: []
             }
         };
     },
-    created() {
+    activated() {
         this.selectOption();
-        this.initList();
-        // console.log('created UserList')
     },
-
+    mounted() {
+        this.getTableList();
+    },
     methods: {
         confirEdit() {
             let data = {
                 id: this.selectUser.id,
-                real_name: this.selectUser.real_name,
+                name: this.selectUser.name,
                 phone: this.selectUser.phone,
-                actor: this.selectUser.actor,
+                channel_code: this.selectUser.channel_code,
                 password: this.rePassword,
                 status: this.selectUser.status,
-                permission: this.usepermission.join(',')
             };
-            revoke('/index.php?m=user&p=edit', data).then(
+            revoke('/index.php?m=ChannelUser&p=edit', data).then(
                 res => {
                     if (res.code === 0) {
                         this.editVisble = false;
@@ -248,13 +200,7 @@ export default {
                             message: '编辑成功！',
                             type: 'success'
                         });
-                        let data = {
-                            actor: this.actor,
-                            name: this.searchStr,
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        };
-                        this.getTableList(data);
+                        this.getTableList();
                     } else {
                         this.$message.error(res.msg);
                     }
@@ -262,72 +208,35 @@ export default {
             );
         },
         selectOption() {
-            let data = { 'permGroup': 1 };
-            revoke('/index.php?m=config&p=user', data).then(
+            let data = { 'key': 1 };
+            revoke('/index.php?m=config&p=channel', data).then(
                 res => {
                     // console.log(res)
                     if (res.code === 0) {
-                        this.actors = res.data.actor;
-                        this.status = res.data.status;
-                        this.permission = res.data.permission;
-                        // this.permission = [{
-                        //     name:"系统管理",
-                        //     children:[{
-                        //         name:"系统管理->管理员操作",
-                        //         api:['user.add','user.edit'],
-                        //         id:"editAdmin",
-                        //         menu:''
-                        //     },{
-                        //         name:"系统管理->管理员操作",
-                        //         api:['actor.add','actor.edit','actor.getactors'],
-                        //         id:"actorAdmin",
-                        //         menu:"Actor"
-                        //     }]
-                        // },{
-                        //     name:"数据统计",
-                        //     children:[{
-                        //         name:"数据统计->分享库统计",
-                        //         api:["stat.sharehub"],
-                        //         id:"statSharehub",
-                        //         menu:"statSharehub"
-                        //     }]
-                        // }];
+                        this.channels = res.data;
+                        // 为啥这样写，因为vue变量是指针拷贝
+                        this.schannels = JSON.parse(JSON.stringify(this.channels));
+                        this.schannels[0] = { 'id': '0', 'name': '全部' };
                     }
                 }
             );
         },
-        initList() {
-            let self = this;
+
+        getTableList() {
             let data = {
-                actor: this.actor,
-                name: '',
-                page: self.currentPage,
-                pageNum: self.pageSize
+                channel_code: this.channel_code,
+                name: this.searchStr,
+                page: this.currentPage,
+                pageNum: this.pageSize
             };
-            revoke('/index.php?m=user&p=lists', data).then(
+            revoke('/index.php?m=ChannelUser&p=lists', data).then(
                 res => {
                     if (res.code === 0) {
                         let tableData = res.data.list;
+
                         for (let i in tableData) {
-                            tableData[i].actorStr =
-                                self.actors[Number(tableData[i].actor)];
-                            tableData[i].statusStr =
-                                self.status[Number(tableData[i].status)];
-                        }
-                        self.tableData = tableData;
-                        self.totalPage = res.data.total;
-                    }
-                }
-            );
-        },
-        getTableList(data) {
-            revoke('/index.php?m=user&p=lists', data).then(
-                res => {
-                    if (res.code === 0) {
-                        let tableData = res.data.list;
-                        for (let i in tableData) {
-                            tableData[i].actorStr = this.actors[Number(tableData[i].actor)];
-                            tableData[i].statusStr = this.status[Number(tableData[i].status)];
+                            tableData[i].channelStr = this.channels[tableData[i].channel_code] ? this.channels[tableData[i].channel_code].name : '';
+                            tableData[i].statusStr = this.status[tableData[i].status];
                         }
                         this.tableData = tableData;
                         this.totalPage = res.data.total;
@@ -340,45 +249,25 @@ export default {
             console.log(row);
             this.editVisble = true;
             this.selectUser.id = row.id;
+            this.selectUser.channel_code = row.channel_code;
             this.selectUser.phone = row.phone;
             this.selectUser.password = this.rePassword;
-            this.selectUser.real_name = row.real_name;
-            this.usepermission = row.permission.split(','); // 逗号切割
-            this.selectUser.name = row.real_name + '(' + row.name + ')';
-            this.selectUser.actor = parseInt(row.actor, 10);
-            this.selectUser.status = parseInt(row.status, 10);
+            this.selectUser.name = row.name;
+            this.selectUser.status = row.status;
         },
         // 修改分页器数量
         handleSizeChange(val) {
             this.pageSize = val;
-            let data = {
-                actor: this.actor,
-                name: this.searchStr,
-                page: this.currentPage,
-                pageNum: this.pageSize
-            };
-            this.getTableList(data);
+            this.getTableList();
         },
         // 切换分页器
         handleCurrentChange(val) {
             this.currentPage = val;
-            let data = {
-                actor: this.actor,
-                name: this.searchStr,
-                page: this.currentPage,
-                pageNum: this.pageSize
-            };
-            this.getTableList(data);
+            this.getTableList();
         },
         // 搜索
         searchName() {
-            let data = {
-                actor: this.actor,
-                name: this.searchStr,
-                page: this.currentPage,
-                pageNum: this.pageSize
-            };
-            this.getTableList(data);
+            this.getTableList();
         },
         // 弹出框close
         handleEditClose(done) {
@@ -392,22 +281,15 @@ export default {
             this.addVisble = true;
         },
         confirAdd() {
-            this.addUser.permission = this.addUser.permission.join(',');
-            revoke('/index.php?m=user&p=add', this.addUser).then(
+            revoke('/index.php?m=ChannelUser&p=add', this.addUser).then(
                 res => {
                     if (res.code === 0) {
                         this.addVisble = false;
                         this.$message({
-                            message: '新增用户成功！',
+                            message: '添加成功！',
                             type: 'success'
                         });
-                        let data = {
-                            actor: this.actor,
-                            name: this.searchStr,
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        };
-                        this.getTableList(data);
+                        this.getTableList();
                     } else {
                         this.$message.error(res.msg);
                     }
@@ -415,12 +297,6 @@ export default {
             );
         }
     },
-    activated() {
-        // console.log('activated UserList')
-    },
-    deactivated() {
-        // console.log('deactivated UserList')
-    }
 };
 </script>
 
@@ -457,20 +333,5 @@ export default {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #f0f2f5;
-}
-
-.permission_settings{
-    > .el-form-item__content{
-        border: 1px solid #EBEEF5;
-    }
-    h2{
-        font-size: 14px;
-        color: #666;
-        background: #f0f2f5;
-        text-indent: 1rem;
-    }
-    .el-checkbox{
-        margin-left: 10px;
-    }
 }
 </style>

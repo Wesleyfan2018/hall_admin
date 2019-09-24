@@ -2,18 +2,26 @@
     <div class="app-containei">
         <div class="filter-container">
             <el-form :inline="true" class="demo-form-inline">
-                <el-form-item label="角色管理">
+                <el-form-item label="兑换商城tag">
                 </el-form-item>
                 <el-form-item class="text-right">
-                    <el-button class="filter-item" type="success"  @click="openAdd">添加角色</el-button>
+                    <el-button class="filter-item" type="success"  @click="openAdd">添加配置</el-button>
                 </el-form-item>
             </el-form>
             <el-table border :data="tableData">
-                <el-table-column align="center" label="id" prop="id">
+                <el-table-column align="center" label="id" prop="subkey">
                 </el-table-column>
-                <el-table-column align="center" label="角色名称" prop="name">
+                <el-table-column align="center" label="tag名称" prop="name">
                 </el-table-column>
-                <el-table-column align="center" label="权限" prop="permlist">
+     、
+                <el-table-column align="center" label="icon" prop="icon">
+                </el-table-column>
+                <el-table-column align="center" label="序号" prop="sort">
+                </el-table-column>
+                <el-table-column align="center" label="是否开放(1开发/2关闭)" prop="isOpen">
+                </el-table-column>
+
+                <el-table-column align="center" label="数据状态(1开发/2关闭/3废弃)" prop="isOpen">
                 </el-table-column>
                 <el-table-column align="center" label="操作">
                 <template slot-scope="scope">
@@ -23,45 +31,54 @@
             </el-table>
         </div>
         <div class="dialog_div">
-            <el-dialog title="编辑角色信息" :visible.sync="editVisble" width="30%" :before-close="handleEditClose">
+            <el-dialog title="编辑菜单信息" :visible.sync="editVisble" width="30%" :before-close="handleEditClose" :closeOnClickModal='clickclose'>
                 <el-form label-position="right" label-width="120px" :model="selectData">
-                    <el-form-item label="姓名">
+                    <el-form-item label="名称">
                         <el-input class="form-input"  v-model="selectData.name"></el-input>
                     </el-form-item>
-                  <!-- <el-form-item label="权限">
-                        <el-checkbox-group  v-model="usepermission">
-                        <el-checkbox v-for="v in permission"  :label="v.id" :key="v.id">{{v.name}}</el-checkbox>
-                        </el-checkbox-group>
-                   </el-form-item> -->
-                   <!-- 权限 -->
-                    <el-form-item label="权限" class="permission_settings">
-                        <el-checkbox-group v-model="usepermission">
-                            <div class="group" v-for="item in permission" :key="item.id">
-                                <h2>{{item.name}}</h2>
-                                <el-checkbox
-                                    v-for="v in item.children"
-                                    :label="v.id"
-                                    :key="v.id"
-                                >{{v.name}}</el-checkbox>
-                            </div>                            
-                        </el-checkbox-group>
+                    <el-form-item label="图标">
+                        <el-input class="form-input"  v-model="selectData.icon"></el-input>
                     </el-form-item>
+                    <el-form-item label="序号">
+                        <el-input class="form-input"  v-model="selectData.sort"></el-input>
+                    </el-form-item>
+                    <el-form-item label="开放状态">
+                      <el-radio v-model="selectData.isOpen" label="1">开放</el-radio>
+                      <el-radio v-model="selectData.isOpen" label="0">关闭</el-radio>
+                    </el-form-item>
+                    <el-form-item label="数据状态">
+                     <el-select v-model="selectData.status" placeholder="请选择">
+                        <el-option
+                          v-for="item in dataStatus"
+                          :key="item.v"
+                          :label="item.v"
+                          :value="item.k">
+                        </el-option>
+                      </el-select>
+                    </el-form-item>
+
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="editVisble = false">取 消</el-button>
                     <el-button type="success" @click="confirEdit">确 定</el-button>
                 </span>
             </el-dialog>
-            <el-dialog title="新增角色信息" :visible.sync="addVisble" width="30%" :before-close="handleAddClose">
-                <el-form label-position="right" label-width="120px" :model="addData" class="dialog-form">
-                    <el-form-item label="角色名称">
-                        <el-input class="form-input" v-model="addData.name"></el-input>
+            <el-dialog title="新增菜单信息" :visible.sync="addVisble" width="30%" :before-close="handleAddClose">
+                 <el-form label-position="right" label-width="120px" :model="selectData">
+                    <el-form-item label="名称">
+                        <el-input class="form-input"  v-model="addData.name"></el-input>
                     </el-form-item>
-                    <el-form-item label="权限">
-                        <el-checkbox-group  v-model="addData.permission">
-                        <el-checkbox v-for="v in permission"  :label="v.id" :key="v.id">{{v.name}}</el-checkbox>
-                        </el-checkbox-group>
-                   </el-form-item>
+                    <el-form-item label="图标">
+                        <el-input class="form-input"  v-model="addData.icon"></el-input>
+                    </el-form-item>
+                    <el-form-item label="序号">
+                        <el-input class="form-input"  v-model="addData.sort"></el-input>
+                    </el-form-item>
+                    <el-form-item label="开放状态">
+                      <el-radio v-model="addData.isOpen" label="1">开放</el-radio>
+                      <el-radio v-model="addData.isOpen" label="0">关闭</el-radio>
+                    </el-form-item>
+
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="addVisble = false">取 消</el-button>
@@ -77,18 +94,23 @@ export default {
     name: 'actor',
     data() {
         return {
+            clickclose: false,
             tableData: [],
-            permission: [], // 权限
-            usepermission: [], // 已有权限
+            dataStatus: [],
             editVisble: false,
             addVisble: false,
             selectData: {
                 name: '',
-                permission: '',
+                icon: '',
+                sort: '',
+                isOpen: '',
+                status: '',
             },
             addData: {
                 name: '',
-                permission: [],
+                icon: '',
+                sort: '',
+                isOpen: '',
             }
         };
     },
@@ -103,9 +125,13 @@ export default {
             let data = {
                 id: this.selectData.id,
                 name: this.selectData.name,
-                permission: this.usepermission.join(','),
+                icon: this.selectData.icon,
+                sort: this.selectData.sort,
+                isOpen: this.selectData.isOpen,
+                status: this.selectData.status,
             };
-            revoke('/index.php?m=actor&p=edit', data).then(res => {
+            console.log(data);
+            revoke('/index.php?m=exchangetag&p=edit', data).then(res => {
                 if (res.code === 0) {
                     this.editVisble = false;
                     this.$message({
@@ -119,13 +145,11 @@ export default {
             });
         },
         selectOption() {
-            let data = {'permGroup': 1};
-            revoke('/index.php?m=config&p=user', data).then(res => {
+            let data = {};
+            revoke('/index.php?m=CommConf&p=getConf', data).then(res => {
                 console.log(res);
                 if (res.code === 0) {
-                    this.actors = res.data.actor;
-                    this.status = res.data.status;
-                    this.permission = res.data.permission;
+                    this.dataStatus = res.data.status;
                 }
             });
         },
@@ -134,7 +158,7 @@ export default {
         },
         getTableList() {
             let data = {};
-            revoke('/index.php?m=actor&p=getActors', data).then(res => {
+            revoke('/index.php?m=exchangetag&p=getLists', data).then(res => {
                 if (res.code === 0) {
                     // for
                     this.tableData = res.data.list;
@@ -145,9 +169,12 @@ export default {
         handleEdit(index, row) {
             console.log(row);
             this.editVisble = true;
-            this.selectData.id = row.id;
-            this.usepermission = row.permission.split(',');// 逗号切割
+            this.selectData.id = row._id;
+            this.selectData.icon = row.icon;
+            this.selectData.sort = row.sort;
             this.selectData.name = row.name;
+            this.selectData.isOpen = String(row.isOpen);
+            this.selectData.status = parseInt(row._status, 10);
         },
 
         // 弹出框close
@@ -162,8 +189,7 @@ export default {
             this.addVisble = true;
         },
         confirAdd() {
-            this.addData.permission = this.addData.permission.join(',');
-            revoke('/index.php?m=actor&p=add', this.addData).then(res => {
+            revoke('/index.php?m=exchangeTag&p=add', this.addData).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;
                     this.$message({
@@ -198,21 +224,6 @@ export default {
 }
 .form-input {
     width: 200px!important;
-}
-
-.permission_settings{
-    > .el-form-item__content{
-        border: 1px solid #EBEEF5;
-    }
-    h2{
-        font-size: 14px;
-        color: #666;
-        background: #f0f2f5;
-        text-indent: 1rem;
-    }
-    .el-checkbox{        
-        margin-left: 10px;
-    }
 }
 </style>
 <style lang="scss">

@@ -48,9 +48,10 @@
                 </el-table-column>
                 <el-table-column align="center" label="操作">
                      <template slot-scope="scope">
-                        <el-button v-if="tableData[scope.$index].status==1" type="primary" size="small" @click="viewReason(scope.row)">支付状态</el-button>
+                        <el-button  type="primary" size="small" @click="viewReason(scope.row)">支付状态</el-button>
                         <br/>
-                        <el-button v-if="tableData[scope.$index].status==1" type="primary" size="small" style="margin-top:2px;" @click="confirmDelivery(scope.row)">手动发货</el-button>
+                        <el-button v-if="tableData[scope.$index].status==1 ||tableData[scope.$index].status==10" type="primary" size="small" style="margin-top:2px;" @click="confirmDelivery(scope.row)">手动发货</el-button>
+
                     </template>
                 </el-table-column>
             </el-table>
@@ -79,8 +80,8 @@ export default {
     data() {
         return {
             // 日期插件
-            initDate: new Date().setTime(new Date().getTime() - 3600 * 1000 * 24 * 1),
-            setRange: 300,
+            initDate: new Date(),
+            setRange: 2,
             startDate: '',
             endDate: '',
             tableData: [], // 默认3个月

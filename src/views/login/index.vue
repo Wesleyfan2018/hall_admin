@@ -149,10 +149,10 @@ $light_gray: #eee;
     background-color: $bg;
     overflow: hidden;
     .login-form {
-        position: relative;
-        width: 520px;
-        max-width: 100%;
-        padding: 160px 35px 0;
+        // position: relative;
+        width: auto;
+        max-width: 520px;
+        padding: 160px 20px 0;
         margin: 0 auto;
         overflow: hidden;
     }

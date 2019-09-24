@@ -33,7 +33,7 @@ import echarts from 'echarts';
 import { revoke } from '@/api/getApi';
 import { AreaSelect } from '@/components/areaselect';
 import { dateRange } from '@/components/dateRange';
-import lineEchart from "@/components/echarts/lines";
+import lineEchart from '@/components/echarts/lines';
 export default {
     name: 'online',
     components: { dateRange, AreaSelect, lineEchart },
@@ -90,7 +90,7 @@ export default {
                 startDate: self.startDate,
                 endDate: self.endDate,
                 channel: self.filterChannel,
-                //version: self.channel_value[1],
+                // version: self.channel_value[1],
                 provId: self.provId,
                 cityId: self.cityId,
                 areaId: self.areaId,
@@ -117,14 +117,14 @@ export default {
         initOnlineEchart() {
             let self = this;
             let dataObj = {
-                echartName: "新增用户",
+                echartName: '新增用户',
                 legenddata: self.data.legend,
                 series: self.data.register_num,
-                datas:{
+                datas: {
                     time: self.data.xAxis,
                     data: []
                 },
-            }
+            };
             this.echartOption1.id = 'online';
             this.echartOption1.options = dataObj;
             this.timestamp = new Date().getTime();
@@ -134,14 +134,14 @@ export default {
         initPlayEchart() {
             let self = this;
             let dataObj = {
-                echartName: "新增手机账号",
+                echartName: '新增手机账号',
                 series: self.data.register_phone_num,
                 legenddata: self.data.legend,
-                datas:{
+                datas: {
                     time: self.data.xAxis,
                     data: []
                 },
-            }
+            };
             this.echartOption2.id = 'onlinePlay';
             this.echartOption2.options = dataObj;
             this.timestamp = new Date().getTime();

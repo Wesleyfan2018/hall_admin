@@ -110,20 +110,14 @@ export default {
     },
     methods: {
         getTableList(args) {
-            // debugger;
-            console.log(this.selectDate);
-            // args['stime'] = parseInt(this.selectDate[0] / 1000, 10);
-            // args['etime'] = parseInt(this.selectDate[1] / 1000, 10);
-            args['stime'] = getTimeFormat(this.selectDate[0]);
-            args['etime'] = getTimeFormat(this.selectDate[1]);
-
+            args['stime'] = parseInt(this.selectDate[0] / 1000, 10);
+            args['etime'] = parseInt(this.selectDate[1] / 1000, 10);
             args['status'] = this.filterStatusType;
             args['uid'] = this.filterUid;
-
             let data = {
                 callm: 'phonefeelog',
                 callp: 'getList',
-                args: args  // JSON.stringify(args),
+                args: JSON.stringify(args),
             };
 
             revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {

@@ -3,6 +3,23 @@
         <div class="filter-container">
             <edit-header :sendData="diffData" :Approvers="Approvers" :ButConf="ButConf" @allLock="isAllLock"></edit-header>
             <el-form :inline="true" class="demo-form-inline">
+                <el-form-item label="游戏类型：">
+                    <el-select v-model="filterGameId" placeholder="请选择游戏" class="form-input-min">
+                        <el-option
+                            v-for="(item, index) in allGameMap"
+                            :key="index"
+                            :label="item"
+                            :value="index">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="比赛ID：">
+                  <el-input v-model="filterChaseId" class="form-input" placeholder="请输入比赛id"></el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button class="filter-item" type="primary" icon="el-icon-search" @click="find"></el-button>
+                </el-form-item>
+
                 <el-form-item class="text-right">
                     <el-button
                         class="filter-item"
@@ -17,13 +34,23 @@
                 <el-table-column align="center" label="比赛名称" prop="name"></el-table-column>
                 <el-table-column align="center" label="报名费用" prop="applyFee"></el-table-column>
                 <el-table-column align="center" label="关卡数" prop="levelsCount"></el-table-column>
-                <el-table-column align="center" label="开放时间" prop="openTime"></el-table-column>
-                <el-table-column align="center" label="状态" prop="status"></el-table-column>
+                <el-table-column align="center" label="开放时间" prop="showTime"></el-table-column>
+                <el-table-column align="center" label="状态" width="180px">
+                    <template slot-scope="scope">
+                        <el-tag v-if="tableData[scope.$index].enableTime === 0 && tableData[scope.$index].enable == 0">未上线</el-tag>
+                        <el-tag v-if="tableData[scope.$index].enableTime > 0 && tableData[scope.$index].enable != 0" type="success">在线</el-tag>
+                        <el-tag v-if="tableData[scope.$index].enableTime > 0 && tableData[scope.$index].enable == 0" type="info">已下线</el-tag>
+                        <span v-if="showTimeDown[scope.$index]">{{ content }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column align="center" label="操作" width="200px;">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                        <el-button type="success" size="small" @click="changeStatus(scope.$index, scope.row, 1)">上线</el-button>
-                        <el-button type="warning" size="small" @click="changeStatus(scope.$index, scope.row, 0)">下线</el-button>
+                        <div id="oprBtn">
+                            <el-button type="primary" size="small" @click="handleEdit(scope.$index, scope.row, 'info')">查看</el-button>
+                            <el-button type="warning" size="small" @click="handleEdit(scope.$index, scope.row, 'edit')">编辑</el-button>
+                            <el-button v-if="tableData[scope.$index].enable ==0" type="success" size="small" @click="changeStatus(scope.$index, scope.row, 1)">上线</el-button>
+                            <el-button v-if="tableData[scope.$index].enable ==1" type="danger" size="small" @click="changeStatus(scope.$index, scope.row, 0)">下线</el-button>
+                        </div>
                     </template>
                 </el-table-column>
             </el-table>
@@ -40,44 +67,13 @@
                 ></el-pagination>
             </div>
         </div>
+
         <div class="dialog_div">
+            <!-- 比赛弹窗 -->
             <el-dialog
-                title="编辑信息"
-                :visible.sync="editVisble"
-                width="30%"
-                :before-close="handleEditClose"
-            >
-                <el-form label-position="right" label-width="120px" :model="selectData">
-                    <el-form-item label="名称">
-                        <el-input class="form-input" v-model="selectData.name"></el-input>
-                    </el-form-item>
-                    <el-form-item label="商户号">
-                        <el-input class="form-input" v-model="selectData.mchId"></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="wxAppId">
-                        <el-input class="form-input" v-model="selectData.wxAppId"></el-input>
-                    </el-form-item>
-                    <el-form-item label="openAppId">
-                        <el-input class="form-input" v-model="selectData.openAppId"></el-input>
-                    </el-form-item>
-                    <el-form-item label="appSecret">
-                        <el-input class="form-input" v-model="selectData.appSecret"></el-input>
-                    </el-form-item>
-                    <el-form-item label="appKey">
-                        <el-input class="form-input" v-model="selectData.appKey"></el-input>
-                    </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="editVisble = false">取 消</el-button>
-                    <el-button type="success" @click="confirEdit">确 定</el-button>
-                </span>
-            </el-dialog>
-
-            <!-- 新增比赛 -->
-            <el-dialog
-                title="新增比赛"
-                :visible.sync="addVisble"
+                :title="titleName"
+                v-if="gameVisble"
+                :visible.sync="gameVisble"
                 width="50%"
                 :before-close="handleAddClose"
             >
@@ -88,7 +84,7 @@
                     class="dialog-form"
                 >
                     <el-form-item label="比赛名称">
-                        <el-input class="form-input" v-model="addData.name"></el-input>
+                        <el-input :disabled="allLocked" class="form-input" v-model="addData.name"></el-input>
                     </el-form-item>
                     <el-form-item label="游戏类型">
                         <el-select :disabled="allLocked" v-model="addData.gameID" placeholder="请选择游戏" class="form-input-min">
@@ -101,11 +97,12 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item label="比赛ID">
-                        <el-input class="form-input" v-model="addData.id" :disabled="true"></el-input>
+                        <el-input disabled class="form-input" v-model="addData.id"></el-input>
                     </el-form-item>
                     <el-form-item label="开放时间">
                         <el-time-picker
                             is-range
+                            :disabled="allLocked"
                             v-model="addOpenTime"
                             range-separator="至"
                             start-placeholder="开始时间"
@@ -128,21 +125,21 @@
                         </el-col>
                         <el-col class="line" :span="2">  </el-col>
                         <el-col :span="11">
-                            <el-input class="form-input" type="number" v-model="addData.applyMoneyCount" min="0"></el-input>
+                            <el-input :disabled="allLocked" class="form-input" type="number" v-model="addData.applyMoneyCount" min="0"></el-input>
                         </el-col>
                     </el-form-item>
 
                     <el-form-item label="关卡数量">
-                        <el-input class="form-input" type="number" v-model="levelCount" @blur="initLevelTable" min="1" max="100"></el-input>
+                        <el-input :disabled="allLocked" class="form-input" type="number" v-model="levelCount" min="1" max="100"></el-input>
                     </el-form-item>
                     <el-form-item label="关卡积分">
                         <chase-point :levelCount2="levelCount2" :formType="formType" :formObj="formObj" ref="chasePoint" @submitEve="submitPointEve"></chase-point>
                     </el-form-item>
                     <el-form-item label="关卡奖励">
-                        <chase-reward :levelCount2="levelCount2" :formType="formType" :formObj="formObj2" ref="chaseReward" @submitEve="submitRewardEve"></chase-reward>
+                        <chase-reward :allLocked="allLocked" :levelCount2="levelCount2" :formType="formType" :formObj="formObj2" ref="chaseReward" @submitEve="submitRewardEve"></chase-reward>
                     </el-form-item>
-                    <el-form-item label="复活设置">                        
-                        <chase-set :levelCount2="levelCount2" :formType="formType" :formObj="formObj3" ref="chaseSet" @submitEve="submitSetEve"></chase-set>
+                    <el-form-item label="复活设置">
+                        <chase-set :allLocked="allLocked" :levelCount2="levelCount2" :formType="formType" :formObj="formObj3" ref="chaseSet" @submitEve="submitSetEve"></chase-set>
                     </el-form-item>
 
                     <!-- 机器人配置 第一期不做 -->
@@ -158,15 +155,20 @@
 
                     <!-- 复活配置 -->
                     <el-form-item label="每日免费复活次数">
-                        <el-input class="form-input" type="number" v-model="addData.totalShareReliveCount" min="0"></el-input>
+                        <el-input :disabled="allLocked" class="form-input" type="number" v-model="addData.totalShareReliveCount" min="0"></el-input>
                     </el-form-item>
                     <el-form-item label="复活分享链接">
-                        <el-input class="form-input" v-model="addData.shareReliveURL"></el-input>
+                        <el-input :disabled="allLocked" class="form-input" v-model="addData.shareReliveURL"></el-input>
                     </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="addVisble = false">取 消</el-button>
-                    <el-button type="success" @click="confirAdd">创 建</el-button>
+                    <el-button @click="gameVisble = false">取 消</el-button>
+                    <template v-if="formType==='add'">
+                        <el-button type="success" @click="confirAdd">创 建</el-button>
+                    </template>
+                    <template v-if="formType==='edit'">
+                        <el-button type="success" @click="confirAdd">保 存</el-button>
+                    </template>
                 </span>
             </el-dialog>
         </div>
@@ -175,22 +177,29 @@
 <script>
 import { revoke } from '@/api/getApi';
 import { EditHeader } from '../../components/editHeader';
-import ChasePoint from '../../components/confManage/ChasePoint';//管卡积分
-import ChaseReward from '../../components/confManage/ChaseReward';//关卡奖励
-import ChaseSet from '../../components/confManage/ChaseSet';//复活设置
-import {getTimeFormat} from '@/utils/common';//复活设置
-import { debuglog } from 'util';
+import ChasePoint from '../../components/confManage/ChasePoint';// 管卡积分
+import ChaseReward from '../../components/confManage/ChaseReward';// 关卡奖励
+import ChaseSet from '../../components/confManage/ChaseSet';// 复活设置
+import { getTimeFormat } from '@/utils/common';// 复活设置
+import { debuglog, types } from 'util';
 export default {
-    components: { EditHeader,ChasePoint,ChaseReward,ChaseSet },
+    components: { EditHeader, ChasePoint, ChaseReward, ChaseSet },
     name: 'chaseRace',
     data() {
         return {
-            levelCount2:0,
-            formType:'info', //add：新增   info:查看     edit:编辑
-            // formObj:[], //关卡积分
-            formObj:[{initScore:10,upgradeScore:50,eliminateScore:10},{initScore:12,upgradeScore:50,eliminateScore:10}],//关卡积分
-            formObj2:[{awardType:10,awardMoneyType:50,awardItemID:10,awardCount:3},{awardType:11,awardMoneyType:50,awardItemID:10,awardCount:3}],  //关卡奖励
-            formObj3:[{isRelive:5,reliveMoneyType:10,reliveMoney:6},{isRelive:1,reliveMoneyType:10,reliveMoney:6}],  //复活设置
+            totalTime: 5, // 记录具体倒计时时间
+            content: '上线倒计时：5s',  // 按钮里显示的内容
+            showTimeDown: [],
+            titleName: '新增比赛',
+            levelCount2: 1,
+            formType: 'add', // add：新增   info:查看     edit:编辑
+            formObj: [], // 关卡积分
+            formObj2: [],
+            formObj3: [],
+            // 奖励类型
+            currencyMap: { 1: '金豆', 5: '红包券' },
+            // 是否可复活
+            reliveMap: [{ label: '可复活', value: 1 }, { label: '不可复活', value: 0 }],
             diffData: null,
             Approvers: [],
             ButConf: { 'copyBut': 1, 'syncBut': 1 },
@@ -198,15 +207,20 @@ export default {
             confKey: 'ChaseRace', // 配置中心key写死兑换商城tag
             confTable: 't_race_config', // 配置中心对应表名写死
             gameMap: {},
+            allGameMap: { 0: '全部' },
             status: [],
+            filterGameId: '0',
+            filterChaseId: '',
             tableData: [],
+            // 保留原始json配置
+            initConfList: {},
             totalPage: 0,
             pageSize: 10,
             currentPage: 1,
             editVisble: false,
-            addVisble: false,
+            gameVisble: false,
             // 关卡数量
-            levelCount: 0,
+            levelCount: 1,
             selectData: {
                 name: '',
                 mchId: '',
@@ -216,26 +230,25 @@ export default {
                 appKey: '',
             },
             addData: {
+                id: '',
                 name: '',
                 gameID: '',
-                id: '',
                 enableTime: '',
                 enable: '0',
-                openTime: '',
+                openTime: [],
                 applyMoneyType: '1',
                 applyMoneyCount: 0,
                 totalShareReliveCount: '',
-                shareReliveURL: ''
+                shareReliveURL: '',
+                levels: [],
+                levelPoint: [],
+                levelAward: [],
+                levelRelive: [],
+                clearCountIncrFactor: [],
+                clearAwardIncrFactor: []
             },
             addOpenTime: '',
-            //currencyMap: [{ 'name': '金豆', 'value': 1 }, { 'name': '红包券', 'value': 5}],
-            currencyMap: {1: '金豆', 5: '红包券'},
-            // 关卡积分表头
-            integralHead: ['关卡序号','初始积分','晋级积分','淘汰积分'],
-            // 关卡奖励表头
-            awardHead: ['关卡序号','类型','数量','类型','数量'],
-            // 复活设置表头
-            reliveHead: ['关卡序号','是否可复活','复活货币','数量'],
+            curChaseId: '',
             // 页面是否已经被锁定
             allLocked: false,
             oldproduct: 0,
@@ -246,68 +259,64 @@ export default {
             oldenv: 0
         };
     },
-    // watch: {
-        // 监听关卡数变化,重新渲染表格
-        // levelCount: function (newLevelNum, oldLevelNum) {
-        //     this.initLevelTable(newLevelNum);
-        // }
-    // },
     created() {
         this.initGameMap();
     },
-    mounted() {
-        this.getConfigList({
-            page: this.currentPage,
-            pageNum: this.pageSize
-        });
-    },
     methods: {
+        // 重置弹窗数据
+        resetDialogData(){
+            this.formObj = [];
+            this.formObj2 = [];
+            this.formObj3 = [];
+            this.levelCount2 = 1;   //传入弹窗的关卡数量恢复为1
+        },
         // 获取游戏
         initGameMap() {
+            let that = this;
             let data = {
                 callm: 'config',
                 callp: 'gameMap',
-                args: JSON.stringify({'isAll': 0}),
+                args: JSON.stringify({ 'isAll': 0 }),
             };
             revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
-                if (res.code === 0) {
+                if (res.code === 0 && res.data) {
                     let retData = res.data;
-                    //console.log(retData);
                     // 去掉好友房
-                    delete(retData[4001]);
-                    this.gameMap = retData;
+                    delete (retData[4001]);
+                    that.gameMap = retData;
+                    that.allGameMap = Object.assign({}, that.allGameMap, res.data);
                 }
+
+                // 获取比赛列表
+                that.getConfigList({
+                    page: that.currentPage,
+                    pageNum: that.pageSize
+                });
             });
         },
         isAllLock(val) {
+            console.log(val);
             this.allLocked = val;
         },
-        // 根据关卡数初始化table
-        initLevelTable() {
-            //console.log(this.addData.levelNum);
-            
-        },
-        // 日期选项
+        // 创建比赛日期选项
         addTimeChange(value) {
-            debugger;
-            console.log(Date.parse(value[0]),Date.parse(value[1])); //时间戳
-            this.addData.openTime = [getTimeFormat(value[0],'hh-mm-ss'), getTimeFormat(value[1],'hh-mm-ss')];// 11:55:45
-            console.log(this.addOpenTime,value,this.addData.openTime);
+            this.addOpenTime = [Date.parse(value[0]), Date.parse(value[1])];
+            this.addData.openTime = [Date.parse(value[0]), Date.parse(value[1])];
+            console.log(value);
+            console.log(this.addOpenTime);
+            console.log(this.addData.openTime);
         },
         // 获取关卡积分的值
-        submitPointEve(val){
+        submitPointEve(val) {
             this.formObj = val;
-            console.log(this.formObj);
         },
         // 获取关卡奖励的值
-        submitRewardEve(val){
+        submitRewardEve(val) {
             this.formObj2 = val;
-            console.log(this.formObj2);
         },
         // 获取复活设置的值
-        submitSetEve(val){
+        submitSetEve(val) {
             this.formObj3 = val;
-            console.log(this.formObj3);
         },
         // 保存创建比赛
         confirAdd() {
@@ -315,19 +324,28 @@ export default {
             this.$refs.chasePoint.submitEve();
             this.$refs.chaseReward.submitEve();
             this.$refs.chaseSet.submitEve();
+            //console.log('formObj',this.formObj);
+            //console.log('formObj2',this.formObj2);
+            //console.log('formObj3',this.formObj3);return;
+
+            this.addData.levelPoint = this.formObj;
+            this.addData.levelAward = this.formObj2;
+            this.addData.levelRelive = this.formObj3;
 
             // 检测默认值
             if (this.addCheckValid() === false) {
                 return false;
             }
-            console.log(this.addData);
+            //console.log('addData2',this.addData);return;
+
             let data = {
+                'id': this.curChaseId,
                 'value': JSON.stringify(this.addData)
             };
-            revoke('/index.php?m=chaserace&p=add', data).then(res => {
-                //console.log(res);return;
+
+            revoke('/index.php?m=chaserace&p=save', data).then(res => {
                 if (res.code === 0) {
-                    this.addVisble = false;
+                    this.gameVisble = false;
                     this.$message({
                         message: '创建成功！',
                         type: 'success'
@@ -348,6 +366,10 @@ export default {
                 this.$message.error('游戏类型必选！');
                 return false;
             }
+            if (this.addData.openTime.length <= 0) {
+                this.$message.error('请选择开放时间！');
+                return false;
+            }
             if (this.addData.applyMoneyCount === '') {
                 this.$message.error('报名费用不能为空！');
                 return false;
@@ -364,7 +386,7 @@ export default {
                 this.$message.error('复活分享链接不能为空！');
                 return false;
             }
-            
+
             return true;
         },
         // 保存修改比赛
@@ -383,6 +405,7 @@ export default {
                 callp: 'edit',
                 args: JSON.stringify(args),
             };
+            return;
             revoke('/index.php?m=CallProxy&p=callCommon', data).then(
                 res => {
                     if (res.code === 0) {
@@ -401,44 +424,136 @@ export default {
                 }
             );
         },
+        // 查找
+        find() {
+            this.currentPage = 1;
+            let data = {
+                page: this.currentPage,
+                pageNum: this.pageSize,
+                gameId: this.filterGameId,
+                chaseId: this.filterChaseId
+            };
+            this.getConfigList(data);
+        },
+        // 获取配置列表
         getConfigList(args) {
-            let data = {};
-            revoke('/index.php?m=chaserace&p=get', data).then(res => {
+            let self = this;
+            revoke('/index.php?m=chaserace&p=getList', args).then(res => {
                 if (res.code === 0 && res.data) {
-                    //let jsonArr = JSON.parse(res.data.list);
                     let retData = res.data.list;
-                    //console.log(this.gameMap);
-                    //console.log(retData);
-                    for (let i in retData) {
-                        console.log(retData[i]['gameID']);
-                        let curGameId = parseInt(retData[i]['gameID']);
-                        retData[i]['gameName'] = this.gameMap[curGameId];
-                        retData[i]['applyFee'] = this.currencyMap[retData[i]['applyMoneyType']] +' - '+ retData[i]['applyMoneyCount'];
+                    self.initConfList = res.data.init;
+                    for (let i = 0; i < retData.length; i++) {
+                        let retDateItem = retData[i];
+                        let curGameId = parseInt(retDateItem['gameID']);
+                        retDateItem['gameName'] = self.gameMap[curGameId];
+                        let stime = retDateItem['openTime'][0];
+                        let etime = retDateItem['openTime'][1];
+                        retDateItem['showTime'] = getTimeFormat(new Date(stime),'hh-mm-ss') + '-' + getTimeFormat(new Date(etime),'hh-mm-ss');
+                        retDateItem['applyFee'] = self.currencyMap[retDateItem['applyMoneyType']] + ' - ' + retDateItem['applyMoneyCount'];
                     }
-                    console.log(retData);
-                    //console.log(this.gameMap[1]);
-                    this.tableData = retData;
+                    self.tableData = retData;
                     // 隐藏复制按钮
                     this.ButConf['copyBut'] = 0;
                 }
             });
         },
-        // 编辑用户信息
-        handleEdit(index, row) {
-            this.editVisble = true;
-            this.selectData.id = row.id;
-            this.selectData.name = row.name;
-            this.selectData.wxAppId = row.wxAppId;
-            this.selectData.openAppId = row.openAppId;
-            this.selectData.appSecret = row.appSecret;
-            this.selectData.appKey = row.appKey;
+        // 编辑、查看
+        handleEdit(index, row, type) {
+            if (type === 'info') {
+                this.allLocked = true;
+            } else {
+                this.allLocked = false;
+            }
+
+            this.curChaseId = row.chaseId;
+            this.addData.name = row.name;
+            this.addData.gameID = row.gameID.toString();
+            this.addData.id = row.id;
+            this.addOpenTime = [row.openTime[0], row.openTime[1]];
+            this.addData.openTime = [row.openTime[0], row.openTime[1]];
+            this.addData.applyMoneyType = row.applyMoneyType.toString();
+            this.addData.applyMoneyCount = row.applyMoneyCount;
+            this.levelCount = row.levelsCount;
+            this.addData.totalShareReliveCount = row.totalShareReliveCount;
+            this.addData.shareReliveURL = row.shareReliveURL;
+
+            // 重置组件数据
+            this.resetDialogData();
+            for (let i = 0; i < row.levels.length; i++) {
+                let item = row.levels[i];
+                this.formObj[i] = { initScore: item.initScore, upgradeScore: item.upgradeScore, eliminateScore: item.eliminateScore };
+                this.formObj2[i] = { awardType: item.awardType, awardMoneyType: item.awardMoneyType, awardItemID: item.awardItemID, awardCount: item.awardCount };
+                let enableRelive = item.enableRelive == true ? 1 : 0;
+                this.formObj3[i] = { enableRelive: enableRelive, reliveMoneyType: item.reliveMoneyType, reliveMoney: item.reliveMoney };
+            }
+            // console.log(this.formObj);
+
+            // 设置弹窗为编辑类型
+            this.formType = type; // add：新增   info:查看     edit:编辑
+            this.gameVisble = true;
         },
         // 上线、下线
         changeStatus(index, row, status) {
-            console.log(row.chaseId);
-            console.log(status);
-            //this.selectData.id = row.id;
+            let curSendData = this.initConfList[row.id];
+            curSendData['syncStatus'] = status;
 
+            // 先修改后端配置
+            let callData = {
+                callm: 'chaserace',
+                callp: 'syncStatus',
+                args: JSON.stringify(curSendData),
+            };
+            let self = this;
+
+            revoke('/index.php?m=CallProxy&p=callCommon', callData).then(res => {
+                if (res.code === 0) {
+                    // 如果是上线操作显示倒计时
+                    if (status == 1) {
+                        self.$set(self.showTimeDown, index, true);
+                        self.countDown(row.chaseId, status);
+                    } else {
+                        self.syncLocalConfig(row.chaseId, status);
+                    }
+                }
+            });
+        },
+        // 同步本地配置
+        syncLocalConfig(id, status) {
+            let message = status == 1 ? '上线成功' : '下线成功';
+            let data = {
+                'id': id,
+                'status': status
+            };
+            let self = this;
+            revoke('/index.php?m=chaserace&p=status', data).then(res => {
+                if (res.code === 0) {
+                    console.log('syncstatus', status);
+                    this.gameVisble = false;
+                    this.$message({
+                        message: message,
+                        type: 'success'
+                    });
+                    // 刷新配置
+                    self.find();
+                } else {
+                    this.$message.error(res.msg);
+                }
+            });
+        },
+        // 倒计时
+        countDown(id, status) {
+            let self = this;
+            let clock = window.setInterval(() => {
+                this.content = '上线倒计时：' + this.totalTime + 's';
+                //console.log('totalthis.totalTime', this.totalTime);
+                if (this.totalTime < 0) {
+                    //console.log('totalTime', 0);
+                    window.clearInterval(clock);
+                    this.showTimeDown = false;
+                    self.syncLocalConfig(id, status);
+                }
+                this.totalTime--;
+            }, 1000);
         },
         // 修改分页器数量
         handleSizeChange(val) {
@@ -459,16 +574,17 @@ export default {
             this.getTableList(data);
         },
         // 弹出框close
-        handleEditClose(done) {
-            this.editVisble = false;
-        },
+        // handleEditClose(done) {
+        //     this.editVisble = false;
+        // },
         // 弹出框close
         handleAddClose(done) {
-            this.addVisble = false;
+            this.gameVisble = false;
         },
         openAdd() {
             this.addData.id = new Date().getTime();
-            this.addVisble = true;
+            this.formType = 'add';
+            this.gameVisble = true;
         },
         // 发布上线
         updateCache() {
@@ -493,7 +609,7 @@ export default {
             revoke('/index.php?m=CallProxy&p=callCommon', data).then(
                 res => {
                     if (res.code === 0) {
-                        this.addVisble = false;
+                        this.gameVisble = false;
                         this.$message({
                             message: '更新成功',
                             type: 'success'
@@ -511,9 +627,20 @@ export default {
     },
     watch: {
         // 根据关卡数量，显示关卡积分/关卡奖励/复活设置的表格行数
-        levelCount:function(newVal){
+        levelCount: function(newVal) {
             newVal = Number(newVal);
-            this.levelCount2  = newVal;
+            this.levelCount2 = newVal;
+            //console.log(newVal, this.levelCount2);
+        },
+        // 修改弹窗标题
+        formType: function(newVal) {
+            if (newVal === 'add') {
+                this.titleName = '新增比赛';
+            } else if (newVal === 'edit') {
+                this.titleName = '编辑比赛';
+            } else {
+                this.titleName = '查看比赛';
+            }
         }
     }
 };
@@ -540,6 +667,13 @@ export default {
 .form-input {
     width: 200px !important;
 }
+#oprBtn {
+    margin: 0;
+    text-align: left;
+}
+#oprBtn .el-button {
+    margin-left: 3px;
+}
 </style>
 <style lang="scss">
 .el-dialog__header {
@@ -553,7 +687,7 @@ export default {
     box-sizing: border-box;
     background-color: #f0f2f5;
 }
-.form-global{    
+.form-global{
     border-left: 1px solid #eee;
     border-top: 1px solid #eee;
     *{
@@ -610,7 +744,7 @@ export default {
         margin: 10px 10%;
         padding:5px 10px;
         outline: none;
-        height: 40px;
+        height: 40px!important;
         box-sizing: border-box;
         border:1px solid #DCDFE6;
         border-radius: 4px;

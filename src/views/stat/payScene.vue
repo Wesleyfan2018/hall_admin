@@ -71,7 +71,7 @@ import echarts from 'echarts';
 import { revoke, exportToExcel } from '@/api/getApi';
 import { AreaSelect } from '@/components/areaselect';
 import { dateRange } from '@/components/dateRange';
-import pieEchart from "@/components/echarts/pies";
+import pieEchart from '@/components/echarts/pies';
 export default {
     name: 'payScene',
     components: { dateRange, AreaSelect, pieEchart },
@@ -91,22 +91,22 @@ export default {
             channel_value: ['-1', '-1|-1'],
             channel_options: [],
             tableData: [],
-            tagList: 
+            tagList:
                 [
-                    {"zh": '日期', "name": 'collectdate', "format": ''},
-                    {"zh": '日新增', "name": 'register_num', "format": ''},
-                    {"zh": '5', "name": 'register_phone_num', "format": ''},
-                    {"zh": '6', "name": 'login_num', "format": ''},
-                    {"zh": '10', "name": 'dau', "format": ''},
-                    {"zh": '30', "name": 'acm_recharge_num', "format": ''},
-                    {"zh": '98', "name": 'recharge_amount', "format": 'float'},
-                    {"zh": '198', "name": 'recharge_num', "format": ''},
-                    {"zh": '5', "name": 'pay_seep_rate', "format": 'percent'},
-                    {"zh": '6', "name": 'arppu', "format": 'float'},
-                    {"zh": '10', "name": 'rarpu', "format": 'float'},
-                    {"zh": '30', "name": 'return30', "format": ''},
-                    {"zh": '98', "name": 'reg_remain2', "format": 'percent'},
-                    {"zh": '198', "name": 'reg_remain7', "format": 'percent'}
+                    { 'zh': '日期', 'name': 'collectdate', 'format': '' },
+                    { 'zh': '日新增', 'name': 'register_num', 'format': '' },
+                    { 'zh': '5', 'name': 'register_phone_num', 'format': '' },
+                    { 'zh': '6', 'name': 'login_num', 'format': '' },
+                    { 'zh': '10', 'name': 'dau', 'format': '' },
+                    { 'zh': '30', 'name': 'acm_recharge_num', 'format': '' },
+                    { 'zh': '98', 'name': 'recharge_amount', 'format': 'float' },
+                    { 'zh': '198', 'name': 'recharge_num', 'format': '' },
+                    { 'zh': '5', 'name': 'pay_seep_rate', 'format': 'percent' },
+                    { 'zh': '6', 'name': 'arppu', 'format': 'float' },
+                    { 'zh': '10', 'name': 'rarpu', 'format': 'float' },
+                    { 'zh': '30', 'name': 'return30', 'format': '' },
+                    { 'zh': '98', 'name': 'reg_remain2', 'format': 'percent' },
+                    { 'zh': '198', 'name': 'reg_remain7', 'format': 'percent' }
                 ],
             // 导出所需表头
             tHeader: [],
@@ -153,11 +153,11 @@ export default {
             };
             revoke('index.php?m=stat&p=payscene', data).then(res => {
                 if (res.code === 0) {
-                    //self.tagList = res.data.tableHead;
+                    // self.tagList = res.data.tableHead;
                     let data = res.data;
                     // 表格数据格式format
                     for (let i in data) {
-                        
+
                     }
                     self.tableData = data;
                     self.loading = false;
@@ -171,48 +171,60 @@ export default {
             });
         },
         // 显示饼图
-        setPieEcharts(){
+        setPieEcharts() {
             let dataObj = {
-                echartName:"饼图DEMO",
-                echartXName:"访问来源",
-                datas:[      //待传入数据
-                    {value:235, name:'平胡',itemStyle: {
-                        color: '#9FDABF'
-                    }},
-                    {value:274, name:'清一色',itemStyle: {
-                        color: '#E98F6F'
-                    }},
-                    {value:310, name:'七对',itemStyle: {
-                        color: '#749F83'
-                    }}
+                echartName: '饼图DEMO',
+                echartXName: '访问来源',
+                datas: [      // 待传入数据
+                    {
+                        value: 235, name: '平胡', itemStyle: {
+                            color: '#9FDABF'
+                        }
+                    },
+                    {
+                        value: 274, name: '清一色', itemStyle: {
+                            color: '#E98F6F'
+                        }
+                    },
+                    {
+                        value: 310, name: '七对', itemStyle: {
+                            color: '#749F83'
+                        }
+                    }
                 ]
-            }
-            this.$store.commit('SET_Pie_ECHARTS',{
-                id:"hallRecharge",
-                options:dataObj
+            };
+            this.$store.commit('SET_Pie_ECHARTS', {
+                id: 'hallRecharge',
+                options: dataObj
             });
             this.showPie = true;
         },
         // 显示饼图
-        setPie2Echarts(){
+        setPie2Echarts() {
             let dataObj = {
-                echartName:"饼图DEMO2",
-                echartXName:"访问来源2",
-                datas:[      //待传入数据
-                    {value:235, name:'平胡2',itemStyle: {
-                        color: '#9FDABF'
-                    }},
-                    {value:274, name:'清一色2',itemStyle: {
-                        color: '#E98F6F'
-                    }},
-                    {value:310, name:'七对2',itemStyle: {
-                        color: '#749F83'
-                    }}
+                echartName: '饼图DEMO2',
+                echartXName: '访问来源2',
+                datas: [      // 待传入数据
+                    {
+                        value: 235, name: '平胡2', itemStyle: {
+                            color: '#9FDABF'
+                        }
+                    },
+                    {
+                        value: 274, name: '清一色2', itemStyle: {
+                            color: '#E98F6F'
+                        }
+                    },
+                    {
+                        value: 310, name: '七对2', itemStyle: {
+                            color: '#749F83'
+                        }
+                    }
                 ]
-            }
-            this.$store.commit('SET_Pie_ECHARTS',{
-                id:"pie-demo2",
-                options:dataObj
+            };
+            this.$store.commit('SET_Pie_ECHARTS', {
+                id: 'pie-demo2',
+                options: dataObj
             });
             this.showPie = true;
         },

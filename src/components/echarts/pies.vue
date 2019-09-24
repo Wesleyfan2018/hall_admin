@@ -7,33 +7,33 @@
 
 <script>
 import echarts from 'echarts';
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 export default {
-    props:["domid"],
+    props: ['domid'],
     computed: {
-      ...mapState({
-          pieEchartData: state => state.echarts.pieEchartData    //获取饼图数据
-      })  
+        ...mapState({
+            pieEchartData: state => state.echarts.pieEchartData    // 获取饼图数据
+        })
     },
-    mounted(){
-      this.echartsShow();  
+    mounted() {
+        this.echartsShow();
     },
-    methods:{
-        //图表插件
+    methods: {
+        // 图表插件
         echartsShow() {
-            let that = this;            
+            let that = this;
             let chartData = this.pieEchartData[this.domid];
             // 找到容器
             let chartObj = document.getElementById(this.domid).getElementsByClassName('myChart')[0];
-            let myChart = echarts.init(chartObj)
+            let myChart = echarts.init(chartObj);
             let chartOptions = {
                 backgroundColor: '#fff',
-                title : {
-                    text: (chartData && chartData.echartName)? chartData.echartName : "饼图",
+                title: {
+                    text: (chartData && chartData.echartName) ? chartData.echartName : '饼图',
                     // subtext: '纯属虚构',
-                    x:'center'
+                    x: 'center'
                 },
-                visualMap: (chartData && chartData.visualMap)? chartData.visualMap : {
+                visualMap: (chartData && chartData.visualMap) ? chartData.visualMap : {
                     show: false,
                     min: 80,
                     max: 600,
@@ -41,11 +41,11 @@ export default {
                         colorLightness: [0, 1]
                     }
                 },
-                tooltip : (chartData && chartData.tooltip) || { //浮窗提示
+                tooltip: (chartData && chartData.tooltip) || { // 浮窗提示
                     trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
                 },
-                series : (chartData && chartData.series) || [
+                series: (chartData && chartData.series) || [
                     {
                         name: chartData && chartData.echartXName,
                         type: 'pie',
@@ -54,7 +54,7 @@ export default {
                         roseType: 'angle',
                         label: {
                             normal: {
-                                textStyle: {       //文字颜色
+                                textStyle: {       // 文字颜色
                                     color: 'rgba(0, 0, 0, 0.6)'
                                 }
                             }
@@ -76,27 +76,27 @@ export default {
                     }
                 ]
             };
-            
-            console.log("参数显示",chartOptions);
+
+            console.log('参数显示', chartOptions);
             // 开始渲染
             myChart.setOption(chartOptions);
-            // 自动缩放            
-            window.addEventListener("resize", myChart.resize);
+            // 自动缩放
+            window.addEventListener('resize', myChart.resize);
         }
     },
     watch: {
         // 更新图表
-        pieEchartData:{
-            handler(newVal,oldVal){
-                if(newVal){
+        pieEchartData: {
+            handler(newVal, oldVal) {
+                if (newVal) {
                     let chartObj = document.getElementById(this.domid).getElementsByClassName('myChart')[0];
-                    this.echartsShow(chartObj,newVal); 
+                    this.echartsShow(chartObj, newVal);
                 }
             },
-            deep:true
+            deep: true
         }
     }
-}
+};
 </script>
 
 <style lang="scss">

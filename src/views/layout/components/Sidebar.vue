@@ -79,6 +79,7 @@ export default {
                 if (res.code === 0) {
                     let menuList = res.data.menu;
                     this.setMenuList(menuList);
+                    this.loadAll();
                 } else {
                     this.$message.error(res.msg);
                 }
@@ -127,7 +128,7 @@ export default {
         },
         createFilter(queryString) {
             return (menuItem) => {
-                return (menuItem.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                return (menuItem.value.trim().toLowerCase().indexOf(queryString.toLowerCase()) >= 0);
             };
         },
         loadAll() {
@@ -152,10 +153,6 @@ export default {
                 path: obj.path
             });
         }
-    },
-    mounted() {
-        this.loadAll();
-        console.log(this.menuItems);
     }
 };
 </script>

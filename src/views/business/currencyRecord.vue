@@ -85,24 +85,24 @@ export default {
             startDate: '',
             endDate: '',
             tableData: [],
-            gameLevelMap: {0:{'name': '全部', 'level': []}},
-            levelMap: {0: '全部'},
+            gameLevelMap: { 0: { 'name': '全部', 'level': [] }},
+            levelMap: { 0: '全部' },
             filterTypes: [
-                {type: 1, name: '显示id'},
-                {type: 2, name: 'playid'},
-                {type: 3, name: '手机号'},
-                {type: 4, name: 'guid'}
+                { type: 1, name: '显示id' },
+                { type: 2, name: 'playid' },
+                { type: 3, name: '手机号' },
+                { type: 4, name: 'guid' }
             ],
-            // 货币类型: 
+            // 货币类型:
             currType: '0',
-            currTypeMap: {0: '全部', 1: '金币', 2: '元宝（钻石）', 3: '房卡'},
-            // 场景类型: 
+            currTypeMap: { 0: '全部', 1: '金币', 2: '元宝（钻石）', 3: '房卡' },
+            // 场景类型:
             sceneType: '',
-            sceneMap: [{'label': '全部', 'value': ''}, {'label': '大厅', 'value': '0'}, {'label': '游戏中', 'value': '1'}],
+            sceneMap: [{ 'label': '全部', 'value': '' }, { 'label': '大厅', 'value': '0' }, { 'label': '游戏中', 'value': '1' }],
             showGameLvel: false,
             gameId: '0',
             levelId: '0',
-            statusMap: {0: '失败', 1: '成功'},
+            statusMap: { 0: '失败', 1: '成功' },
             // 玩家
             filterUid: '',
             filterType: 1,
@@ -130,7 +130,7 @@ export default {
             let data = {
                 callm: 'config',
                 callp: 'getGameLevelMap',
-                args: JSON.stringify({'showAll': 1}),
+                args: JSON.stringify({ 'showAll': 1 }),
             };
             revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
                 if (res.code === 0) {
@@ -170,7 +170,7 @@ export default {
                         retData[i]['actionName'] = currFunc[retData[i]['funcId']];
                         retData[i]['statusName'] = this.statusMap[retData[i]['status']];
                         retData[i]['gameName'] = gameID == 0 ? '' : this.gameLevelMap[gameID]['name'];
-                        retData[i]['levelName'] = gameID == 0 ? '' : this.gameLevelMap[gameID]['level'][retData[i]['level']];                     
+                        retData[i]['levelName'] = gameID == 0 ? '' : this.gameLevelMap[gameID]['level'][retData[i]['level']];
                     }
                     this.tableData = retData;
                 } else {

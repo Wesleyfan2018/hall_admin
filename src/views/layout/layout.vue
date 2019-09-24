@@ -1,8 +1,8 @@
 <template>
     <div class="app-wrapper">
         <el-container style="height:100%;">
-            <sidebar style="width:200px;" />
-            <el-container style="width:200px;">
+            <sidebar style="width:200px;height:100%;" />
+            <el-container style="width:200px;height:100%;">
                 <el-header class="headers">
                     <navbar />
                     <tags-view />

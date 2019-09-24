@@ -241,8 +241,8 @@
                     </el-row>
                      <el-row :span="2">
                         <dl>
-                            <dt></dt>
-                            <dd></dd>
+                            <dt>零钱:</dt>
+                            <dd>{{currency.ingots}}</dd>
                         </dl>
                     </el-row>
                     <el-row :span="2">
@@ -401,7 +401,7 @@ export default {
                     this.lastLogin = res.data.lastLogin;
                     this.loadLog();// 加载历史记录
                 } else {
-                    this.$alert(res.data.msg, '信息', { });
+                    this.$alert(res.msg, '信息', { });
                 }
             });
         },

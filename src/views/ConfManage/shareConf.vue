@@ -94,7 +94,7 @@
                     <el-input class="form-input" v-model="image_url"></el-input>
                 </el-form-item>
                 <el-form-item label="本地上传" prop="image" v-if="addConf.image_type == 'local'">
-                    <AliOSS @getUploadData='getOssFileInfo' :objectName="objectName"></AliOSS>
+                    <AliOSS ref="addUpload" @getUploadData='getOssFileInfo' :objectName="objectName"></AliOSS>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -113,7 +113,7 @@
                     <el-input class="form-input-max" v-model="selectConf.image_url" ></el-input>
                 </el-form-item>
                 <el-form-item label="本地更换" prop="image">
-                    <AliOSS @getUploadData='getOssFileInfo' :objectName="objectName"></AliOSS>
+                    <AliOSS ref="editUpload" @getUploadData='getOssFileInfo' :objectName="objectName"></AliOSS>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -145,6 +145,7 @@ export default {
                 { 'scene_id': 8, 'scene_name': ' 好友房邀请好友' },
                 { 'scene_id': 9, 'scene_name': ' 赢3局的翻牌' },
                 { 'scene_id': 10, 'scene_name': '中奖记录' },
+                { 'scene_id': 11, 'scene_name': '抽奖' },
             ],
             game: 0,
             gameList: {
@@ -217,11 +218,17 @@ export default {
         openAdd() {
             this.addVisble = true;
             this.addConf.image_type = 'local';
+            if (typeof this.$refs.addUpload !== 'undefined') {
+                this.$refs.addUpload.clearUpload();
+            }
         },
         // 编辑分享配置
         handleEdit(index, row) {
             this.editVisble = true;
             this.objectUrl = '';// 清空上传的文件
+            if (typeof this.$refs.editUpload !== 'undefined') {
+                this.$refs.editUpload.clearUpload();// 清空上传的文件
+            }
             this.selectConf.id = row.config_id;
             this.selectConf.share_text = row.share_text;
             this.selectConf.image_url = row.share_image_url;
@@ -300,6 +307,7 @@ export default {
         },
         // 获取oss文件上传信息
         getOssFileInfo(data) {
+            console.log(data);
             this.objectUrl = data[0].url;
         },
         // 初始化页面

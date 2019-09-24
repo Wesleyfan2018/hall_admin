@@ -30,8 +30,8 @@ export default {
     data() {
         return {
             proList: [
-                { title: '配置中心', path: '/', imgUrl: require('../../assets/image/bigData.png') },
-                { title: '对比工具', path: 'http://flat.stv.com/diff/', imgUrl: require('../../assets/image/bigData3.png') }
+                { title: '配置中心', path: '/', imgUrl: require('../../assets/image/bigData.jpg') },
+                { title: '对比工具', path: 'http://flat.stv.com/diff/', imgUrl: require('../../assets/image/bigData3.jpg') }
             ]
         };
     },
@@ -68,8 +68,8 @@ export default {
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    background: url('../../assets/image/loginbg_01.jpg')no-repeat;
-    background-size: 100% 100%;
+    background: url('../../assets/image/loginbg_01.jpg') no-repeat;
+    background-size: cover;
 }
 .iconStyle { font-size: 100px!important; }
 .text-center{ text-align:center; }
@@ -83,7 +83,7 @@ export default {
     display: -webkit-flex;
     display: flex;
     flex-wrap: wrap;
-    top: 30%;
+    top: 200px;
     left: 50%;
     width: 846px;
     margin-left: -423px;
@@ -97,19 +97,37 @@ export default {
 .cardItem {
     display:flex;flex-direction: column-reverse;width:100%;height:100%;
     background-repeat: no-repeat;background-position: center center;
-    background-size: 40% 65%;
+    background-size: 70px auto;
 }
 .cardItemEnd {
     display:flex;flex-direction: column-reverse;width:100%;height:100%;
-    background-image:url("../../assets/image/plusIcon.png");
+    background-image:url("../../assets/image/plusIcon.jpg");
     background-repeat: no-repeat;background-position: center center;
+    background-size: 70px auto;
 }
 .cardTitle {
-    display: none;
-}
-.card:hover {
-    .cardTitle {
     width:100%;height:30px;line-height:30px;background: rgba(34, 24, 219, 0.4);border-radius: 0 0 5px 5px;font-size: 16px;display: block;
+    // display: none;
 }
+// .card:hover {
+//     .cardTitle {
+    
+// }
+// }
+
+@media screen and (max-width:768px){
+    .mainBox{
+        width: 90%;
+        justify-content: space-between;
+        flex-direction: row;
+        flex-wrap: wrap;
+        left: 0;
+        margin-left: 5%;
+        .card{
+            width: calc(50% - 20px);
+            margin: 20px 10px;
+        }
+
+    }
 }
 </style>

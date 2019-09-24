@@ -194,6 +194,18 @@ export const constantRouterMap = [
                 meta: { keepAlive: true },
                 component: _import('SysManage/SendLog')
             },
+            {
+                path: '/sys-manage/channeluser',
+                name: 'channeluser',
+                meta: { keepAlive: true },
+                component: _import('SysManage/channeluser')
+            },
+            {
+                path: '/sys-manage/permission',
+                name: 'permission',
+                meta: { keepAlive: true },
+                component: _import('SysManage/permission')
+            },
 
 
 
@@ -270,7 +282,16 @@ export const constantRouterMap = [
                 name: 'redticketRecord',
                 meta: { keepAlive: true },
                 component: _import('business/redticketRecord')
-            }
+            },
+            {
+                path: '/business/playerMail',
+                name: 'playerMail',
+                meta: { keepAlive: true },
+                component: _import('business/playerMail')
+            },
+
+
+
         ]
     },
     // 调试工具
@@ -314,6 +335,12 @@ export const constantRouterMap = [
                 name: 'generalOss',
                 meta: { keepAlive: true },
                 component: _import('debug/generaloss')
+            },
+            {
+                path: '/debug/wol',
+                name: 'wol',
+                meta: { keepAlive: true },
+                component: _import('debug/wol')
             },
 
 

@@ -30,7 +30,7 @@
                     <el-table-column align="center">
                         <el-table-column align="center" prop="collectdate" label="日期"></el-table-column>
                     </el-table-column>
-                   
+
                 </el-table>
             </div>
         </div>
@@ -67,7 +67,7 @@ export default {
             startDate: '',
             endDate: '',
             // 玩法
-            gameMap: {0: '全部'},
+            gameMap: { 0: '全部' },
             filterGame: '0',
             filterType: '1'
         };
@@ -93,7 +93,7 @@ export default {
                     let data = res.data;
                     // 表格数据格式format
                     for (let i in data) {
-                        
+
                     }
                     self.tableData = data;
                     self.loading = false;
@@ -127,7 +127,7 @@ export default {
         },
         // 获取游戏
         initGameMap() {
-            revoke('index.php?m=config&p=gameMap', {showAll: 1}).then(res => {
+            revoke('index.php?m=config&p=gameMap', { showAll: 1 }).then(res => {
                 if (res.code === 0) {
                     this.gameMap = res.data;
                 }

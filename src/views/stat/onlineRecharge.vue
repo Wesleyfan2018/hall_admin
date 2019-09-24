@@ -33,7 +33,7 @@ import echarts from 'echarts';
 import { revoke } from '@/api/getApi';
 import { AreaSelect } from '@/components/areaselect';
 import { dateRange } from '@/components/dateRange';
-import lineEchart from "@/components/echarts/lines";
+import lineEchart from '@/components/echarts/lines';
 export default {
     name: 'online',
     components: { dateRange, AreaSelect, lineEchart },
@@ -116,14 +116,14 @@ export default {
         initOnlineEchart() {
             let self = this;
             let dataObj = {
-                echartName: "充值金额",
+                echartName: '充值金额',
                 legenddata: self.data.legend,
                 series: self.data.recharge_amount,
-                datas:{
+                datas: {
                     time: self.data.xAxis,
                     data: []
                 },
-            }
+            };
             this.echartOption1.id = 'online';
             this.echartOption1.options = dataObj;
             this.timestamp = new Date().getTime();
@@ -133,14 +133,14 @@ export default {
         initPlayEchart() {
             let self = this;
             let dataObj = {
-                echartName: "充值人数",
+                echartName: '充值人数',
                 legenddata: self.data.legend,
                 series: self.data.recharge_num,
-                datas:{
+                datas: {
                     time: self.data.xAxis,
                     data: []
                 },
-            }
+            };
             this.echartOption2.id = 'onlinePlay';
             this.echartOption2.options = dataObj;
             this.timestamp = new Date().getTime();

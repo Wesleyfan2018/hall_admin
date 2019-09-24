@@ -48,7 +48,7 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                     <el-form-item label="TO渠道：" v-show="channelVisble">
+                    <el-form-item label="TO渠道：" v-show="channelVisble">
                         <el-select v-model="newChannelId" filterable placeholder="请选择">
                             <el-option
                             v-for="item in channels"
@@ -61,7 +61,7 @@
                     <el-form-item label="原地区：" v-show="areaVisble">
                         <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectArea"></area-select>
                     </el-form-item>
-                     <el-form-item label="TO地区：" v-show="areaVisble">
+                    <el-form-item label="TO地区：" v-show="areaVisble">
                         <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectAreaNew"></area-select>
                     </el-form-item>
                     <el-form-item label="原环境：">
@@ -92,13 +92,13 @@
                             </el-option>
                         </el-select>
                     </el-form-item>
-                     <el-form-item label="地区：" v-show="areaVisble">
-                            <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectAreaNew"></area-select>
-                          </el-form-item>
-                    <el-form-item >
+                    <el-form-item label="地区：" v-show="areaVisble">
+                        <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectAreaNew"></area-select>
+                    </el-form-item>
+                    <el-form-item>
                         <el-button type="success" @click="syncConf()">确认同步</el-button>
                     </el-form-item>
-                     </el-form>
+                </el-form>
                     <div class="diff_title">老代码</div>
                     <div class="diff_title">新代码(当前配置中心配置)</div>
                     <vue-code-diff :old-string="syncoldStr" :new-string="syncnewStr" outputFormat="side-by-side" :context="100" />

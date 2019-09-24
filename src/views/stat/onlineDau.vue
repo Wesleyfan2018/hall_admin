@@ -33,7 +33,7 @@ import echarts from 'echarts';
 import { revoke } from '@/api/getApi';
 import { AreaSelect } from '@/components/areaselect';
 import { dateRange } from '@/components/dateRange';
-import lineEchart from "@/components/echarts/lines";
+import lineEchart from '@/components/echarts/lines';
 export default {
     name: 'online',
     components: { dateRange, AreaSelect, lineEchart },
@@ -90,7 +90,7 @@ export default {
                 startDate: self.startDate,
                 endDate: self.endDate,
                 channel: self.filterChannel,
-                //version: self.channel_value[1],
+                // version: self.channel_value[1],
                 provId: self.provId,
                 cityId: self.cityId,
                 areaId: self.areaId,
@@ -117,14 +117,14 @@ export default {
         initOnlineEchart() {
             let self = this;
             let dataObj = {
-                echartName: "实时日活(DAU)",
+                echartName: '实时日活(DAU)',
                 legenddata: self.data.legend,
                 series: self.data.dau_num,
-                datas:{
+                datas: {
                     time: self.data.xAxis,
                     data: []
                 },
-            }
+            };
             this.echartOption1.id = 'online';
             this.echartOption1.options = dataObj;
             this.timestamp = new Date().getTime();
@@ -134,14 +134,14 @@ export default {
         initPlayEchart() {
             let self = this;
             let dataObj = {
-                echartName: "玩牌人数",
+                echartName: '玩牌人数',
                 series: self.data.play_num,
                 legenddata: self.data.legend,
-                datas:{
+                datas: {
                     time: self.data.xAxis,
                     data: []
                 },
-            }
+            };
             this.echartOption2.id = 'onlinePlay';
             this.echartOption2.options = dataObj;
             this.timestamp = new Date().getTime();

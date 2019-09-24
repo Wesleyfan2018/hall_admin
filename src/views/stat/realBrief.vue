@@ -152,6 +152,20 @@ export default {
             // 地区
             provMap: [{ 'type': -1, 'name': '全部' }, { 'type': 34, 'name': '安徽省' }, { 'type': 51, 'name': '四川省' }, { 'type': 0, 'name': '未选区' }],
             provId: -1,
+            tableHead: [{ 'zh': '日期', 'name': 'collectdate' },
+                { 'zh': '新增-新增注册', 'name': 'register_count' },
+                { 'zh': '新增-玩牌用户', 'name': 'register_play_count' },
+                { 'zh': '新增-玩牌率', 'name': 'register_play_rate' },
+                { 'zh': '新增-平均玩牌局数', 'name': 'register_avg_count' },
+                { 'zh': '登录-登录用户', 'name': 'login_count' },
+                { 'zh': '登录-玩牌用户', 'name': 'login_play_count' },
+                { 'zh': '登录-玩牌率', 'name': 'login_play_rate' },
+                { 'zh': '登录-平均玩牌局数', 'name': 'login_avg_count' },
+                { 'zh': '充值-充值总人数', 'name': 'recharge_count' },
+                { 'zh': '充值-充值总金额', 'name': 'recharge_amount' },
+                { 'zh': '提现-提现总金额', 'name': 'draw_count' },
+                { 'zh': '提现-提现总金额', 'name': 'draw_amount' }
+            ],
             // 渠道
             filterChannel: '0',
             channelMap: {},
@@ -219,9 +233,6 @@ export default {
                 self.tHeader.push(self.tableHead[i]['zh']);
                 self.filterVal.push(self.tableHead[i]['name']);
             }
-            console.log(this.tHeader);
-            console.log(this.filterVal);
-            console.log(this.tableData);
             exportToExcel(self.tHeader, self.filterVal, self.tableData);
         },
         // 日期选项

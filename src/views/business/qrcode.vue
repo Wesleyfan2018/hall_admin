@@ -50,7 +50,7 @@ export default {
                     console.log(res);
                     this.qrimg = 'data:image/png;base64,' + res.data.img;
                 } else {
-                    this.$alert(res.data.msg, '信息', { });
+                    this.$alert(res.msg, '信息', { });
                 }
             });
         },

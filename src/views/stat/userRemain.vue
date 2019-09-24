@@ -194,6 +194,7 @@ export default {
             revoke('index.php?m=stat&p=userRemain', data).then(res => {
                 if (res.code === 0) {
                     self.tagList = res.data.tableHead;
+
                     let data = res.data.data;
                     self.tableData = data;
                     self.loading = false;
@@ -234,7 +235,6 @@ export default {
 
                 for (let xAxisIndex in xAxis) {
                     let dataIndex = xAxis.length - xAxisIndex - 1;
-                    console.log(dataIndex + ':' + xAxisIndex);
                     seriesItemData.push(this.tableData[dataIndex][this.tagList[tagIndex].name]);
                 }
                 seriesItem.data = seriesItemData;
@@ -244,7 +244,6 @@ export default {
 
             this.echartOption.legend.data = legendData;
             this.echartOption.series = seriesData;
-            console.log(this.echartOption);
             myChart.setOption(this.echartOption);
         },
         // 切换tags
@@ -258,8 +257,17 @@ export default {
             this.tHeader = [];
             this.filterVal = [];
             for (let i in this.tagList) {
-                this.tHeader.push(this.tagList[i]['zh']);
-                this.filterVal.push(this.tagList[i]['name']);
+                if (this.tagList[i]['name'].indexOf('remain') !== 0) {
+
+                    this.tHeader.push(this.tagList[i]['zh']);
+                    this.filterVal.push(this.tagList[i]['name']);
+                } else {
+                    this.tHeader.push(this.tagList[i]['zh'] + '率(%)');
+                    this.tHeader.push(this.tagList[i]['zh'] + '数量');
+                    this.filterVal.push(this.tagList[i]['name']);
+                    this.filterVal.push(this.tagList[i]['name'] + '_num');
+
+                }
             }
             exportToExcel(this.tHeader, this.filterVal, this.tableData);
         },
