@@ -8,7 +8,7 @@ const echarts = {
     mutations: {
         // 线图数据设置
         SET_Line_ECHARTS: (state, data) => {
-            state.lineEchartData[data.id] = data.options;  // 图表外层id
+            state.lineEchartData[data.id] = data.options; // 图表外层id
         },
         // 饼图数据设置
         SET_Pie_ECHARTS: (state, data) => {

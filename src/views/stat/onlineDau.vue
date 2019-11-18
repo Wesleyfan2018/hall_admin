@@ -8,22 +8,48 @@
 
                 <el-form-item label="渠道：">
                     <el-select v-model="filterChannel" placeholder="请选择">
-                        <el-option v-for="(item, index) in channelMap" :key="index" :value="index" :label="item"></el-option>
+                        <el-option
+                            v-for="(item, index) in channelMap"
+                            :key="index"
+                            :value="index"
+                            :label="item"
+                        ></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="地区：">
-                    <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectArea" :initArea="initArea"></area-select>
+                    <area-select
+                        :isMultiple="area_multiple"
+                        :has_area="isHasArea"
+                        @areaValue="selectArea"
+                        :initArea="initArea"
+                    ></area-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="filter-item" type="primary" icon="el-icon-search" @click="getEchartData"></el-button>
+                    <el-button
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="getEchartData"
+                    ></el-button>
                 </el-form-item>
             </el-form>
 
             <!-- echart -->
             <div class="table-main">
-                <line-echart v-if="show_1" domid="online" :echartOption="echartOption1" :searchTime="timestamp"></line-echart>
-                <line-echart v-if="show_2" domid="onlinePlay" :echartOption="echartOption2" :searchTime="timestamp" style="margin-top:30px;"></line-echart>
+                <line-echart
+                    v-if="show_1"
+                    domid="online"
+                    :echartOption="echartOption1"
+                    :searchTime="timestamp"
+                ></line-echart>
+                <line-echart
+                    v-if="show_2"
+                    domid="onlinePlay"
+                    :echartOption="echartOption2"
+                    :searchTime="timestamp"
+                    style="margin-top:30px;"
+                ></line-echart>
             </div>
         </div>
     </div>
@@ -52,7 +78,9 @@ export default {
             channel_value: ['0', '0'],
             channel_options: [],
             // 日期插件
-            initDate: new Date().setTime(new Date().getTime() - 3600 * 1000 * 24 * 1),
+            initDate: new Date().setTime(
+                new Date().getTime() - 3600 * 1000 * 24 * 1
+            ),
             setRange: 7,
             startDate: '',
             endDate: '',
@@ -93,7 +121,7 @@ export default {
                 // version: self.channel_value[1],
                 provId: self.provId,
                 cityId: self.cityId,
-                areaId: self.areaId,
+                areaId: self.areaId
             };
             revoke('index.php?m=stat&p=getOnlineDau', data).then(res => {
                 if (res.code === 0) {
@@ -123,7 +151,7 @@ export default {
                 datas: {
                     time: self.data.xAxis,
                     data: []
-                },
+                }
             };
             this.echartOption1.id = 'online';
             this.echartOption1.options = dataObj;
@@ -140,7 +168,7 @@ export default {
                 datas: {
                     time: self.data.xAxis,
                     data: []
-                },
+                }
             };
             this.echartOption2.id = 'onlinePlay';
             this.echartOption2.options = dataObj;

@@ -8,26 +8,25 @@
     "build:test": "vue-cli-service build --mode testing",
     "lint": "eslint --fix --ext .js,.vue src",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "bundle-report": "webpack-bundle-analyzer --port 8123 dist/stats.json"
   },
   "dependencies": {
     "ali-oss": "^6.1.1",
-    "axios": "^0.19.0",
+    "compression-webpack-plugin": "^3.0.0",
     "core-js": "^2.6.5",
     "echarts": "^4.2.1",
-    "element-ui": "^2.9.1",
     "file-saver": "^2.0.2",
+    "highlight.js": "^9.15.10",
     "js-base64": "^2.5.1",
     "js-cookie": "^2.2.0",
-    "js-md5": "^0.7.3",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
+    "script-ext-html-webpack-plugin": "^2.1.4",
     "script-loader": "^0.7.2",
-    "vue": "^2.6.10",
-    "vue-axios": "^2.1.4",
     "vue-code-diff": "0.0.4",
     "vue-router": "^3.0.3",
-    "vuex": "^3.0.1",
+    "webpack-cli": "^3.3.9",
     "xlsx": "^0.15.1"
   },
   "devDependencies": {
@@ -45,7 +44,9 @@
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "vue-template-compiler": "^2.6.10",
+    "webpack-bundle-analyzer": "^3.5.2"
   },
   "eslintConfig": {
     "root": true,

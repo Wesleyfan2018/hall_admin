@@ -8,15 +8,18 @@ const service = axios.create({
     timeout: 8000
 });
 // request
-service.interceptors.request.use(config => {
-    config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    if (config.url.indexOf('p=index') === -1) {
-        config.headers['stv-admin-token'] = getStorageData('token');
+service.interceptors.request.use(
+    config => {
+        config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        if (config.url.indexOf('p=index') === -1) {
+            config.headers['stv-admin-token'] = getStorageData('token');
+        }
+        return config;
+    },
+    error => {
+        Promise.reject(error);
     }
-    return config;
-}, error => {
-    Promise.reject(error);
-});
+);
 
 // respone
 service.interceptors.response.use(

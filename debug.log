@@ -1,0 +1,6 @@
+[1009/154357.453:ERROR:process_reader_win.cc(233)] ReadMemory at 0x71709318 of 1048576 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
+[1009/154357.473:ERROR:scoped_process_suspend.cc(38)] NtResumeProcess: 已尝试访问正在退出的过程。  (0xc000010a)
+[1009/154357.563:ERROR:file_io_win.cc(145)] CreateFile C:\Users\kaifa\AppData\Local\2345Explorer\User Data\Crashpad\reports\50-9A-4C-08-AE-14_e3e53934-281a-476b-ae28-1f9e3a035ead.log: 系统找不到指定的文件。 (0x2)
+[1009/154357.563:ERROR:http_transport_win.cc(185)] GetBytesBuffer failed
+[1010/164349.940:ERROR:file_io_win.cc(145)] CreateFile C:\Users\kaifa\AppData\Local\2345Explorer\User Data\Crashpad\reports\50-9A-4C-08-AE-14_0c5a2ca5-fb52-4daf-a1c6-f5bbf2be3ebc.log: 系统找不到指定的文件。 (0x2)
+[1010/164349.943:ERROR:http_transport_win.cc(185)] GetBytesBuffer failed

@@ -21,7 +21,7 @@ const base = {
                     {
                         env: 4,
                         label: '正式服'
-                    },
+                    }
                 ]
             },
             {
@@ -43,7 +43,7 @@ const base = {
                     {
                         env: 4,
                         label: '正式服'
-                    },
+                    }
                 ]
             },
             {
@@ -65,7 +65,7 @@ const base = {
                     {
                         env: 4,
                         label: '正式服'
-                    },
+                    }
                 ]
             }
         ]

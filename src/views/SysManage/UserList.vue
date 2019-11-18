@@ -91,15 +91,6 @@
                         </el-radio-group>
                     </el-form-item>
 
-                    <!-- <el-form-item label="特殊权限">
-                        <el-checkbox-group v-model="usepermission">
-                            <el-checkbox
-                                v-for="v in permission"
-                                :label="v.id"
-                                :key="v.id"
-                            >{{v.name}}</el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item> -->
 
                     <!-- 特殊权限 -->
                     <el-form-item label="特殊权限" class="permission_settings">
@@ -155,18 +146,10 @@
                         <el-input class="form-input" placeholder="请输入电话号码" v-model="addUser.phone"></el-input>
                     </el-form-item>
 
-                    <!-- <el-form-item label="特殊权限">
-                        <el-checkbox-group v-model="addUser.permission">
-                            <el-checkbox
-                                v-for="v in permission"
-                                :label="v.id"
-                                :key="v.id"
-                            >{{v.name}}</el-checkbox>
-                        </el-checkbox-group>
-                    </el-form-item> -->
+
                     <!-- 特殊权限 -->
                     <el-form-item label="特殊权限" class="permission_settings">
-                        <el-checkbox-group v-model="addUser.usepermission">
+                        <el-checkbox-group v-model="addUser.permission">
                             <div class="group" v-for="item in permission" :key="item.id">
                                 <h2>{{item.name}}</h2>
                                 <el-checkbox
@@ -240,61 +223,35 @@ export default {
                 status: this.selectUser.status,
                 permission: this.usepermission.join(',')
             };
-            revoke('/index.php?m=user&p=edit', data).then(
-                res => {
-                    if (res.code === 0) {
-                        this.editVisble = false;
-                        this.$message({
-                            message: '编辑成功！',
-                            type: 'success'
-                        });
-                        let data = {
-                            actor: this.actor,
-                            name: this.searchStr,
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        };
-                        this.getTableList(data);
-                    } else {
-                        this.$message.error(res.msg);
-                    }
+            revoke('/index.php?m=user&p=edit', data).then(res => {
+                if (res.code === 0) {
+                    this.editVisble = false;
+                    this.$message({
+                        message: '编辑成功！',
+                        type: 'success'
+                    });
+                    let data = {
+                        actor: this.actor,
+                        name: this.searchStr,
+                        page: this.currentPage,
+                        pageNum: this.pageSize
+                    };
+                    this.getTableList(data);
+                } else {
+                    this.$message.error(res.msg);
                 }
-            );
+            });
         },
         selectOption() {
-            let data = { 'permGroup': 1 };
-            revoke('/index.php?m=config&p=user', data).then(
-                res => {
-                    // console.log(res)
-                    if (res.code === 0) {
-                        this.actors = res.data.actor;
-                        this.status = res.data.status;
-                        this.permission = res.data.permission;
-                        // this.permission = [{
-                        //     name:"系统管理",
-                        //     children:[{
-                        //         name:"系统管理->管理员操作",
-                        //         api:['user.add','user.edit'],
-                        //         id:"editAdmin",
-                        //         menu:''
-                        //     },{
-                        //         name:"系统管理->管理员操作",
-                        //         api:['actor.add','actor.edit','actor.getactors'],
-                        //         id:"actorAdmin",
-                        //         menu:"Actor"
-                        //     }]
-                        // },{
-                        //     name:"数据统计",
-                        //     children:[{
-                        //         name:"数据统计->分享库统计",
-                        //         api:["stat.sharehub"],
-                        //         id:"statSharehub",
-                        //         menu:"statSharehub"
-                        //     }]
-                        // }];
-                    }
+            let data = { permGroup: 1 };
+            revoke('/index.php?m=config&p=user', data).then(res => {
+                // console.log(res)
+                if (res.code === 0) {
+                    this.actors = res.data.actor;
+                    this.status = res.data.status;
+                    this.permission = res.data.permission;
                 }
-            );
+            });
         },
         initList() {
             let self = this;
@@ -304,36 +261,36 @@ export default {
                 page: self.currentPage,
                 pageNum: self.pageSize
             };
-            revoke('/index.php?m=user&p=lists', data).then(
-                res => {
-                    if (res.code === 0) {
-                        let tableData = res.data.list;
-                        for (let i in tableData) {
-                            tableData[i].actorStr =
-                                self.actors[Number(tableData[i].actor)];
-                            tableData[i].statusStr =
-                                self.status[Number(tableData[i].status)];
-                        }
-                        self.tableData = tableData;
-                        self.totalPage = res.data.total;
+            revoke('/index.php?m=user&p=lists', data).then(res => {
+                if (res.code === 0) {
+                    let tableData = res.data.list;
+                    for (let i in tableData) {
+                        tableData[i].actorStr =
+                            self.actors[Number(tableData[i].actor)];
+                        tableData[i].statusStr =
+                            self.status[Number(tableData[i].status)];
                     }
+                    self.tableData = tableData;
+                    self.totalPage = res.data.total;
                 }
-            );
+            });
         },
         getTableList(data) {
-            revoke('/index.php?m=user&p=lists', data).then(
-                res => {
-                    if (res.code === 0) {
-                        let tableData = res.data.list;
-                        for (let i in tableData) {
-                            tableData[i].actorStr = this.actors[Number(tableData[i].actor)];
-                            tableData[i].statusStr = this.status[Number(tableData[i].status)];
-                        }
-                        this.tableData = tableData;
-                        this.totalPage = res.data.total;
+            revoke('/index.php?m=user&p=lists', data).then(res => {
+                if (res.code === 0) {
+                    let tableData = res.data.list;
+                    for (let i in tableData) {
+                        tableData[i].actorStr = this.actors[
+                            Number(tableData[i].actor)
+                        ];
+                        tableData[i].statusStr = this.status[
+                            Number(tableData[i].status)
+                        ];
                     }
+                    this.tableData = tableData;
+                    this.totalPage = res.data.total;
                 }
-            );
+            });
         },
         // 编辑用户信息
         handleEdit(index, row) {
@@ -392,27 +349,27 @@ export default {
             this.addVisble = true;
         },
         confirAdd() {
-            this.addUser.permission = this.addUser.permission.join(',');
-            revoke('/index.php?m=user&p=add', this.addUser).then(
-                res => {
-                    if (res.code === 0) {
-                        this.addVisble = false;
-                        this.$message({
-                            message: '新增用户成功！',
-                            type: 'success'
-                        });
-                        let data = {
-                            actor: this.actor,
-                            name: this.searchStr,
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        };
-                        this.getTableList(data);
-                    } else {
-                        this.$message.error(res.msg);
-                    }
+            // 深拷贝一份,然后修改
+            let addData = JSON.parse(JSON.stringify(this.addUser));
+            addData.permission = addData.permission.join(',');
+            revoke('/index.php?m=user&p=add', addData).then(res => {
+                if (res.code === 0) {
+                    this.addVisble = false;
+                    this.$message({
+                        message: '新增用户成功！',
+                        type: 'success'
+                    });
+                    let data = {
+                        actor: this.actor,
+                        name: this.searchStr,
+                        page: this.currentPage,
+                        pageNum: this.pageSize
+                    };
+                    this.getTableList(data);
+                } else {
+                    this.$message.error(res.msg);
                 }
-            );
+            });
         }
     },
     activated() {
@@ -459,17 +416,17 @@ export default {
     background-color: #f0f2f5;
 }
 
-.permission_settings{
-    > .el-form-item__content{
-        border: 1px solid #EBEEF5;
+.permission_settings {
+    > .el-form-item__content {
+        border: 1px solid #ebeef5;
     }
-    h2{
+    h2 {
         font-size: 14px;
         color: #666;
         background: #f0f2f5;
         text-indent: 1rem;
     }
-    .el-checkbox{
+    .el-checkbox {
         margin-left: 10px;
     }
 }

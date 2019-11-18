@@ -8,32 +8,58 @@
 
                 <el-form-item label="渠道：">
                     <el-select v-model="filterChannel" placeholder="请选择">
-                        <el-option v-for="(item, index) in channelMap" :key="index" :value="index" :label="item"></el-option>
+                        <el-option
+                            v-for="(item, index) in channelMap"
+                            :key="index"
+                            :value="index"
+                            :label="item"
+                        ></el-option>
                     </el-select>
                 </el-form-item>
 
                 <el-form-item label="地区：">
-                    <area-select :isMultiple="area_multiple" :has_area="isHasArea" @areaValue="selectArea" :initArea="initArea"></area-select>
+                    <area-select
+                        :isMultiple="area_multiple"
+                        :has_area="isHasArea"
+                        @areaValue="selectArea"
+                        :initArea="initArea"
+                    ></area-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="filter-item" type="primary" icon="el-icon-search" @click="getEchartData"></el-button>
+                    <el-button
+                        class="filter-item"
+                        type="primary"
+                        icon="el-icon-search"
+                        @click="getEchartData"
+                    ></el-button>
                 </el-form-item>
             </el-form>
 
             <!-- echart -->
             <div class="table-main">
-                <line-echart v-if="show_1" domid="online" :echartOption="echartOption1" :searchTime="timestamp"></line-echart>
-                <line-echart v-if="show_2" domid="onlinePlay" :echartOption="echartOption2" :searchTime="timestamp" style="margin-top:30px;"></line-echart>
+                <line-echart
+                    v-if="show_1"
+                    domid="online"
+                    :echartOption="echartOption1"
+                    :searchTime="timestamp"
+                ></line-echart>
+                <line-echart
+                    v-if="show_2"
+                    domid="onlinePlay"
+                    :echartOption="echartOption2"
+                    :searchTime="timestamp"
+                    style="margin-top:30px;"
+                ></line-echart>
             </div>
         </div>
     </div>
 </template>
 <script>
-import echarts from 'echarts';
-import { revoke } from '@/api/getApi';
-import { AreaSelect } from '@/components/areaselect';
-import { dateRange } from '@/components/dateRange';
-import lineEchart from '@/components/echarts/lines';
+import echarts from 'echarts'
+import { revoke } from '@/api/getApi'
+import { AreaSelect } from '@/components/areaselect'
+import { dateRange } from '@/components/dateRange'
+import lineEchart from '@/components/echarts/lines'
 export default {
     name: 'online',
     components: { dateRange, AreaSelect, lineEchart },
@@ -52,7 +78,9 @@ export default {
             channel_value: ['0', '0'],
             channel_options: [],
             // 日期插件
-            initDate: new Date().setTime(new Date().getTime() - 3600 * 1000 * 24 * 1),
+            initDate: new Date().setTime(
+                new Date().getTime() - 3600 * 1000 * 24 * 1
+            ),
             setRange: 7,
             startDate: '',
             endDate: '',
@@ -68,13 +96,13 @@ export default {
             echartOption1: {},
             echartOption2: {},
             timestamp: ''
-        };
+        }
     },
     created() {
-        this.initChannel();
+        this.initChannel()
     },
     mounted() {
-        this.getEchartData();
+        this.getEchartData()
     },
     methods: {
         // 获取表格信息
@@ -84,8 +112,8 @@ export default {
                 text: 'Loading',
                 spinner: 'el-icon-loading',
                 background: 'rgba(0, 0, 0, 0.7)'
-            });
-            let self = this;
+            })
+            let self = this
             let data = {
                 startDate: self.startDate,
                 endDate: self.endDate,
@@ -93,29 +121,29 @@ export default {
                 // version: self.channel_value[1],
                 provId: self.provId,
                 cityId: self.cityId,
-                areaId: self.areaId,
-            };
+                areaId: self.areaId
+            }
             revoke('index.php?m=stat&p=getOnlineReg', data).then(res => {
                 if (res.code === 0) {
-                    self.data = res.data;
-                    self.loading = false;
+                    self.data = res.data
+                    self.loading = false
                     // 新增用户 echart
-                    self.initOnlineEchart();
+                    self.initOnlineEchart()
                     // 新增手机账号 echart
-                    self.initPlayEchart();
-                    loading.close();
+                    self.initPlayEchart()
+                    loading.close()
                 } else {
                     this.$notify.error({
                         title: '错误',
                         message: res,
                         duration: 3000
-                    });
+                    })
                 }
-            });
+            })
         },
         // 新增用户 echart
         initOnlineEchart() {
-            let self = this;
+            let self = this
             let dataObj = {
                 echartName: '新增用户',
                 legenddata: self.data.legend,
@@ -123,16 +151,16 @@ export default {
                 datas: {
                     time: self.data.xAxis,
                     data: []
-                },
-            };
-            this.echartOption1.id = 'online';
-            this.echartOption1.options = dataObj;
-            this.timestamp = new Date().getTime();
-            this.show_1 = true;
+                }
+            }
+            this.echartOption1.id = 'online'
+            this.echartOption1.options = dataObj
+            this.timestamp = new Date().getTime()
+            this.show_1 = true
         },
         // 新增手机账号 echart
         initPlayEchart() {
-            let self = this;
+            let self = this
             let dataObj = {
                 echartName: '新增手机账号',
                 series: self.data.register_phone_num,
@@ -140,44 +168,44 @@ export default {
                 datas: {
                     time: self.data.xAxis,
                     data: []
-                },
-            };
-            this.echartOption2.id = 'onlinePlay';
-            this.echartOption2.options = dataObj;
-            this.timestamp = new Date().getTime();
-            this.show_2 = true;
+                }
+            }
+            this.echartOption2.id = 'onlinePlay'
+            this.echartOption2.options = dataObj
+            this.timestamp = new Date().getTime()
+            this.show_2 = true
         },
         // 日期选项
         selectDate(value) {
-            this.startDate = value[0];
-            this.endDate = value[1];
+            this.startDate = value[0]
+            this.endDate = value[1]
         },
         // init渠道/版本选项
         initChannel() {
-            let data = {};
+            let data = {}
             revoke('index.php?m=stat&p=getChannel', data).then(res => {
                 if (res.code === 0) {
-                    this.channelMap = res.data;
+                    this.channelMap = res.data
                 }
-            });
+            })
         },
         // 绑定选择后的地区选项值
         selectArea(array) {
-            let str = array[0].toString();
+            let str = array[0].toString()
             if (str.length <= 2) {
-                this.provId = str;
-                this.cityId = '0';
-                this.areaId = '0';
+                this.provId = str
+                this.cityId = '0'
+                this.areaId = '0'
             } else if (str.length <= 4) {
-                this.provId = str.charAt(0) + str.charAt(1);
-                this.cityId = str;
-                this.areaId = '0';
+                this.provId = str.charAt(0) + str.charAt(1)
+                this.cityId = str
+                this.areaId = '0'
             } else {
-                this.provId = str.charAt(0) + str.charAt(1);
-                this.cityId = str.charAt(2) + str.charAt(3);
-                this.areaId = str;
+                this.provId = str.charAt(0) + str.charAt(1)
+                this.cityId = str.charAt(2) + str.charAt(3)
+                this.areaId = str
             }
         }
     }
-};
+}
 </script>

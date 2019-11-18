@@ -1,10 +1,7 @@
 <template>
     <div class="app-containei">
         <div class="filter-container">
-            <el-table
-                :data="tableData"
-                border
-                style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%">
                 <el-table-column prop="id" label="id"></el-table-column>
                 <el-table-column prop="type" label="登录类型"></el-table-column>
                 <el-table-column prop="from_ip" label="登录ip"></el-table-column>
@@ -20,8 +17,8 @@
                     :page-sizes="[10, 25, 50, 100]"
                     :page-size="pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="totalPage">
-                </el-pagination>
+                    :total="totalPage"
+                ></el-pagination>
             </div>
         </div>
     </div>
@@ -34,7 +31,7 @@ export default {
             tableData: [],
             totalPage: 0,
             pageSize: 10,
-            currentPage: 1,
+            currentPage: 1
         };
     },
     created() {

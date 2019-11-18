@@ -17,9 +17,8 @@
             <el-form-item>
                 <el-button class="filter-item" type="primary" icon="el-icon-search" @click="find"></el-button>
             </el-form-item>
-
             <el-form-item label="历史查询:">
-                <el-select  v-model="selectLogKey" placeholder="请选择" @change="selectedLog($event)">
+                <el-select v-model="selectLogKey" placeholder="请选择" @change="selectedLog($event)">
                     <el-option
                         v-for="item in logData"
                         :key="item.id"
@@ -29,7 +28,6 @@
                 </el-select>
             </el-form-item>
         </el-form>
-
 
         <div class="userinfo-global userinfo-base">
             <el-row>
@@ -41,8 +39,16 @@
                 <el-col :span="8" class="col-header">
                     <div class="user-header">
                         <img v-if="head" :src="dataInfo.avatar" :alt="dataInfo.avatar" />
-                        <img v-if="headmale" src="../../assets/image/avatar_male.png"  :alt="dataInfo.avatar"/>
-                        <img v-if="headfemale" src="../../assets/image/farmers_female.png" :alt="dataInfo.avatar" />
+                        <img
+                            v-if="headmale"
+                            src="../../assets/image/avatar_male.png"
+                            :alt="dataInfo.avatar"
+                        />
+                        <img
+                            v-if="headfemale"
+                            src="../../assets/image/farmers_female.png"
+                            :alt="dataInfo.avatar"
+                        />
                         <!--:src="dataInfo.avatar || female_img" -->
                         <el-button size="small" type="primary">重置头像</el-button>
                     </div>
@@ -78,19 +84,19 @@
                             <dd></dd>
                         </dl>
                     </el-row>
-                     <el-row :span="5">
+                    <el-row :span="5">
                         <dl>
                             <dt>注册设备码:</dt>
                             <dd>{{firstLogin.deviceCode}}</dd>
                         </dl>
                     </el-row>
-                     <el-row :span="4">
+                    <el-row :span="4">
                         <dl>
                             <dt>注册渠道:</dt>
-                            <dd>{{  channelData[dataInfo.channelID] && channelData[dataInfo.channelID].name}}({{dataInfo.channelID}})</dd>
+                            <dd>{{ channelData[dataInfo.channelID] && channelData[dataInfo.channelID].name}}({{dataInfo.channelID}})</dd>
                         </dl>
                     </el-row>
-                      <el-row :span="6">
+                    <el-row :span="6">
                         <dl>
                             <dt>注册版本:</dt>
                             <dd>{{dataInfo.version}}</dd>
@@ -111,8 +117,6 @@
                             <dd></dd>
                         </dl>
                     </el-row>
-
-
                 </el-col>
                 <el-col :span="8">
                     <el-row :span="1">
@@ -150,22 +154,21 @@
                         </dl>
                     </el-row>
 
-                      <el-row :span="4">
+                    <el-row :span="4">
                         <dl>
                             <dt>上次登录渠道:</dt>
                             <dd>{{channelData[lastLogin.channelId] && channelData[lastLogin.channelId].name}}({{lastLogin.channelId}})</dd>
                         </dl>
                     </el-row>
 
-
-                     <el-row :span="6">
+                    <el-row :span="6">
                         <dl>
                             <dt>上次登录版本:</dt>
                             <dd>{{lastLogin.version}}</dd>
                             <dd></dd>
                         </dl>
                     </el-row>
-                  <el-row :span="2">
+                    <el-row :span="2">
                         <dl>
                             <dt>类型:</dt>
                             <dd>{{type[dataInfo.type]}}</dd>
@@ -179,7 +182,6 @@
                             <dd></dd>
                         </dl>
                     </el-row>
-
                 </el-col>
             </el-row>
         </div>
@@ -239,7 +241,7 @@
                             <dd>{{dataInfo.accountID}}</dd>
                         </dl>
                     </el-row>
-                     <el-row :span="2">
+                    <el-row :span="2">
                         <dl>
                             <dt>零钱:</dt>
                             <dd>{{currency.ingots}}</dd>
@@ -306,11 +308,11 @@
                     </el-row>
                 </el-col>
             </el-row>
-        </div> -->
+        </div>-->
     </div>
 </template>
 <script>
-import { revoke } from '@/api/getApi';
+import { revoke } from '@/api/getApi'
 export default {
     name: 'actor',
     data() {
@@ -336,137 +338,154 @@ export default {
             logData: [],
             firstLogin: [],
             lastLogin: [],
-            packsack: { 'gold': 0 }, // 保险箱信息
-            currency: { 'coins': 0 }, // 货币表信息
-            redticket: { 'total': 0 }, // 红包券信息
-
-        };
+            packsack: { gold: 0 }, // 保险箱信息
+            currency: { coins: 0 }, // 货币表信息
+            redticket: { total: 0 } // 红包券信息
+        }
     },
     created() {
-        this.loadArea();
-        this.loadChannel();
-        this.loadLog();
+        this.loadArea()
+        this.loadChannel()
+        this.loadLog()
     },
     activated() {
         if (this.$route.params.filterType) {
-            this.filterType = this.$route.params.filterType;
+            this.filterType = this.$route.params.filterType
         }
         if (this.$route.params.filterUid) {
-            this.filterUid = this.$route.params.filterUid;
+            this.filterUid = this.$route.params.filterUid
         }
         if (this.$route.params.filterUid || this.$route.params.filterType) {
-            this.find();
+            this.find()
         }
     },
     methods: {
         find() {
-            let args = {};
-            args['type'] = this.filterType;
-            args['value'] = this.filterUid;
+            let args = {}
+            args['type'] = this.filterType
+            args['value'] = this.filterUid
             let data = {
                 callm: 'users',
                 callp: 'getInfo',
                 args: JSON.stringify(args)
-            };
+            }
             revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
                 if (res.code === 0) {
                     // 处理头像
-                    this.dataInfo = res.data.info;
-                    if (this.dataInfo.length === 0 || !this.dataInfo.hasOwnProperty('id')) {
-                        this.$message('无此用户', '信息', { });
-                        return;
+                    this.dataInfo = res.data.info
+                    if (
+                        this.dataInfo.length === 0 ||
+                        !this.dataInfo.hasOwnProperty('id')
+                    ) {
+                        this.$message('无此用户', '信息', {})
+                        return
                     }
                     if (!isNaN(this.dataInfo.avatar)) {
                         if (this.dataInfo.gender === '2') {
-                            this.headfemale = true;
-                            this.headmale = false;
+                            this.headfemale = true
+                            this.headmale = false
                         }
                         if (this.dataInfo.gender === '1') {
-                            this.headmale = true;
-                            this.headfemale = false;
+                            this.headmale = true
+                            this.headfemale = false
                         }
-                        this.head = false;
+                        this.head = false
                     } else {
-                        this.head = true;
-                        this.headmale = false;
-                        this.headfemale = false;
+                        this.head = true
+                        this.headmale = false
+                        this.headfemale = false
                     }
 
                     // 处理地址区域
-                    this.dataInfo.areastr = (this.getAreaName(this.dataInfo.provinceID) + '-' + this.getAreaName(this.dataInfo.cityID) + '-' + this.getAreaName(this.dataInfo.areaID));
-                    this.packsack = res.data.packsack;
-                    this.currency = res.data.currency;
-                    this.redticket = res.data.redticket;
-                    this.firstLogin = res.data.firstLogin;
-                    this.lastLogin = res.data.lastLogin;
-                    this.loadLog();// 加载历史记录
+                    this.dataInfo.areastr =
+                        this.getAreaName(this.dataInfo.provinceID) +
+                        '-' +
+                        this.getAreaName(this.dataInfo.cityID) +
+                        '-' +
+                        this.getAreaName(this.dataInfo.areaID)
+                    this.packsack = res.data.packsack
+                    this.currency = res.data.currency
+                    this.redticket = res.data.redticket
+                    this.firstLogin = res.data.firstLogin
+                    this.lastLogin = res.data.lastLogin
+                    this.loadLog() // 加载历史记录
                 } else {
-                    this.$alert(res.msg, '信息', { });
+                    this.$alert(res.msg, '信息', {})
                 }
-            });
+            })
         },
         // 查询区域名字
         getAreaName(key) {
             if (key.length === 2) {
                 if (this.areaData.hasOwnProperty(key)) {
-                    return this.areaData[key]['name'];
+                    return this.areaData[key]['name']
                 }
-            }
-            else if (key.length === 4) {
-                let pid = key.substring(0, 2);
-                if (this.areaData.hasOwnProperty(pid) && this.areaData[pid]['children'].hasOwnProperty(key)) {
-                    return this.areaData[pid]['children'][key]['name'];
+            } else if (key.length === 4) {
+                let pid = key.substring(0, 2)
+                if (
+                    this.areaData.hasOwnProperty(pid) &&
+                    this.areaData[pid]['children'].hasOwnProperty(key)
+                ) {
+                    return this.areaData[pid]['children'][key]['name']
                 }
-            }
-            else if (key.length === 6) {
-                let pid = key.substring(0, 2);
-                let cid = key.substring(0, 4);
-                if (this.areaData.hasOwnProperty(pid) && this.areaData[pid]['children'].hasOwnProperty(cid)) {
-                    for (let j in this.areaData[pid]['children'][cid]['children']) {
-                        if (String(this.areaData[pid]['children'][cid]['children'][j]['id']) === key) {
-                            return this.areaData[pid]['children'][cid]['children'][j]['name'];
+            } else if (key.length === 6) {
+                let pid = key.substring(0, 2)
+                let cid = key.substring(0, 4)
+                if (
+                    this.areaData.hasOwnProperty(pid) &&
+                    this.areaData[pid]['children'].hasOwnProperty(cid)
+                ) {
+                    for (let j in this.areaData[pid]['children'][cid][
+                        'children'
+                    ]) {
+                        if (
+                            String(
+                                this.areaData[pid]['children'][cid]['children'][
+                                    j
+                                ]['id']
+                            ) === key
+                        ) {
+                            return this.areaData[pid]['children'][cid][
+                                'children'
+                            ][j]['name']
                         }
                     }
-
                 }
             }
-            return '';
+            return ''
         },
         loadArea() {
-            let data = { 'key': 1 };// 保留key
+            let data = { key: 1 } // 保留key
             revoke('/index.php?m=config&p=area', data).then(res => {
-
                 if (res.code === 0) {
-                    this.areaData = res.data;
+                    this.areaData = res.data
                 }
-            });
+            })
         },
         loadChannel() {
-            let data = { 'key': 1 };// 保留key
+            let data = { key: 1 } // 保留key
             revoke('/index.php?m=config&p=channel', data).then(res => {
                 if (res.code === 0) {
-
-                    this.channelData = res.data ? res.data : [];
+                    this.channelData = res.data ? res.data : []
                 }
-            });
+            })
         },
         loadLog() {
-            let data = { 'key': 1 };// 保留key
+            let data = { key: 1 } // 保留key
             revoke('/index.php?m=UserInfo&p=logs', data).then(res => {
                 if (res.code === 0) {
-                    this.logData = res.data;
+                    this.logData = res.data
                 }
-
-            });
+            })
         },
         // 回调
         selectedLog(value) {
-            let temp = value.split('_');
-            this.filterType = parseInt(temp[0], 10);
-            this.filterUid = String(temp[1]);
+            let temp = value.split('_')
+            this.filterType = parseInt(temp[0], 10)
+            this.filterUid = String(temp[1])
         }
     }
-};
+}
 </script>
 
 <style lang="scss">

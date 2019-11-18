@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import router from '@/router';
+import { mapState } from 'vuex'
+import router from '@/router'
 export default {
     name: 'AppMain',
     computed: {
@@ -30,10 +30,10 @@ export default {
             cachedViews: state => state.tagsview.cachedViews
         }),
         key() {
-            return router.path;
+            return router.path
         }
     }
-};
+}
 </script>
 
 <style scoped>

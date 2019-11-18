@@ -148,8 +148,6 @@ export const constantRouterMap = [
                 meta: { keepAlive: true },
                 component: _import('stat/shareHub')
             }
-
-
         ]
     },
     // 系统管理
@@ -205,10 +203,7 @@ export const constantRouterMap = [
                 name: 'permission',
                 meta: { keepAlive: true },
                 component: _import('SysManage/permission')
-            },
-
-
-
+            }
         ]
     },
     // 业务
@@ -289,9 +284,24 @@ export const constantRouterMap = [
                 meta: { keepAlive: true },
                 component: _import('business/playerMail')
             },
-
-
-
+            {
+                path: '/business/AppletVersion',
+                name: 'AppletVersion',
+                meta: { keepAlive: true },
+                component: _import('business/AppletVersion')
+            },
+            {
+                path: '/business/robotOverview',
+                name: 'robotOverview',
+                meta: { keepAlive: true },
+                component: _import('business/robotOverview')
+            },
+            {
+                path: '/debug/monitorNotice',
+                name: 'monitorNotice',
+                meta: { keepAlive: true },
+                component: _import('debug/monitorNotice')
+            }
         ]
     },
     // 调试工具
@@ -341,10 +351,7 @@ export const constantRouterMap = [
                 name: 'wol',
                 meta: { keepAlive: true },
                 component: _import('debug/wol')
-            },
-
-
-
+            }
         ]
     },
     // 配置管理
@@ -388,6 +395,44 @@ export const constantRouterMap = [
                 name: 'chaseRace',
                 meta: { keepAlive: true },
                 component: _import('ConfManage/chaseRace')
+            },
+            {
+                path: '/confmanage/robot',
+                name: 'robot',
+                meta: { keepAlive: true },
+                component: _import('ConfManage/robot')
+            }
+        ]
+    },
+    // 基础配置
+    {
+        path: '/baseconf',
+        // name: "Dashboard",
+        component: layout,
+        children: [
+            {
+                path: '/baseconf/area',
+                name: 'area',
+                meta: { keepAlive: true },
+                component: _import('baseconf/area')
+            },
+            {
+                path: '/baseconf/confManager',
+                name: 'confManager',
+                meta: { keepAlive: true },
+                component: _import('baseconf/confManager')
+            },
+            {
+                path: '/baseconf/games',
+                name: 'games',
+                meta: { keepAlive: true },
+                component: _import('baseconf/games')
+            },
+            {
+                path: '/baseconf/channel',
+                name: 'channel',
+                meta: { keepAlive: true },
+                component: _import('baseconf/channel')
             }
         ]
     },

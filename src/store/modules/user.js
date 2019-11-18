@@ -4,7 +4,7 @@ const user = {
     state: {
         token: '',
         g: Number(getStorageData('g')) || 10000,
-        e: Number(getStorageData('e')) || 1,
+        e: Number(getStorageData('e')) || 1
     },
     mutations: {
         SET_TOKEN: (state, token) => {

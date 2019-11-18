@@ -3,16 +3,8 @@
         <div class="filter-container">
             <el-form :inline="true" class="demo-form-inline">
                 <el-form-item class="text-right">
-                   <el-button
-                        class="filter-item"
-                        type="success"
-                        @click="updateCache"
-                    >更新缓存</el-button>
-                    <el-button
-                        class="filter-item"
-                        type="success"
-                        @click="openAdd"
-                    >添加配置</el-button>
+                    <el-button class="filter-item" type="success" @click="updateCache">更新缓存</el-button>
+                    <el-button class="filter-item" type="success" @click="openAdd">添加配置</el-button>
                 </el-form-item>
             </el-form>
             <el-table border :data="tableData">
@@ -22,8 +14,8 @@
                 <el-table-column align="center" label="wxAppid" prop="wxAppId"></el-table-column>
                 <el-table-column align="center" label="客户端Appid(*)" prop="openAppId"></el-table-column>
                 <el-table-column align="center" label="appSecret" prop="appSecret" width="300"></el-table-column>
-                 <el-table-column align="center" label="appKey(*)" prop="appKey" width="300"></el-table-column>
-                  <el-table-column align="center" label="渠道(*)" prop="channelId" width="70"></el-table-column>
+                <el-table-column align="center" label="appKey(*)" prop="appKey" width="300"></el-table-column>
+                <el-table-column align="center" label="渠道(*)" prop="channelId" width="70"></el-table-column>
 
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope">
@@ -124,7 +116,7 @@
     </div>
 </template>
 <script>
-import { revoke } from '@/api/getApi';
+import { revoke } from '@/api/getApi'
 export default {
     name: 'UserList',
     data() {
@@ -154,14 +146,14 @@ export default {
                 appKey: '',
                 channelId: ''
             }
-        };
+        }
     },
 
     mounted() {
         this.getTableList({
             page: this.currentPage,
             pageNum: this.pageSize
-        });
+        })
     },
     methods: {
         confirEdit() {
@@ -173,154 +165,143 @@ export default {
                 openAppId: this.selectData.openAppId,
                 appSecret: this.selectData.appSecret,
                 appKey: this.selectData.appKey,
-                channelId: this.selectData.channelId,
-            };
+                channelId: this.selectData.channelId
+            }
             let data = {
                 callm: 'wxconf',
                 callp: 'edit',
-                args: JSON.stringify(args),
-            };
-            revoke('/index.php?m=CallProxy&p=callCommon', data).then(
-                res => {
-                    if (res.code === 0) {
-                        this.editVisble = false;
-                        this.$message({
-                            message: '编辑成功！',
-                            type: 'success'
-                        });
-                        this.getTableList({
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        });
-                    } else {
-                        this.$message.error(res.msg);
-                    }
+                args: JSON.stringify(args)
+            }
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
+                if (res.code === 0) {
+                    this.editVisble = false
+                    this.$message({
+                        message: '编辑成功！',
+                        type: 'success'
+                    })
+                    this.getTableList({
+                        page: this.currentPage,
+                        pageNum: this.pageSize
+                    })
+                } else {
+                    this.$message.error(res.msg)
                 }
-            );
+            })
         },
         getTableList(args) {
             let data = {
                 callm: 'wxconf',
                 callp: 'getList',
-                args: JSON.stringify(args),
-            };
-            revoke('/index.php?m=CallProxy&p=callCommon', data).then(
-                res => {
-                    if (res.code === 0) {
-                        this.tableData = res.data.list;
-                        this.totalPage = res.data.total;
-                    }
+                args: JSON.stringify(args)
+            }
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
+                if (res.code === 0) {
+                    this.tableData = res.data.list
+                    this.totalPage = res.data.total
                 }
-            );
+            })
         },
         // 编辑用户信息
         handleEdit(index, row) {
-            console.log(row);
-            this.editVisble = true;
-            this.selectData.id = row.id;
-            this.selectData.name = row.name;
-            this.selectData.channelId = row.channelId;
-            this.selectData.mchId = row.mchId;
-            this.selectData.wxAppId = row.wxAppId;
-            this.selectData.openAppId = row.openAppId;
-            this.selectData.appSecret = row.appSecret;
-            this.selectData.appKey = row.appKey;
+            console.log(row)
+            this.editVisble = true
+            this.selectData.id = row.id
+            this.selectData.name = row.name
+            this.selectData.channelId = row.channelId
+            this.selectData.mchId = row.mchId
+            this.selectData.wxAppId = row.wxAppId
+            this.selectData.openAppId = row.openAppId
+            this.selectData.appSecret = row.appSecret
+            this.selectData.appKey = row.appKey
         },
         // 修改分页器数量
         handleSizeChange(val) {
-            this.pageSize = val;
+            this.pageSize = val
             let data = {
                 page: this.currentPage,
                 pageNum: this.pageSize
-            };
-            this.getTableList(data);
+            }
+            this.getTableList(data)
         },
         // 切换分页器
         handleCurrentChange(val) {
-            this.currentPage = val;
+            this.currentPage = val
             let data = {
                 page: this.currentPage,
                 pageNum: this.pageSize
-            };
-            this.getTableList(data);
+            }
+            this.getTableList(data)
         },
         // 弹出框close
         handleEditClose(done) {
-            this.editVisble = false;
+            this.editVisble = false
         },
         // 弹出框close
         handleAddClose(done) {
-            this.addVisble = false;
+            this.addVisble = false
         },
         openAdd() {
-            this.addVisble = true;
+            this.addVisble = true
         },
         confirAdd() {
             let data = {
                 callm: 'wxconf',
                 callp: 'add',
-                args: JSON.stringify(this.addData),
-            };
-            revoke('/index.php?m=CallProxy&p=callCommon', data).then(
-                res => {
-                    if (res.code === 0) {
-                        this.addVisble = false;
-                        this.$message({
-                            message: '新增用户成功！',
-                            type: 'success'
-                        });
-                        this.getTableList({
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        });
-                    } else {
-                        this.$message.error(res.msg);
-                    }
+                args: JSON.stringify(this.addData)
+            }
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
+                if (res.code === 0) {
+                    this.addVisble = false
+                    this.$message({
+                        message: '新增用户成功！',
+                        type: 'success'
+                    })
+                    this.getTableList({
+                        page: this.currentPage,
+                        pageNum: this.pageSize
+                    })
+                } else {
+                    this.$message.error(res.msg)
                 }
-            );
+            })
         },
         // 发布上线
         updateCache() {
-
-
-            this.popVisble = false;
+            this.popVisble = false
             this.$confirm('这会使配置立即生效,确认清空缓存？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
-            }).then(() => {
-                this.reqUpdate();
-            }).catch(() => {
-
-            });
-
+            })
+                .then(() => {
+                    this.reqUpdate()
+                })
+                .catch(() => {})
         },
         reqUpdate() {
             let data = {
                 callm: 'wxconf',
                 callp: 'updateCache',
-                args: JSON.stringify(this.addData),
-            };
-            revoke('/index.php?m=CallProxy&p=callCommon', data).then(
-                res => {
-                    if (res.code === 0) {
-                        this.addVisble = false;
-                        this.$message({
-                            message: '更新成功',
-                            type: 'success'
-                        });
-                        this.getTableList({
-                            page: this.currentPage,
-                            pageNum: this.pageSize
-                        });
-                    } else {
-                        this.$message.error(res.msg);
-                    }
+                args: JSON.stringify(this.addData)
+            }
+            revoke('/index.php?m=CallProxy&p=callCommon', data).then(res => {
+                if (res.code === 0) {
+                    this.addVisble = false
+                    this.$message({
+                        message: '更新成功',
+                        type: 'success'
+                    })
+                    this.getTableList({
+                        page: this.currentPage,
+                        pageNum: this.pageSize
+                    })
+                } else {
+                    this.$message.error(res.msg)
                 }
-            );
-        },
+            })
+        }
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>

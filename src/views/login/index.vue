@@ -35,20 +35,15 @@
                     ></span>
                 </span>
             </el-form-item>
-            <el-button
-                :loading="loading"
-                type="primary"
-                class="loginBtn"
-                @click="login"
-            >Login</el-button>
+            <el-button :loading="loading" type="primary" class="loginBtn" @click="login">Login</el-button>
         </el-form>
     </div>
 </template>
 
 <script>
-import { revoke } from '@/api/getApi';
-import router from '@/router';
-import { setStorageData } from '@/utils/auth';
+import { revoke } from '@/api/getApi'
+import router from '@/router'
+import { setStorageData } from '@/utils/auth'
 export default {
     data() {
         return {
@@ -56,38 +51,38 @@ export default {
             password: '',
             loading: false,
             passwordType: 'password'
-        };
+        }
     },
     methods: {
         showPwd() {
             if (this.passwordType === 'password') {
-                this.passwordType = '';
+                this.passwordType = ''
             } else {
-                this.passwordType = 'password';
+                this.passwordType = 'password'
             }
             this.$nextTick(() => {
-                this.$refs.password.focus();
-            });
+                this.$refs.password.focus()
+            })
         },
         login() {
             let data = {
                 userName: this.username,
-                password: this.password,
-            };
+                password: this.password
+            }
             revoke('/index.php?m=login&p=index&g=10000', data).then(res => {
                 if (res.code === 0) {
-                    setStorageData('userInfo', res.data);
-                    setStorageData('token', res.data.token);
+                    setStorageData('userInfo', res.data)
+                    setStorageData('token', res.data.token)
                     router.push({
                         path: '/sel-project'
-                    });
+                    })
                 } else {
-                    this.$message.error(res.msg);
+                    this.$message.error(res.msg)
                 }
-            });
+            })
         }
     }
-};
+}
 </script>
 
 <style lang="scss">

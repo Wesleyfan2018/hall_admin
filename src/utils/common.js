@@ -1,4 +1,3 @@
-
 // JS数据处理对象
 
 // 时间戳转换为时间
@@ -39,49 +38,52 @@ export function getTimeFormat(now, type = 'yyyy-mm-dd') {
             ':' +
             second
         );
-    }
-    else if (type === 'hh-mm-ss') {
+    } else if (type === 'hh-mm-ss') {
         // 转hh-mm-ss
         let hour = now.getHours();
         let minute = now.getMinutes();
         let second = now.getSeconds();
-        return (
-            hour +
-            ':' +
-            minute +
-            ':' +
-            second
-        );
+        return hour + ':' + minute + ':' + second;
     } else {
         // 转年月日格式 yyyy-mm-dd
         return year + '-' + month + '-' + date;
     }
 }
 
-
 // 时间戳格式时间 在Date对象原型上操作 后期可把此操作写到公共common函数里面
 export function datesFormat(date, _fmt) {
     let o = {
         'y+': date.getFullYear(),
-        'M+': date.getMonth() + 1,                   // 月份
-        'd+': date.getDate(),                        // 日
-        'h+': date.getHours(),                       // 小时
-        'm+': date.getMinutes(),                     // 分
-        's+': date.getSeconds(),                     // 秒
+        'M+': date.getMonth() + 1, // 月份
+        'd+': date.getDate(), // 日
+        'h+': date.getHours(), // 小时
+        'm+': date.getMinutes(), // 分
+        's+': date.getSeconds(), // 秒
         'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
-        'S+': date.getMilliseconds()                 // 毫秒
+        'S+': date.getMilliseconds() // 毫秒
     };
     let fmt = _fmt;
     for (let k in o) {
         if (new RegExp('(' + k + ')').test(fmt)) {
             if (k === 'y+') {
-                fmt = fmt.replace(RegExp.$1, (String(o[k])).substr(4 - RegExp.$1.length));
+                fmt = fmt.replace(
+                    RegExp.$1,
+                    String(o[k]).substr(4 - RegExp.$1.length)
+                );
             } else if (k === 'S+') {
                 let lens = RegExp.$1.length;
                 lens = lens === 1 ? 3 : lens;
-                fmt = fmt.replace(RegExp.$1, ('00' + o[k]).substr((String(o[k])).length - 1, lens));
+                fmt = fmt.replace(
+                    RegExp.$1,
+                    ('00' + o[k]).substr(String(o[k]).length - 1, lens)
+                );
             } else {
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr((String(o[k])).length)));
+                fmt = fmt.replace(
+                    RegExp.$1,
+                    RegExp.$1.length === 1
+                        ? o[k]
+                        : ('00' + o[k]).substr(String(o[k]).length)
+                );
             }
         }
     }

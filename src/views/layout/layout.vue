@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import { Navbar, AppMain, Sidebar, TagsView } from './components';
+import { Navbar, AppMain, Sidebar, TagsView } from './components'
 export default {
     name: 'Layout',
     components: {
@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             dataInfo: null
-        };
+        }
     },
     created() {
         // console.log(
@@ -50,7 +50,7 @@ export default {
         // )
     },
     methods: {}
-};
+}
 </script>
 <style lang="scss">
 .app-wrapper {

@@ -1,0 +1,23 @@
+#plat: b5f75829726be53b6d4a47455b22e5c9193cb7bf
+variables:
+    GIT_SSL_NO_VERIFY: "true"
+    SONAR_URL: "http://192.168.7.130:9000"
+    SONAR_LOGIN: "b5f75829726be53b6d4a47455b22e5c9193cb7bf"
+
+stages:
+  - build
+  - test
+
+before_script:
+  - echo "scanner..."
+
+build_job:
+  stage: build
+  script:
+  - pwd
+  - sonar-scanner    -Dsonar.projectKey=plat  -Dsonar.host.url=$SONAR_URL   -Dsonar.login=$SONAR_LOGIN -Dsonar.sources=.
+
+test_job:
+  stage: test
+  script:
+  - echo "Tests run..." 

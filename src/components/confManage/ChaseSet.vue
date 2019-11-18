@@ -1,6 +1,11 @@
 <template>
     <!-- 复活设置 -->
-    <div :class="{'form-global gkjf':true,'add':formType==='add','edit':formType==='edit','info':formType==='info'}" border="1" cellpadding="0" cellspacing="0">
+    <div
+        :class="{'form-global gkjf':true,'add':formType==='add','edit':formType==='edit','info':formType==='info'}"
+        border="1"
+        cellpadding="0"
+        cellspacing="0"
+    >
         <ul class="theader">
             <li>关卡序号</li>
             <li>是否可复活</li>
@@ -13,58 +18,91 @@
                 <li>{{i}}</li>
                 <li>
                     <!-- <input type='text' class="enableRelive"  value=""/> -->
-                    <el-select :disabled="allLocked" v-model="reliveTypeArr[i]" class="form-input-min" @change="changeEve($event,i,'reliveType')">
+                    <el-select
+                        :disabled="allLocked"
+                        v-model="reliveTypeArr[i]"
+                        class="form-input-min"
+                        @change="changeEve($event,i,'reliveType')"
+                    >
                         <el-option
                             v-for="item in reliveMap"
                             :key="item.value"
                             :label="item.label"
-                            :value="item.value">
-                        </el-option>
+                            :value="item.value"
+                        ></el-option>
                     </el-select>
                 </li>
                 <li>
                     <!-- <input type='text' class="reliveMoneyType" value=""/> -->
-                    <el-select :disabled="allLocked" v-model="currTypeArr[i]" class="form-input-min" @change="changeEve($event, i, 'currType')">
+                    <el-select
+                        :disabled="allLocked"
+                        v-model="currTypeArr[i]"
+                        class="form-input-min"
+                        @change="changeEve($event, i, 'currType')"
+                    >
                         <el-option
                             v-for="item in currencyMap"
                             :key="item.value"
                             :label="item.label"
-                            :value="item.value">
-                        </el-option>
+                            :value="item.value"
+                        ></el-option>
                     </el-select>
                 </li>
-                <li><input :disabled="allLocked" type='text' class="reliveMoney" value="" /></li>
+                <li>
+                    <input :disabled="allLocked" type="text" class="reliveMoney" value />
+                </li>
             </ul>
         </template>
         <template v-if="formType==='add' && levelCount2===0">
             <p class="form-no-data">请添加关卡数量</p>
         </template>
         <!-- 编辑 -->
-        <template v-if="(formType==='edit' || formType==='info') && thatFormObj && thatFormObj.length>0">
+        <template
+            v-if="(formType==='edit' || formType==='info') && thatFormObj && thatFormObj.length>0"
+        >
             <ul class="tbody addType" v-for="(item,index) in thatFormObj" :key="item.id">
                 <li>{{index+1}}</li>
                 <li>
-                    <el-select :disabled="allLocked" v-model="reliveTypeArr[index]" class="form-input-min" @change="changeEve($event, index, 'reliveType')">
+                    <el-select
+                        :disabled="allLocked"
+                        v-model="reliveTypeArr[index]"
+                        class="form-input-min"
+                        @change="changeEve($event, index, 'reliveType')"
+                    >
                         <el-option
                             v-for="item in reliveMap"
                             :key="item.value"
                             :label="item.label"
-                            :value="item.value">
-                        </el-option>
+                            :value="item.value"
+                        ></el-option>
                     </el-select>
                 </li>
                 <li>
                     <!-- <input type='text' class="reliveMoneyType" v-model="item.reliveMoneyType" :readonly="inputReadOnly"/> -->
-                    <el-select :disabled="allLocked" v-model="currTypeArr[index]" class="form-input-min" :readonly="inputReadOnly" @change="changeEve($event, index, 'currType')">
+                    <el-select
+                        :disabled="allLocked"
+                        v-model="currTypeArr[index]"
+                        class="form-input-min"
+                        :readonly="inputReadOnly"
+                        @change="changeEve($event, index, 'currType')"
+                    >
                         <el-option
                             v-for="item in currencyMap"
                             :key="item.value"
                             :label="item.label"
-                            :value="item.value">
-                        </el-option>
+                            :value="item.value"
+                        ></el-option>
                     </el-select>
                 </li>
-                <li><input :disabled="allLocked" type='text' class="reliveMoney" v-model="item.reliveMoney" :readonly="inputReadOnly"/></li>
+                <li>
+                    <input
+                        :disabled="allLocked"
+                        type="text"
+                        class="reliveMoney"
+                        v-model="item.reliveMoney"
+                        :readonly="inputReadOnly"
+                    />
+                </li>
             </ul>
         </template>
     </div>
@@ -72,16 +110,23 @@
 
 <script>
 import { getClassValue } from '@/utils/common.js';
+import { debuglog } from 'util';
 export default {
     props: ['levelCount2', 'formType', 'formObj', 'allLocked'],
     data() {
         return {
             inputReadOnly: false, // formType = 'info'时使用
             // 是否可复活
-            reliveMap: [{ label: '可复活', value: 1 }, { label: '不可复活', value: 0 }],
+            reliveMap: [
+                { label: '可复活', value: 1 },
+                { label: '不可复活', value: 0 }
+            ],
             reliveTypeArr: [],
             // 货币类型
-            currencyMap: [{ label: '金豆', value: 1 }, { label: '红包券', value: 5 }],
+            currencyMap: [
+                { label: '金豆', value: 1 },
+                { label: '红包券', value: 5 }
+            ],
             currTypeArr: [],
             thatFormObj: []
         };
@@ -89,49 +134,64 @@ export default {
     mounted() {
         // 初始化赋值
         this.thatFormObj = this.formObj;
-        console.log(this.thatFormObj);
-        for(let i in this.thatFormObj) {
+        // console.log(this.thatFormObj);
+        for (let i in this.thatFormObj) {
             this.reliveTypeArr.push(this.thatFormObj[i].enableRelive);
             this.currTypeArr.push(this.thatFormObj[i].reliveMoneyType);
         }
     },
     watch: {
         formType: function(newVal) {
-            this.inputReadOnly = this.formType === 'info' ? true : false;// 输入框是否只读
+            this.inputReadOnly = this.formType === 'info' ? true : false; // 输入框是否只读
             this.thatFormObj = this.formObj;
             // this.reliveTypeArr = new Array(this.levelCount2);
             // this.currTypeArr = new Array(this.levelCount2);
         },
         levelCount2(newVal, oldVal) {
-            if (oldVal > newVal) {
-                this.thatFormObj.pop();
-            } else {
+            let delete_num = Number(oldVal) - Number(newVal);
+            if (delete_num > 0) {
+                for (let i = 0; i < delete_num; i++) {
+                    this.thatFormObj.pop();
+                }
+            } else if (delete_num < 0) {
                 let item = {
-                    "enableRelive": '',
-                    "reliveMoney": 0,
-                    "reliveMoneyType": ''
+                    enableRelive: '',
+                    reliveMoney: 0,
+                    reliveMoneyType: ''
                 };
-                this.thatFormObj.push(item);
+                for (let i = 0; i < (-delete_num); i++) {
+                    this.thatFormObj.push(item);
+                }
             }
         }
     },
     methods: {
         changeEve(val, index, field) {
             if (field === 'currType') {
-                this.currTypeArr[index] = val;
+                // this.currTypeArr[index] = val;
+                this.$set(this.currTypeArr, index, val);
             } else if (field === 'reliveType') {
-                this.reliveTypeArr[index] = val;
+                // this.reliveTypeArr[index] = val;
+                this.$set(this.reliveTypeArr, index, val);
             }
         },
         // formType = 'add' 时，表单提交
-        addSubmitEve() {
+        setSubmitEve(type) {
             let thatFormObj1 = [];
-            let for_length = Number(this.levelCount2);  // 关卡数量
+            let for_length = Number(this.levelCount2); // 关卡数量
             for (let i = 0; i < for_length; i++) {
+                let enableRelive = '';
+                let reliveMoneyType = '';
+                let reliveMoney = 0;
+                if (type === 'add') {
+                    enableRelive = this.reliveTypeArr[i + 1];
+                    reliveMoneyType = this.currTypeArr[i + 1];
+                } else {
+                    enableRelive = this.reliveTypeArr[i];
+                    reliveMoneyType = this.currTypeArr[i];
+                }
+                reliveMoney = getClassValue('reliveMoney', i);
 
-                let enableRelive = this.reliveTypeArr[i + 1];
-                let reliveMoneyType = this.currTypeArr[i + 1];
-                let reliveMoney = getClassValue('reliveMoney', i);
                 if (enableRelive === undefined) {
                     this.$message.error('请选择是否可复活！');
                     return false;
@@ -146,8 +206,8 @@ export default {
                 }
 
                 thatFormObj1[i] = {
-                    enableRelive: this.reliveTypeArr[i + 1],
-                    reliveMoneyType: this.currTypeArr[i + 1],
+                    enableRelive: enableRelive,
+                    reliveMoneyType: reliveMoneyType,
                     reliveMoney: reliveMoney
                 };
             }
@@ -156,10 +216,9 @@ export default {
         },
         submitEve() {
             if (this.formType === 'add') {
-                this.addSubmitEve();
-            }
-            else if (this.formType === 'edit') {
-                this.$emit('submitEve', this.thatFormObj);
+                this.setSubmitEve('add');
+            } else if (this.formType === 'edit') {
+                this.setSubmitEve('edit');
             }
         }
     }
