@@ -200,3 +200,17 @@ dd {
 .multiselect--active {
     z-index: 1000 !important;
 }
+
+// 地区选择
+.aera_select_tree_box {
+    margin: 10px auto;
+    min-height: 150px;
+    max-height: 250px;
+    overflow: auto;
+    border: 1px solid #dcdfe6;
+    border-radius: 5px;
+
+    .el-tree-node.is-current .el-tree-node__label {
+        color: #409eff !important;
+    }
+}

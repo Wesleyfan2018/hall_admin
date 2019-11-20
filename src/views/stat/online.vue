@@ -72,7 +72,7 @@ export default {
             // 地区插件是否支持多选
             area_multiple: false,
             // 地区插件是否支持选区
-            isHasArea: true,
+            isHasArea: false,
             initArea: [0],
             channel_value: ['0', '0'],
             channel_options: [],

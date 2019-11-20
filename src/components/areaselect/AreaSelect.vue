@@ -78,7 +78,7 @@ export default {
     created() {
         this.areaValue = this.initArea
         this.$emit('areaValue', this.areaValue)
-        if (this.thatValue && this.thatValue.length === 0) {
+        if (this.thatValue === undefined || this.thatValue.length === 0) {
             this.getOptions()
         } else {
             this.data = this.thatValue

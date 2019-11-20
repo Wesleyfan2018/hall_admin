@@ -157,7 +157,16 @@ module.exports = {
     },
 
     // PWA 插件相关配置
-    pwa: {},
+    pwa: {
+        manifestPath: 'manifest.json',
+        iconPaths: {
+            favicon32: 'favicon.ico',
+            favicon16: 'favicon.ico',
+            appleTouchIcon: 'favicon.ico',
+            maskIcon: 'favicon.ico',
+            msTileImage: 'favicon.ico'
+        }
+    },
     // 第三方插件配置
     pluginOptions: {}
 };

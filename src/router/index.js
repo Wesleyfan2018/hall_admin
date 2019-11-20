@@ -436,6 +436,32 @@ export const constantRouterMap = [
             }
         ]
     },
+    // 活动配置
+    {
+        path: '/activity',
+        // name: "Dashboard",
+        component: layout,
+        children: [
+            {
+                path: '/activity/promoter',
+                name: 'promoter',
+                meta: { keepAlive: true },
+                component: _import('activity/promoter')
+            },
+            {
+                path: '/activity/bindpromoter',
+                name: 'bindpromoter',
+                meta: { keepAlive: true },
+                component: _import('activity/bindpromoter')
+            },
+            {
+                path: '/activity/promotertotal',
+                name: 'promotertotal',
+                meta: { keepAlive: true },
+                component: _import('activity/promotertotal')
+            },
+        ]
+    },
     // 页面demo
     {
         path: '/demo-module',
