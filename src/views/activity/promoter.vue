@@ -215,7 +215,13 @@ export default {
             this.addVisble = true;
         },
         confirAdd() {
-            revoke('/index.php?m=Promoter&p=add', this.addData).then(res => {
+            let data = {};
+            data.name = this.addData.name;
+            data.phone = this.addData.phone;
+            data.show_id = this.addData.show_id;
+            data.url = this.addData.url;
+            data.entry_date = this.addData.entry_date;
+            revoke('/index.php?m=Promoter&p=add', data).then(res => {
                 if (res.code === 0) {
                     this.addVisble = false;
                     this.$message({

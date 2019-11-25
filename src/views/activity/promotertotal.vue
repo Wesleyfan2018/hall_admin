@@ -139,7 +139,7 @@ export default {
             };
             revoke('/index.php?m=Promoter&p=seachPromoter', data).then(res => {
                 if (res.code === 0) {
-                    this.funDownload(res.data.csv, 'dd.csv');
+                    this.funDownload(res.data.csv, this.sdate + '.csv');
                 }
             });
         },
